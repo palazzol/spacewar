@@ -7,13 +7,8 @@
  * Copyright 1985 Dan Rosenblatt
  */
 
-#ifndef VMS
 #include <sys/types.h>
 #include <dbm.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#include "dbm.h"
-#endif /* VMS */
 #include "spacewar.h"
 #include "universe.h"
 #include "login.h"
@@ -65,11 +60,7 @@ int main()
 	    }
 	    bytecopy((char *)&pld,dbmdata.dptr,sizeof(pld));
 	    printf("{%.24s} %d ",
-#ifdef VMS
-	    ctime(&pld.pl_lstlgn),
-#else /* BSD SYSIII SYSV */
 	    asctime(localtime(&pld.pl_lstlgn)),
-#endif /* VMS BSD SYSIII SYSV */
 	    pld.pl_numlgn);
 
 	    /* prompt for delete or craft name to endow */

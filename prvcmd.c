@@ -6,11 +6,7 @@
  */
 
 #include "spacewar.h"
-#ifndef VMS
 #include <sys/types.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#endif /* VMS */
 #include "universe.h"
 #include "login.h"
 #include "sys.h"
@@ -122,14 +118,6 @@ struct login *plogin;
 	    for (plgn=loginlst;plgn < loginlst+MAXLOGIN;++plgn) {
 		if (!plgn->ln_tty) continue;
 		if (*s) {
-#ifdef VMS
-		    sprintf(buf,
-		    "#%-3d %2d %x '%-8.8s' '%-8.8s' '%c' '%-12.12s' %s",
-		    plgn-loginlst,plgn->ln_tty,plgn->ln_pid,plgn->ln_name,
-		    plgn->ln_term ? plgn->ln_term : "",
-		    plgn->ln_iomode ? plgn->ln_iomode : ' ',
-		    plgn->ln_crft,fmtip(plgn->ln_play));
-#else /* BSD SYSIII SYSV */
 		    sprintf(buf,
 		    "#%-3d %2d %5d %5d '%-8.8s' '%-8.8s' '%c' '%-12.12s' %s",
 		    plgn-loginlst,plgn->ln_tty,plgn->ln_playpid,
@@ -137,7 +125,6 @@ struct login *plogin;
 		    plgn->ln_term ? plgn->ln_term : "",
 		    plgn->ln_iomode ? plgn->ln_iomode : ' ',plgn->ln_crft,
 		    fmtip(plgn->ln_play));
-#endif /* VMS BSD SYSIII SYSV */
 		    output(plogin,'C',0,buf);
 		    sprintf(buf," '%c'\n     '%s'\n",
 		    plgn->ln_stat ? plgn->ln_stat : ' ',plgn->ln_input);

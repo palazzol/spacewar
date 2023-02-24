@@ -6,11 +6,7 @@
  * Copyright 1986 Dan Rosenblatt
  */
 
-#ifndef VMS
 #include <sys/types.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#endif /* VMS */
 #include "spacewar.h"
 #include "universe.h"
 #include "login.h"

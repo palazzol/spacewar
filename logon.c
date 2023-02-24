@@ -18,13 +18,11 @@
 
 #ifdef BSD
 #	include <sgtty.h>
-#else /* VMS SYSIII SYSV */
-#ifndef VMS
+#else /* SYSIII SYSV */
 #	include <sys/types.h>
 #	include <sys/ioctl.h>
 #	include <termio.h>
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 VOID logon(plogin)
 register struct login *plogin;
@@ -92,8 +90,7 @@ register struct login *plogin;
 		return;
 	}
 	}
-#else /* VMS SYSIII SYSV */
-#ifndef VMS
+#else /* SYSIII SYSV */
 	{
 	struct termio tmode;
 
@@ -121,8 +118,7 @@ register struct login *plogin;
 		return;
 	}
 	}
-#endif /* VMS */
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 
 	/* prompt player for name */

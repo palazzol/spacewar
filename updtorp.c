@@ -8,11 +8,7 @@
  */
 
 #include "spacewar.h"
-#ifndef VMS
 #include <sys/types.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#endif /* VMS */
 #include "universe.h"
 #include "sys.h"
 #include "login.h"

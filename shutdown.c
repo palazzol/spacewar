@@ -9,11 +9,6 @@
 #include "universe.h"
 #include "login.h"
 
-#ifdef VMS
-#	include <ssdef.h>
-	extern short inmlbx;
-#endif /* VMS */
-
 // add missing headers
 #include <unistd.h>
 #include <stdlib.h>
@@ -54,24 +49,9 @@ int e;
 #ifdef BSD
 	if (unlink(SWLGNFILE)) perror(SWLGNFILE);
 	if (unlink(SWPIDFILE)) perror(SWPIDFILE);
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-	if ((i=sys$delmbx(inmlbx)) != SS$_NORMAL) {
-		perror("delete mlbx 2");
-#ifdef DEBUG
-		VDBG("shutdown delmbx()=%d, errno=%d\n",i,errno);
-#endif
-	}
-	if ((i=sys$dassgn(inmlbx)) != SS$_NORMAL) {
-		perror("dassgn mlbx 2");
-#ifdef DEBUG
-		VDBG("shutdown dassgn()=%d, errno=%d\n",i,errno);
-#endif
-	}
 #else /* SYSIII SYSV */
 	if (unlink(SWCOMFILE)) perror(SWCOMFILE);
-#endif /* VMS SYSIII SYSV */
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 #ifdef DEBUG
 	VDBG("shutdown exiting\n");

@@ -26,9 +26,7 @@ VOID objupdate()
 
 	/* write to secondary file to be renamed */
 	strcpy(buf,SWOBJ);
-#ifndef VMS
 	strcat(buf,"x");
-#endif
 	if (!(fobj = fopen(buf,"w"))) {
 	    perror(buf);
 #ifdef DEBUG
@@ -52,12 +50,10 @@ VOID objupdate()
 	    return;
 	}
 
-#ifndef VMS
 	/* rename secondary file to be primary */
 	if (unlink(SWOBJ) || link(buf,SWOBJ) || unlink(buf)) {
 	    perror(buf);
 	}
-#endif
 
 #ifdef DEBUG
 	VDBG("objupdate return\n");

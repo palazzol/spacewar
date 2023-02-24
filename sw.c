@@ -22,18 +22,10 @@ int numpling;
 #ifdef BSD
 #   include <sys/ioctl.h>
     static int sigtrap,swlgnfd;
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-#    include <descrip.h>
-#    include <ssdef.h>
-#    include <psldef.h>
-    static $DESCRIPTOR(mlbx,SWCOMFILE);
-    extern short inmlbx;
 #else /* SYSIII SYSV */
 #    include <sys/types.h>
 #    include <sys/stat.h>
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 extern int doproctrap,doupdate;
 static int dbglvl = 0;
 static VOID catchtrp(),catchalrm();
@@ -43,9 +35,6 @@ int argc;
 char *argv[];
 {
 	extern VOID proctrap(),shutdown(),cmd();
-#ifdef VMS
-	int i;
-#endif /* VMS */
 	extern int errno;
 #ifdef BSD
 	int swpidfd,thispid,pfd[2];
@@ -54,14 +43,11 @@ char *argv[];
 	if (argc > 1) dbglvl = atoi(argv[1]);
 
 	/* insure running in background */
-#ifndef VMS
 	/*if (fork() > 0) exit(0);*/
-#endif /* VMS BSD SYSIII SYSV */
 
 	/* ignore interrupts, shutdown on terminate */
 	/* break connection with controlling tty */
 	/* close unneccesary files */
-#ifndef VMS
 	signal(SIGHUP,SIG_IGN);
 	signal(SIGINT,SIG_IGN);
 	signal(SIGQUIT,SIG_IGN);
@@ -80,7 +66,6 @@ char *argv[];
 	close(open("/dev/console",1));
 #endif
 	setpgid(getpid(),getpid());
-#endif
 	close(0);
 	close(1);
 
@@ -110,15 +95,6 @@ char *argv[];
 		if (unlink(SWPIDFILE)) perror(SWPIDFILE);
 		exit(1);
 	}
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-	if ((i=sys$assign(&mlbx,&inmlbx,PSL$C_USER,0)) != SS$_NORMAL) {
-		perror("assign mlbx");
-#ifdef DEBUG
-		VDBG("sw assign()=%d, errno=%d\n",i,errno);
-#endif
-		exit(1);
-	}
 #else /* SYSIII SYSV */
 	if (mknod(SWCOMFILE,0666+S_IFIFO,0) ||
 	open(SWCOMFILE,0) != 0 ||
@@ -126,8 +102,7 @@ char *argv[];
 		perror(SWCOMFILE);
 		exit(1);
 	}
-#endif /* VMS SYSIII SYSV */
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 	/* open dbm(3) file */
 	if (dbminit(SWDATABASE)) {
@@ -135,11 +110,9 @@ char *argv[];
 #ifdef BSD
 		if (unlink(SWLGNFILE)) perror(SWLGNFILE);
 		if (unlink(SWPIDFILE)) perror(SWPIDFILE);
-#else /* VMS SYSIII SYSV */
-#ifndef VMS
+#else /* SYSIII SYSV */
 		if (unlink(SWCOMFILE)) perror(SWCOMFILE);
-#endif	/* VMS SYSIII SYSV */
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 		exit(1);
 	}
 
@@ -184,9 +157,6 @@ static VOID catchalrm()
 #ifdef DEBUG
 	VDBG("catchalrm\n");
 #endif
-#ifdef VMS
-	sys$cancel(inmlbx);
-#endif /* VMS */
 	signal(SIGALRM,catchalrm);
 	if (doproctrap > 0 && doupdate > 0) {
 		doproctrap = 0;
@@ -220,45 +190,6 @@ static VOID catchtrp()
 #undef NULL
 #include <stdio.h>
 
-#ifdef VMS
-#include <varargs.h>
-VOID DBG(va_alist)
-va_dcl
-{
-	va_list ap;
-	int nargs,i,a[8];
-	char *fmt;
-
-	va_start(ap);
-	va_count(nargs);
-	fmt = va_arg(ap,char *);
-	for (i=0;--nargs > 0;++i)
-		a[i] = va_arg(ap,int);
-	va_end(ap);
-	while (i < sizeof(a)/sizeof(a[0]))
-		a[i++] = -1;
-	if (dbglvl > 0) fprintf(stderr,fmt,
-	a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]);
-}
-VOID VDBG(va_alist)
-va_dcl
-{
-	va_list ap;
-	int nargs,i,a[8];
-	char *fmt;
-
-	va_start(ap);
-	va_count(nargs);
-	fmt = va_arg(ap,char *);
-	for (i=0;--nargs > 0;++i)
-		a[i] = va_arg(ap,int);
-	va_end(ap);
-	while (i < sizeof(a)/sizeof(a[0]))
-		a[i++] = -1;
-	if (dbglvl > 1) fprintf(stderr,fmt,
-	a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]);
-}
-#else
 /*VARARGS1*/
 VOID DBG(char *fmt, ...)
 {
@@ -280,6 +211,5 @@ VOID VDBG(char *fmt, ...)
 		va_end(argp);
 	}
 }
-#endif
 
 #endif

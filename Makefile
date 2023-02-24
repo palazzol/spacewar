@@ -35,15 +35,14 @@ all : sw psw rsw dmpdbm upddbm tstsz install
 
 .PRECIOUS: print send
 
-print : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh vmspsw.c rsw.c vmsrsw.c \
-	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init dbm.h dbm.c \
-	vmsdelmbx.c
+print : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
+	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init \
 	pr $? | ${LPR}
 	touch print
 
-send : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh vmspsw.c rsw.c vmsrsw.c \
-	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init doc dbm.h dbm.c \
-	vmsdelmbx.c swnews
+send : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
+	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init doc \
+	swnews
 	uucp $? 'obo586!~/sw/'
 	touch send
 

@@ -5,37 +5,19 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#ifdef VMS
-#define VOID
-#define delete dbmdelete
-#endif /* VMS */
-
 #ifdef BSD
 #	define SWPIDFILE	"/home/palazzol/sw/swpid"
 #	define SWLGNFILE	"/home/palazzol/sw/swlgn"
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-#	define SWCOMFILE	"swmlbx"
 #else /* SYSIII SYSV */
 #	define SWCOMFILE	"/home/palazzol/sw/swcomm"
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
-#ifdef VMS
-#	define SWDATABASE	"$DISK2:[TSDIR.SW]swdb."
-#	define SWGAME		"$DISK2:[TSDIR.SW]sw"
-#	define SWREAD		"$DISK2:[TSDIR.SW]vmsrsw"
-#	define SWNEWS		"$DISK2:[TSDIR.SW]swnews"
-#	define SWERR		"$DISK2:[TSDIR.SW]swerr"
-#	define SWOBJ		"$DISK2:[TSDIR.SW]swobj"
-#else /* BSD SYSIII SYSV */
-#	define SWDATABASE	"/home/palazzol/sw/swdb"
-#	define SWGAME		"/home/palazzol/sw/sw"
-#	define SWREAD		"/home/palazzol/sw/rsw"
-#	define SWNEWS		"/home/palazzol/sw/swnews"
-#	define SWERR		"/home/palazzol/sw/swerr"
-#	define SWOBJ		"/home/palazzol/sw/swobj" /* see objupdate.c */
-#endif /* VMS BSD SYSIII SYSV */
+#define SWDATABASE	"/home/palazzol/sw/swdb"
+#define SWGAME		"/home/palazzol/sw/sw"
+#define SWREAD		"/home/palazzol/sw/rsw"
+#define SWNEWS		"/home/palazzol/sw/swnews"
+#define SWERR		"/home/palazzol/sw/swerr"
+#define SWOBJ		"/home/palazzol/sw/swobj" /* see objupdate.c */
 
 #define SWMASTER	"Dan R"
 
@@ -128,13 +110,9 @@ VOID who(register struct login *plogin);
 #include "uio2.h"
 
 #ifdef BSD
-//VOID proctrap(int trapmsgfd,int *ntrapmsg);
+VOID proctrap(int trapmsgfd,int *ntrapmsg);
 #else
-#ifdef VMS
-//VOID proctrap(struct uio uio);
-#else /* SYSIII SYSV */
 VOID proctrap(struct uio2 uio);
-#endif /* VMS SYSIII SYSV */
 #endif
 
 VOID shutdown(int e);

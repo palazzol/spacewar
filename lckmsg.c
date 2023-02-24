@@ -6,11 +6,7 @@
  */
 
 #include "spacewar.h"
-#ifndef VMS
 #include <sys/types.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#endif /* VMS */
 #include <time.h>
 
 static char *msg;	/* NULL if normal locking applies */

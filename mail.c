@@ -5,13 +5,8 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#ifndef VMS
 #include <sys/types.h>
 #include <dbm.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#include "dbm.h"
-#endif /* VMS */
 #include <time.h>
 #include "spacewar.h"
 #include "universe.h"
@@ -353,11 +348,7 @@ register struct mstat *pmstat;
 	    } else if (!pmstat->ms_frst) {	/* first time */
 		time(&clock);
 		sprintf(plogin->ln_input,"From '%s' on %.24s",plogin->ln_name,
-#ifdef VMS
-		ctime(&clock));
-#else /* BSD SYSIII SYSV */
 		asctime(localtime(&clock)));
-#endif /* VMS BSD SYSIII SYSV */
 		output(plogin,'C',0,
 		"Terminate your mail with a single dot (.) on a line by itself.\n\n");
 		output(plogin,0,0,0);

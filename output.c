@@ -15,10 +15,6 @@
 #include "sys.h"
 #define FLDS
 #include "flds.h"
-#ifdef VMS
-#	include <iodef.h>
-#	include <ssdef.h>
-#endif /* VMS */
 
 // add missing headers
 #include <stdarg.h>
@@ -36,9 +32,6 @@ VOID output(register struct login *plogin, char mode, int fld, char *str, ...)
 	int val2,val3,val4;
 	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();
 	int grp;
-#ifdef VMS
-	int i;
-#endif /* VMS */
 
 	switch(mode) {
 	    case 'B':
@@ -84,17 +77,7 @@ VOID output(register struct login *plogin, char mode, int fld, char *str, ...)
 		    doout(plogin->ln_tty,s);
 		}
 		if (outbuf[0]) {
-#ifdef VMS
-		    if ((i=sys$qiow(0,plogin->ln_tty,IO$_WRITEVBLK+IO$M_NOW,
-		    0,0,0,outbuf,strlen(outbuf)+1,0,0,0,0)) != SS$_NORMAL) {
-			perror("output qiow 1");
-#ifdef DEBUG
-			VDBG("output qiow(WRITEVBLK)=%d, errno=%d\n",i,errno);
-#endif
-		    }
-#else /* BSD SYSIII SYSV */
 		    dowrite(plogin->ln_tty,outbuf,strlen(outbuf));
-#endif /* VMS BSD SYSIII SYSV */
 		    outbuf[0] = 0;
 		}
 		break;
@@ -108,43 +91,19 @@ static VOID doout(fd,s)
 short fd;
 char *s;
 {
-#ifdef VMS
-	int i;
-#endif /* VMS */
 
 #if 1 /* with buffering */
 	if (strlen(outbuf)+strlen(s)+1 >= sizeof(outbuf)) {
-#ifdef VMS
-	    if ((i=sys$qiow(0,fd,IO$_WRITEVBLK+IO$M_NOW,0,0,0,
-	    outbuf,strlen(outbuf)+1,0,0,0,0)) != SS$_NORMAL) {
-		perror("output qiow 2");
-#ifdef DEBUG
-		VDBG("output qiow(WRITEVBLK)=%d, errno=%d\n",i,errno);
-#endif
-	    }
-#else /* BSD SYSIII SYSV */
 	    dowrite(fd,outbuf,strlen(outbuf));
-#endif /* VMS BSD SYSIII SYSV */
 	    outbuf[0] = 0;
 	}
 	strcat(outbuf,s);
 
 #else /* without buffering */
-#ifdef VMS
-	if ((i=sys$qiow(0,fd,IO$_WRITEVBLK+IO$M_NOW,0,0,0,
-	s,strlen(s)+1,0,0,0,0)) != SS$_NORMAL) {
-	    perror("output qiow 3");
-#ifdef DEBUG
-	    VDBG("output qiow(WRITEVBLK)=%d, errno=%d\n",i,errno);
-#endif
-	}
-#else /* BSD SYSIII SYSV */
 	dowrite(fd,s,strlen(s));
-#endif /* VMS BSD SYSIII SYSV */
 #endif /* with/without buffering */
 }
 
-#ifndef VMS
 #include <signal.h>
 static VOID dowrite(fd,s,ls)
 int fd,ls;
@@ -159,4 +118,4 @@ char *s;
 	sigsetmask(oldmask);
 #endif
 }
-#endif
+

@@ -12,22 +12,13 @@
 #include "spacewar.h"
 #ifdef BSD
 #	include <sys/ioctl.h>
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-#	include <descrip.h>
-#	include <ssdef.h>
-#	include <psldef.h>
-#	include "uio.h"
 #else /* SYSIII SYSV */
 #	include <fcntl.h>
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 #include <signal.h>
 #include "universe.h"
 #include "login.h"
-#ifndef VMS
-#	include "uio2.h"
-#endif /* VMS */
+#include "uio2.h"
 
 // add missing headers
 #include <stdio.h>
@@ -41,20 +32,13 @@ VOID proctrap(trapmsgfd,ntrapmsg)
 int trapmsgfd,*ntrapmsg;
 {
 	struct uio2 uio;
-#else /* VMS SYSIII SYSV */
-VOID proctrap(uio)
-#ifdef VMS
-struct uio uio;
 #else /* SYSIII SYSV */
+VOID proctrap(uio)
 struct uio2 uio;
-#endif /* VMS SYSIII SYSV */
 {
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 	register struct login *plogin;
 	int i;
-#ifdef VMS
-	int pid;
-#endif /* VMS */
 	extern VOID logon(),logoff();
 
 #ifdef BSD
@@ -78,12 +62,6 @@ struct uio2 uio;
 		VDBG("proctrap: uio %d %d %.*s\n",uio.uio2sig,uio.uio2pid,
 		sizeof(uio.uio2tty),uio.uio2tty);
 #endif
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-#ifdef DEBUG
-		DBG("proctrap(%d,%.*s)\n",(int)uio.uio_lgn,sizeof(uio.uio_chrs),uio.uio_chrs);
-#endif
-		sscanf(uio.uio_chrs+2,"%x",&pid);
 #else /* SYSIII SYSV */
 #ifdef DEBUG
 		DBG("HERE\n");
@@ -93,16 +71,11 @@ struct uio2 uio;
 		else
 			DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
 #endif
-#endif /* VMS SYSIII SYSV */
-#endif /* VMS BSD SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 		/* try to find player */
 		for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
-#ifdef VMS
-			if (plogin->ln_pid == pid)
-#else /* BSD SYSIII SYSV */
 			if (plogin->ln_playpid == uio.uio2pid)
-#endif /* VMS BSD SYSIII SYSV */
 				break;
 #ifdef DEBUG
 		VDBG("proctrap: login entry #%d\n",plogin-loginlst);
@@ -111,11 +84,7 @@ struct uio2 uio;
 		if (i) {
 
 			/* process according to signal# */
-#ifdef VMS
-			switch((int)uio.uio_lgn) {
-#else /* BSD SYSIII SYSV */
 			switch(uio.uio2sig) {
-#endif /* VMS BSD SYSIII SYSV */
 
 			    case SIGQUIT:	/* wants to go away */
 				output(plogin,'E',0,0);
@@ -147,16 +116,10 @@ struct uio2 uio;
 			VDBG("proctrap: available login entry #%d\n",
 			plogin-loginlst);
 #endif
-#ifdef VMS
-			/* psw will timeout if no message from setupread */
-			if (i && setupread(plogin,pid))
-				logon(plogin);
-#else /* BSD SYSIII SYSV */
 			if (i && setupread(plogin,uio.uio2pid,uio.uio2tty))
 				logon(plogin);
 			else
 				kill(uio.uio2pid,SIGTERM);
-#endif /* VMS BSD SYSIII SYSV */
 		}
 #ifdef BSD
 	} while (--(*ntrapmsg) > 0);
@@ -166,49 +129,6 @@ struct uio2 uio;
 #endif
 }
 
-#ifdef VMS
-static int setupread(plogin,pid)
-struct login *plogin;
-int pid;
-{
-	struct dsc$descriptor_d mlbx;
-	char buf[32];
-	int i;
-	extern int errno;
-
-#ifdef DEBUG
-	DBG("setupread(#%d,%x)\n",plogin-loginlst,pid);
-#endif
-
-	sprintf(buf,"sw%x",pid);
-	mlbx.dsc$w_length = strlen(buf);
-	mlbx.dsc$b_dtype = DSC$K_DTYPE_T;
-	mlbx.dsc$b_class = DSC$K_CLASS_S;
-	mlbx.dsc$a_pointer = buf;
-	if ((i=sys$crembx(1,&plogin->ln_tty,0,0,0,PSL$C_USER,&mlbx)) !=
-	SS$_NORMAL) {
-		perror("crembx");
-#ifdef DEBUG
-		VDBG("setupread crembx()=%d, errno=%d\n",i,errno);
-#endif
-		plogin->ln_tty = NULL;
-#ifdef DEBUG
-		VDBG("setupread return\n");
-#endif
-		return(0);
-	}
-	plogin->ln_pid = pid;
-
-	sprintf(buf,"%d",plogin);
-	output(plogin,'C',0,buf);
-	output(plogin,0,0,0);
-
-#ifdef DEBUG
-	VDBG("setupread return\n");
-#endif
-	return(1);
-}
-#else /* BSD SYSIII SYSV */
 /*
  * setting up a readsw process with:
  *	fd0 attached to the terminal
@@ -295,4 +215,4 @@ char *ttynm;
 #endif
 	return(1);
 }
-#endif /* VMS BSD SYSIII SYSV */
+

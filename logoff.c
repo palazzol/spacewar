@@ -16,15 +16,11 @@
 
 #ifdef BSD
 #	include <sgtty.h>
-#else /* VMS SYSIII SYSV */
-#ifdef VMS
-#	include <ssdef.h>
 #else /* SYSIII SYSV */
 #	include <sys/types.h>
 #	include <sys/ioctl.h>
 #	include <termio.h>
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 // add missing headers
 #include <unistd.h>
@@ -34,9 +30,6 @@
 VOID logoff(plogin)
 register struct login *plogin;
 {
-#ifdef VMS
-	int i;
-#endif /* VMS */
 	extern int errno;
 
 #ifdef DEBUG
@@ -68,8 +61,7 @@ register struct login *plogin;
 		goto sigh;	/* horrendous */
 	}
 	}
-#else /* VMS SYSIII SYSV */
-#ifndef VMS
+#else /* SYSIII SYSV */
 	{
 	struct termio tmode;
 
@@ -89,28 +81,10 @@ register struct login *plogin;
 		goto sigh;	/* horrendous */
 	}
 	}
-#endif /* VMS SYSIII SYSV */
-#endif /* BSD VMS SYSIII SYSV */
+#endif /* BSD SYSIII SYSV */
 
 	/* close the player's terminal and kill the read and play processes */
 sigh:
-#ifdef VMS
-	output(plogin,0,0,0);
-	output(plogin,'C',0,"ShUtDoWn");
-	output(plogin,0,0,0);
-	if ((i=sys$delmbx(plogin->ln_tty)) != SS$_NORMAL) {
-		perror("delete mlbx 1");
-#ifdef DEBUG
-		VDBG("logoff delmbx()=%d, errno=%d\n",i,errno);
-#endif
-	}
-	if ((i=sys$dassgn(plogin->ln_tty)) != SS$_NORMAL) {
-		perror("dassgn mlbx 1");
-#ifdef DEBUG
-		VDBG("logoff dassgn()=%d, errno=%d\n",i,errno);
-#endif
-	}
-#else /* BSD SYSIII SYSV */
 	if (close(plogin->ln_tty))
 		perror("close");
 	if (kill(plogin->ln_readpid,SIGTERM))
@@ -119,7 +93,6 @@ sigh:
 		wait(0);
 	if (kill(plogin->ln_playpid,SIGTERM))
 		perror("kill playsw");
-#endif /* VMS BSD SYSIII SYSV */
 
 	/* reset the login entry */
 	binit((char *)plogin,sizeof(*plogin));

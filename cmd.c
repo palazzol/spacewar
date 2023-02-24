@@ -5,13 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#ifndef VMS
+
 #include <sys/types.h>
 #include <dbm.h>
-#else /* BSD SYSIII SYSV */
-#include <types.h>
-#include "dbm.h"
-#endif /* VMS */
 #include <errno.h>
 #include "spacewar.h"
 #include "universe.h"
@@ -19,11 +15,6 @@
 #include "uio.h"
 #include "plyr.h"
 #include "mlbx.h"
-#ifdef VMS
-#	include <iodef.h>
-#	include <ssdef.h>
-	short inmlbx;
-#endif /* VMS */
 
 // add missing headers
 #include <string.h>
@@ -357,10 +348,8 @@ static struct login *getinp()
 	register char *input;
 	extern int errno;
 #ifndef BSD
-#ifndef VMS
 #	include "uio2.h"
 	struct uio2 inp2;
-#endif /* VMS */
 #endif /* BSD */
 
 #ifdef DEBUG
@@ -379,39 +368,20 @@ static struct login *getinp()
 			return(NULL);
 		}
 		doproctrap = 1;
-#ifdef VMS
-		inp.uio_lgn = (struct login *)-1;
-		if ((i=sys$qiow(0,inmlbx,IO$_READVBLK,0,0,0,&inp,sizeof(inp),
-		0,0,0,0)) != SS$_NORMAL)  {
-#ifdef DEBUG
-		    VDBG("getinp qiow(READVBLK)=%d errno=%d\n",i,errno);
-#endif
-		    if (errno != EINTR)
-			perror("read mlbx uio");
-		    continue;
-		}
-		if (inp.uio_lgn == (struct login *)-1) continue;
-#else /* BSD SYSIII SYSV */
 		if (read(0,&inp,sizeof(inp)) != sizeof(inp)) {
 			if (errno != EINTR)
 				perror("read uio");
 			continue;
 		}
-#endif /* VMS BSD SYSIII SYSV */
 		doproctrap = 0;
 #ifdef DEBUG
 #ifndef BSD
 		if (((long)inp.uio_lgn) >= 0 && ((long)inp.uio_lgn) <= 20) {
-#ifdef VMS
-			VDBG("getinp: uio sig %d %s\n",(int)inp.uio_lgn,
-			inp.uio_chrs);
-#else /* SYSIII SYSV */
 			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			VDBG("getinp: ");
 			VDBG("sig=%d ",inp2.uio2sig);
 			VDBG("pid=%d ",inp2.uio2pid);
 			VDBG("tty=%.*s\n",sizeof(inp2.uio2tty),inp2.uio2tty);
-#endif /* VMS SYSIII SYSV */
 		} else
 #endif /* BSD */
 		{
@@ -425,12 +395,8 @@ static struct login *getinp()
 		/* validate login pointer */
 #ifndef BSD
 		if (((long)inp.uio_lgn) >= 0 &&((long)inp.uio_lgn) <= 20) {
-#ifdef VMS
-			proctrap(inp);
-#else /* SYSIII SYSV */
 			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			proctrap(inp2);
-#endif /* VMS SYSIII SYSV */
 			continue;
 		}
 #endif /* BSD */

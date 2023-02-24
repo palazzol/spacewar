@@ -18,6 +18,7 @@
 - Added Makefile target to build original documentation
 - Added temporary Makefile target to do some install stuff for debugging - WIP
 - fix varargs stuff
+- remove VMS code for clarity
 
 #### TBD 
 - playtesting
@@ -27,7 +28,6 @@
 - do proper make install target
 
 #### Cleanup
-- remove VMS code for clarity
 - remove -DVOID stuff
 
 
