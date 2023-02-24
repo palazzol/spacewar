@@ -1,0 +1,36 @@
+Unfortunately, I have not gotten around to packaging spacewar
+for totally automatic installation; so here are some notes:
+
+    spacewar.h	contains various pathnames that must be edited
+		before compilation.  There is also a define for
+		SWMASTER, the player that has special game commands
+		and ship privileges. The special game commands
+		can be found in prvcmd.c.
+
+    Makefile	must define the right symbols during compilation
+		for your system type:
+			VMS	for VMS; certain mailbox privileges
+				are required.
+			BSD	for non System-V.
+		If neither of these are defined, then a System-V
+		environment with named pipes is assumed.
+			VOID	either 'int' or 'void' depending on
+				what your compiler supports.
+			NEEDFMOD if your system doesn't have an fmod
+				function in libc.a or libm.a.
+
+    swobj	should be created by copying swobj.init into it.
+
+    swerr
+    swdb.dir
+    swdb.pag	should be created empty.
+
+    psw.sh	should be edited for pathnames and installed somewhere
+		like /usr/games.
+
+    psw
+    sw		should be setuid to the owner of swobj, swdb.dir, swdb.pag,
+		and swerr. Also, the directory that these files are in
+		must be mode 'rwx' for the same user-id as the setuid cuz
+		various other files are created and exist here only while
+		spacewar is running.
