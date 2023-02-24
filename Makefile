@@ -4,8 +4,8 @@
 #  Copyright 1984 obo Systems, Inc.
 #  Copyright 1984 Dan Rosenblatt
 #
-LDFLAGS= -n
-CFLAGS= -O -DBSD -DVOID=void -m68020 -f68881 -DNEEDFMOD
+LDFLAGS= 
+CFLAGS= -Werror -m32 -DVOID=void -DDEBUG 
 LPR= lpr
 
 INCLUDES= aln.h build.h crft.h flds.h login.h mlbx.h obj.h plyr.h \
@@ -31,7 +31,7 @@ OBJECTS= sw.o globals.o lckmsg.o proctrap.o shutdown.o \
 	bfuncs.o bits.o damage.o fixdir.o mutils.o vdisp.o remove.o rpt.o \
 	output.o scrn.o
 
-all : sw psw rsw dmpdbm upddbm tstsz
+all : sw psw rsw dmpdbm upddbm tstsz install
 
 .PRECIOUS: print send
 
@@ -51,7 +51,7 @@ clean :
 	rm *.o sw psw rsw dmpdbm upddbm tstsz
 
 sw : ${OBJECTS}
-	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -ltermlib -ldbm -lm
+	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -ltinfo -lgdbm_compat -lm
 	chmod u+s sw
 
 psw : psw.c spacewar.h uio2.h
@@ -63,15 +63,29 @@ rsw : rsw.c login.h uio.h universe.h spacewar.h
 
 dmpdbm : dmpdbm.c spacewar.h universe.h login.h sys.h crft.h mlbx.h \
 	plyr.h ucmd.h bfuncs.o
-	${CC} ${CFLAGS} ${LDFLAGS} dmpdbm.c bfuncs.o -ldbm -o dmpdbm
+	${CC} ${CFLAGS} ${LDFLAGS} dmpdbm.c bfuncs.o -lgdbm_compat -o dmpdbm
 
 upddbm : upddbm.c spacewar.h universe.h login.h sys.h crft.h mlbx.h \
 	plyr.h ucmd.h bfuncs.o
-	${CC} ${CFLAGS} ${LDFLAGS} upddbm.c bfuncs.o -ldbm -o upddbm
+	${CC} ${CFLAGS} ${LDFLAGS} upddbm.c bfuncs.o -lgdbm_compat -o upddbm
 
 tstsz : tstsz.c uio.h uio2.h spacewar.h
 	${CC} ${CFLAGS} ${LDFLAGS} tstsz.c -o tstsz
-	tstsz
+	./tstsz
+
+install :
+	rm -f ../sw/*
+	#mkdir ../sw
+	cp psw ../sw
+	chmod u+s ../sw/psw
+	cp sw ../sw
+	chmod u+s ../sw/sw
+	cp rsw ../sw
+	cp swobj.init ../sw/swobj
+	cp dmpdbm ../sw
+	cp upddbm ../sw
+	touch ../sw/swdb.dir
+	touch ../sw/swdb.pag
 
 lint : ${SOURCES} psw.c rsw.c dmpdbm.c upddbm.c tstsz.c
 	lint ${CFLAGS} ${SOURCES}
@@ -80,6 +94,11 @@ lint : ${SOURCES} psw.c rsw.c dmpdbm.c upddbm.c tstsz.c
 	lint ${CFLAGS} dmpdbm.c bfuncs.c
 	lint ${CFLAGS} upddbm.c bfuncs.c
 	lint ${CFLAGS} tstsz.c
+
+doc.pdf : doc.ms
+	groff -dpaper=letter -P-pletter -ms -fC -Tpdf doc.ms > doc.pdf
+
+doc : doc.pdf
 
 bfuncs.o : spacewar.h
 

@@ -7,7 +7,7 @@
 
 #include "spacewar.h"
 
-VOID bcopy(dst,src,len)
+VOID bytecopy(dst,src,len)
 register char *dst,*src;
 register int len;
 {
@@ -33,12 +33,13 @@ register double *dst,*src;
 }
 
 VOID mcopy(dst,src)
-register double *dst,*src;
+register double dst[3][3],src[3][3];
 {
 	register int i;
-
+	register double *dst2 = (double *)dst;
+	register double *src2 = (double *)src;	
 	for (i=0;i++<9;)
-		*dst++ = *src++;
+		*dst2++ = *src2++;
 }
 
 VOID vinit(dst)
@@ -51,10 +52,10 @@ register double *dst;
 }
 
 VOID minit(dst)
-register double *dst;
+register double dst[3][3];
 {
 	register int i;
-
+	register double *dst2 = (double *)dst;
 	for (i=0;i++<9;)
-		*dst++ = 0.;
+		*dst2++ = 0.;
 }

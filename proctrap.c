@@ -29,6 +29,11 @@
 #	include "uio2.h"
 #endif /* VMS */
 
+// add missing headers
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 static int setupread();
 
 #ifdef BSD
@@ -70,18 +75,23 @@ struct uio2 uio;
 			return;
 		}
 #ifdef DEBUG
-		VDBG("proctrap: uio %d %d %s\n",uio.uio2sig,uio.uio2pid,
-		uio.uio2tty);
+		VDBG("proctrap: uio %d %d %.*s\n",uio.uio2sig,uio.uio2pid,
+		sizeof(uio.uio2tty),uio.uio2tty);
 #endif
 #else /* VMS SYSIII SYSV */
 #ifdef VMS
 #ifdef DEBUG
-		DBG("proctrap(%d,%s)\n",(int)uio.uio_lgn,uio.uio_chrs);
+		DBG("proctrap(%d,%.*s)\n",(int)uio.uio_lgn,sizeof(uio.uio_chrs),uio.uio_chrs);
 #endif
 		sscanf(uio.uio_chrs+2,"%x",&pid);
 #else /* SYSIII SYSV */
 #ifdef DEBUG
-		DBG("proctrap(%d,%d,%s)\n",uio.uio2sig,uio.uio2pid,uio.uio2tty);
+		DBG("HERE\n");
+		DBG("proctrap(%d)\n",uio.uio2sig);
+		if (uio.uio2sig == 0)
+			DBG("proctrap(%d,%d)\n",uio.uio2sig,uio.uio2pid);
+		else
+			DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
 #endif
 #endif /* VMS SYSIII SYSV */
 #endif /* VMS BSD SYSIII SYSV */
@@ -97,7 +107,6 @@ struct uio2 uio;
 #ifdef DEBUG
 		VDBG("proctrap: login entry #%d\n",plogin-loginlst);
 #endif
-
 		/* player is already logged on, therefore its a signal */
 		if (i) {
 
@@ -132,7 +141,7 @@ struct uio2 uio;
 
 			/* find an available login */
 			for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
-				if (plogin->ln_tty == NULL)
+				if (plogin->ln_tty == 0)
 					break;
 #ifdef DEBUG
 			VDBG("proctrap: available login entry #%d\n",
@@ -269,8 +278,8 @@ char *ttynm;
 			if (close(ttyfd)) perror(ttynm);
 			for (i=3;i < 20;fcntl(i++,F_SETFD,1));
 #endif /* BSD SYSIII SYSV */
-			sprintf(buf,"%d",(int)plogin);
-			execlp(SWREAD,"rsw",buf,0);
+			sprintf(buf,"%ld",(long)plogin);
+			execlp(SWREAD,"rsw",buf,NULL);
 			perror(SWREAD);
 			exit(1);
 	}

@@ -25,6 +25,8 @@ struct obj {
 	double	oj_rmat[3][3];	/* object rotation matrix */
 };
 
+VOID objinit();
+
 #define MAXOBJ	42
 
 extern struct obj objlst[];

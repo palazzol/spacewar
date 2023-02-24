@@ -21,7 +21,7 @@ struct crft {
 	long	cr_flsp;	/* craft free floor space */
 	long	cr_crew;	/* craft free crew */
 	long	cr_pnts;	/* craft points */
-	time_t	cr_time;	/* craft playing time */
+	long	cr_time;	/* craft playing time */
 	short	cr_kill;	/* craft credited kills */
 	idxptr	cr_dock;	/* craft docked at (object) */
 	double	cr_pstn[3];	/* craft position */

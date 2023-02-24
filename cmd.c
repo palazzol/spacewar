@@ -25,6 +25,11 @@
 	short inmlbx;
 #endif /* VMS */
 
+// add missing headers
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+
 int doproctrap,doupdate;
 static struct login *getinp();
 static VOID cmd2();
@@ -95,7 +100,7 @@ VOID cmd()
 			break;
 	}
 
-	plogin->ln_input[0] = NULL;
+	plogin->ln_input[0] = 0;
 #ifdef DEBUG
 	VDBG("cmd return\n");
 #endif
@@ -191,7 +196,7 @@ How about another name?");
 			plogin-loginlst,plogin->ln_name);
 #endif
 
-			bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+			bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 			/* bad password */
 			if (strcmp(plogin->ln_input,getpldat.pl_passwd)) {
@@ -206,8 +211,8 @@ How about another name?");
 
 				output(plogin,'C',0,PROMPT);
 				output(plogin,0,0,0);
-				plogin->ln_stat = NULL;
-				plogin->ln_iomode = NULL;
+				plogin->ln_stat = 0;
+				plogin->ln_iomode = 0;
 
 				/* update login info */
 				++getpldat.pl_numlgn;
@@ -252,7 +257,7 @@ How about another name?");
 				"(sigh) database collision - try another name\
 \n\nWhat is your name?");
 				output(plogin,0,0,0);
-				plogin->ln_name[0] = NULL;
+				plogin->ln_name[0] = 0;
 
 			/* give prompt */
 			} else {
@@ -260,8 +265,8 @@ How about another name?");
 				output(plogin,'C',0,PROMPT);
 				output(plogin,0,0,0);
 			}
-			plogin->ln_stat = NULL;
-			plogin->ln_iomode = NULL;
+			plogin->ln_stat = 0;
+			plogin->ln_iomode = 0;
 		}
 
 	/***********************/
@@ -275,9 +280,9 @@ How about another name?");
 
 		case 'B': case 'b':	/* reBuild */
 			plogin->ln_stat = 'B';
-			plogin->ln_crft[0] = NULL;
+			plogin->ln_crft[0] = 0;
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			build(plogin);
 			break;
 
@@ -298,36 +303,36 @@ How about another name?");
 		case 'M': case 'm':	/* Mail */
 			plogin->ln_stat = 'M';
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			mail(plogin);
 			break;
 
 		case 'U': case 'u':	/* Usercmd */
 			plogin->ln_stat = 'U';
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			usrcmd(plogin);
 			break;
 
 		case 'S': case 's':	/* See */
 			plogin->ln_stat = 'S';
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			see(plogin);
 			break;
 
 		case 'W': case 'w':	/* Who */
 			plogin->ln_stat = 'W';
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			who(plogin);
 			break;
 
 		case 'P': case 'p':	/* Play */
 			plogin->ln_stat = 'P';
-			plogin->ln_crft[0] = NULL;
+			plogin->ln_crft[0] = 0;
 			plogin->ln_substat = NULL;
-			plogin->ln_input[0] = NULL;
+			plogin->ln_input[0] = 0;
 			play(plogin);
 			break;
 
@@ -366,7 +371,6 @@ static struct login *getinp()
 	/* trap processing; do echo and edit magic */
 	/* do all this until there is a full cmd   */
 	for (;;) {
-
 		/* get the uio header allowing asynch trap processing */
 		if (doproctrap < 0 || doupdate < 0) {
 #ifdef DEBUG
@@ -397,20 +401,22 @@ static struct login *getinp()
 		doproctrap = 0;
 #ifdef DEBUG
 #ifndef BSD
-		if (((int)inp.uio_lgn) >= 0 &&((int)inp.uio_lgn) <= 20) {
+		if (((long)inp.uio_lgn) >= 0 && ((long)inp.uio_lgn) <= 20) {
 #ifdef VMS
 			VDBG("getinp: uio sig %d %s\n",(int)inp.uio_lgn,
 			inp.uio_chrs);
 #else /* SYSIII SYSV */
-			bcopy((char *)&inp2,(char *)&inp,sizeof(inp2));
-			VDBG("getinp: uio sig %d %d %s\n",inp2.uio2sig,
-			inp2.uio2pid,inp2.uio2tty);
+			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
+			VDBG("getinp: ");
+			VDBG("sig=%d ",inp2.uio2sig);
+			VDBG("pid=%d ",inp2.uio2pid);
+			VDBG("tty=%.*s\n",sizeof(inp2.uio2tty),inp2.uio2tty);
 #endif /* VMS SYSIII SYSV */
 		} else
 #endif /* BSD */
 		{
 			VDBG("getinp: uio #%d '",inp.uio_lgn-loginlst);
-			for (p=inp.uio_chrs;*p;++p)
+			for (p=inp.uio_chrs;*p;++p)  
 			    VDBG((*p < ' ' || *p > '~') ? "\\%03o" : "%c",*p);
 			VDBG("'\n");
 		}
@@ -418,11 +424,11 @@ static struct login *getinp()
 
 		/* validate login pointer */
 #ifndef BSD
-		if (((int)inp.uio_lgn) >= 0 &&((int)inp.uio_lgn) <= 20) {
+		if (((long)inp.uio_lgn) >= 0 &&((long)inp.uio_lgn) <= 20) {
 #ifdef VMS
 			proctrap(inp);
 #else /* SYSIII SYSV */
-			bcopy((char *)&inp2,(char *)&inp,sizeof(inp2));
+			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			proctrap(inp2);
 #endif /* VMS SYSIII SYSV */
 			continue;
@@ -441,12 +447,12 @@ static struct login *getinp()
 		    switch(*p) {
 			case '\n':
 			case '\r':
-			    *input = NULL;
+			    *input = 0;
 
 			    /* strip trailing blanks */
 			    for (p=inp.uio_lgn->ln_input;--input >= p &&
 			    *input == ' ';)
-				*input = NULL;
+				*input = 0;
 
 			    if (inp.uio_lgn->ln_iomode == 'm' ||
 			    inp.uio_lgn->ln_iomode == 's')
@@ -485,7 +491,7 @@ static struct login *getinp()
 		    /* make sure buffer can't overflow */
 		    if (input >= inp.uio_lgn->ln_input +
 		    sizeof(inp.uio_lgn->ln_input) - 1) {
-			*input = NULL;
+			*input = 0;
 			if (inp.uio_lgn->ln_iomode == 'm' ||
 			inp.uio_lgn->ln_iomode == 's')
 			    output(inp.uio_lgn,'C',0,"\r");
@@ -498,13 +504,13 @@ static struct login *getinp()
 			return(inp.uio_lgn);
 		    }
 
-		    input[1] = NULL;
+		    input[1] = 0;
 		    *input = *p;
 		    output(inp.uio_lgn,'C',0,(inp.uio_lgn->ln_iomode == 'p') ?
 		    " " : input); /* space if password state, char otherwise */
 		    ++input;
 		}
-		*input = NULL;
+		*input = 0;
 		output(inp.uio_lgn,0,0,0);
 	}
 }

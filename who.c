@@ -9,6 +9,9 @@
 #include "universe.h"
 #include "login.h"
 
+// add missing headers
+#include <string.h>
+
 VOID who(plogin)
 register struct login *plogin;
 {
@@ -42,7 +45,7 @@ register struct login *plogin;
 	} else
 		output(plogin,'C',0,"\nNo one else\n");
 	
-	plogin->ln_stat = NULL;
+	plogin->ln_stat = 0;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
 #ifdef DEBUG

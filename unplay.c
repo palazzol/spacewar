@@ -20,6 +20,9 @@
 #include "sys.h"
 #include "crft.h"
 
+// add missing headers
+#include <string.h>
+
 VOID unplay(plogin)
 register struct login *plogin;
 {
@@ -77,7 +80,7 @@ register struct login *plogin;
 	    dbmkey.dsize = sizeof(getplkey);
 	    dbmdata = fetch(dbmkey);
 	    if (dbmdata.dptr) {
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 		getpldat.pl_slst += 1;
 		getpldat.pl_klst += pcrft->cr_kill;
 		getpldat.pl_plst += pcrft->cr_pnts;
@@ -101,14 +104,14 @@ register struct login *plogin;
 	}
 
 	/* remove craft from universe */
-	remove(plogin->ln_play);
+	removeu(plogin->ln_play);
 	if (--numpling < 0) numpling = 0;
 
 	/* put player back to command mode */
-	plogin->ln_iomode = NULL;
-	plogin->ln_crft[0] = NULL;
+	plogin->ln_iomode = 0;
+	plogin->ln_crft[0] = 0;
 	plogin->ln_play.ip_ptr = NULL;
-	plogin->ln_stat = NULL;
+	plogin->ln_stat = 0;
 	plogin->ln_substat = NULL;
 
 #ifdef DEBUG

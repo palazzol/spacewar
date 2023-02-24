@@ -23,7 +23,13 @@
 #include "plyr.h"
 #include "ucmd.h"
 
-main()
+// add missing headers
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdio.h>
+
+int main()
 {
 	datum srchkey,dbmkey,dbmdata;
 	struct crftkey crk;
@@ -35,7 +41,7 @@ main()
 	struct ucmdkey uck;
 	struct syskey sk;
 	struct sys s;
-	char *asctime(),*ctime(),*gets(),buf[32],dnam[100][8+1],*pnam;
+	char *gets(),buf[32],dnam[100][8+1],*pnam;
 	int i,nd=0,atoi();
 	long atol();
 
@@ -50,14 +56,14 @@ main()
 		continue;
 
 	    /* show player name, last login time, and # of logins */
-	    bcopy((char *)&plk,srchkey.dptr,sizeof(plk));
+	    bytecopy((char *)&plk,srchkey.dptr,sizeof(plk));
 	    printf("'%s' ",plk.pl_name);
 	    dbmdata = fetch(srchkey);
 	    if (!dbmdata.dptr) {
 		printf("- can't fetch\n");
 		continue;
 	    }
-	    bcopy((char *)&pld,dbmdata.dptr,sizeof(pld));
+	    bytecopy((char *)&pld,dbmdata.dptr,sizeof(pld));
 	    printf("{%.24s} %d ",
 #ifdef VMS
 	    ctime(&pld.pl_lstlgn),
@@ -88,7 +94,7 @@ getcrnam:   printf("(d/craftname)>");
 		    goto getcrnam;	/* horrendous */
 		}
 
-		bcopy((char *)&crd,dbmdata.dptr,dbmdata.dsize);
+		bytecopy((char *)&crd,dbmdata.dptr,dbmdata.dsize);
 		printf("[htyp=%d] flsp=%ld crew=%ld plvl=%d\n",
 		crd.cr_htyp,crd.cr_flsp,crd.cr_crew,crd.cr_plvl);
 		printf("flsp>");
@@ -111,31 +117,31 @@ getcrnam:   printf("(d/craftname)>");
 
 	    switch(srchkey.dptr[0]) {
 		case CRAFT:
-		    bcopy((char *)&crk,srchkey.dptr,sizeof(crk));
+		    bytecopy((char *)&crk,srchkey.dptr,sizeof(crk));
 		    pnam = crk.cr_plyr;
 		    srchkey.dptr = (char *)&crk;
 		    srchkey.dsize = sizeof(crk);
 		    break;
 		case MLBX:
-		    bcopy((char *)&mbk,srchkey.dptr,sizeof(mbk));
+		    bytecopy((char *)&mbk,srchkey.dptr,sizeof(mbk));
 		    pnam = mbk.mb_plyr;
 		    srchkey.dptr = (char *)&mbk;
 		    srchkey.dsize = sizeof(mbk);
 		    break;
 		case PLYR:
-		    bcopy((char *)&plk,srchkey.dptr,sizeof(plk));
+		    bytecopy((char *)&plk,srchkey.dptr,sizeof(plk));
 		    pnam = plk.pl_name;
 		    srchkey.dptr = (char *)&plk;
 		    srchkey.dsize = sizeof(plk);
 		    break;
 		case SUBSYS:
-		    bcopy((char *)&sk,srchkey.dptr,sizeof(sk));
+		    bytecopy((char *)&sk,srchkey.dptr,sizeof(sk));
 		    pnam = sk.s_plyr;
 		    srchkey.dptr = (char *)&sk;
 		    srchkey.dsize = sizeof(sk);
 		    break;
 		case UCMD:
-		    bcopy((char *)&uck,srchkey.dptr,sizeof(uck));
+		    bytecopy((char *)&uck,srchkey.dptr,sizeof(uck));
 		    pnam = uck.uc_plyr;
 		    srchkey.dptr = (char *)&uck;
 		    srchkey.dsize = sizeof(uck);

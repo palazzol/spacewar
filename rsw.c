@@ -13,7 +13,11 @@
 #include "login.h"
 #include "uio.h"
 
-main(argc,argv)
+// add missing headers
+#include <unistd.h>
+#include <stdlib.h>
+
+int main(argc,argv)
 int argc;
 char *argv[];
 {

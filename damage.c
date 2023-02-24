@@ -23,6 +23,9 @@
 #include "obj.h"
 #include "torp.h"
 
+// add missing headers
+#include <stdio.h>
+
 VOID damage(patck,ptrgt,rng,dmg,msg)
 struct universe *patck,*ptrgt;
 double rng,dmg;

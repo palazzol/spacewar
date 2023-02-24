@@ -23,7 +23,7 @@ int bitno;
 	ary[bitno/BPB] &= ~(1<<(bitno%BPB));
 }
 
-nabit(ary,bitno)
+int nabit(ary,bitno)
 char ary[];
 int bitno;
 {

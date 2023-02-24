@@ -15,7 +15,7 @@ static struct {
 	{0}
 };
 
-tgetent(p1,termname)
+int tgetent(p1,termname)
 char *p1,*termname;
 {
 	for (tptr=ttbl;tptr->tnam && strcmp(termname,tptr->tnam);++tptr) ;

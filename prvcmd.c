@@ -20,6 +20,10 @@
 #include "crft.h"
 #include "torp.h"
 
+// add missing headers
+#include <string.h>
+#include <stdio.h>
+
 static char *fmtip();
 
 VOID prvcmd(plogin)
@@ -213,7 +217,7 @@ struct login *plogin;
 	    }
 
 	} else if (!strncmp(".lock",s,5)) {
-	    static msg[80+1];
+	    static char msg[80+1];
 	    s += 5;
 	    while (*s == ' ') ++s;
 	    strcpy(msg,s);

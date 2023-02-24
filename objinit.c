@@ -10,6 +10,9 @@
 #include "universe.h"
 #include "obj.h"
 
+// add missing headers
+#include <stdlib.h>
+
 VOID objinit()
 {
 	FILE *fobj;

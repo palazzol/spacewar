@@ -20,18 +20,20 @@
 #	include <ssdef.h>
 #endif /* VMS */
 
+// add missing headers
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
 static char outbuf[80*24*2]="";
 static VOID doout(),dowrite();
 extern int errno;
 
 /*VARARGS1*/
-VOID output(plogin,mode,fld,str,val2,val3,val4)
-register struct login *plogin;
-char mode;
-int fld;
-char *str;
-int val2,val3,val4;
+VOID output(register struct login *plogin, char mode, int fld, char *str, ...)
 {
+	int val2,val3,val4;
 	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();
 	int grp;
 #ifdef VMS
@@ -63,6 +65,12 @@ int val2,val3,val4;
 		}
 		grp = (fld>>8)&0xff;
 		fld &= 0xff;
+		va_list(argp);
+		va_start(argp, str);
+		val2 = va_arg(argp, int);
+		val3 = va_arg(argp, int);
+		val4 = va_arg(argp, int);
+		va_end(argp);
 		sprintf(fmt,"%%s%%s%s",flds[fld].f_fmt); /* no overflow check */
 		sprintf(buf,fmt,
 		tgoto(plogin->ln_tcm,flds[fld].f_col,flds[fld].f_row+grp),
@@ -87,7 +95,7 @@ int val2,val3,val4;
 #else /* BSD SYSIII SYSV */
 		    dowrite(plogin->ln_tty,outbuf,strlen(outbuf));
 #endif /* VMS BSD SYSIII SYSV */
-		    outbuf[0] = NULL;
+		    outbuf[0] = 0;
 		}
 		break;
 	    default:
@@ -117,7 +125,7 @@ char *s;
 #else /* BSD SYSIII SYSV */
 	    dowrite(fd,outbuf,strlen(outbuf));
 #endif /* VMS BSD SYSIII SYSV */
-	    outbuf[0] = NULL;
+	    outbuf[0] = 0;
 	}
 	strcat(outbuf,s);
 

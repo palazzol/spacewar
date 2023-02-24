@@ -9,7 +9,10 @@
 #include "uio.h"
 #include "uio2.h"
 
-main()
+// add missing headers
+#include <stdio.h>
+
+int main()
 {
 #ifdef BSD
 	printf("only one uio, nothing to worry about\n");

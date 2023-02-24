@@ -19,6 +19,10 @@
 #include "mlbx.h"
 #include "plyr.h"
 
+// add missing headers
+#include <stdlib.h>
+#include <string.h>
+
 #define MAILPROMPT	"player/O(ld)/N(ew)/D(elete)/.(quit)>"
 
 struct mstat {
@@ -36,9 +40,8 @@ struct mlst {
 };
 
 static VOID sndmail(),dspmail();
-extern char *malloc();
 
-mail(plogin)
+VOID mail(plogin)
 register struct login *plogin;
 {
 	register struct mstat *pmstat;
@@ -66,7 +69,7 @@ register struct login *plogin;
 		    break;
 		default:
 		    perror("mail: unknown ms_stat");
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
@@ -88,7 +91,7 @@ register struct login *plogin;
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {	/* not found? */
 		    perror("mail: can't find plyr");
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 #ifdef DEBUG
@@ -96,7 +99,7 @@ register struct login *plogin;
 #endif
 		    return;
 		}
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 		sprintf(buf,
 		"\nYou have %d line(s) of old mail, %d line(s) of new mail.\n",
@@ -118,7 +121,7 @@ register struct login *plogin;
 	    dbmdata = fetch(dbmkey);
 	    if (!dbmdata.dptr) {	/* not found? */
 		perror("mail: can't find plyr");
-		plogin->ln_stat = NULL;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 #ifdef DEBUG
@@ -126,7 +129,7 @@ register struct login *plogin;
 #endif
 		return;
 	    }
-	    bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+	    bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 	    switch(c=plogin->ln_input[0]) {
 
@@ -158,7 +161,7 @@ register struct login *plogin;
 
 		    /* back to command prompt */
 		case '.':	/* quit mail */
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
 		    break;
@@ -171,7 +174,7 @@ register struct login *plogin;
 		    if (!(pmstat = (struct mstat *)
 		    malloc(sizeof(struct mstat)))) {
 			perror("mail: out of memory for mstat");
-			plogin->ln_stat = NULL;
+			plogin->ln_stat = 0;
 			output(plogin,'C',0,PROMPT);
 			output(plogin,0,0,0);
 			break;
@@ -204,12 +207,12 @@ register struct login *plogin;
 		/* allocate/initialize subtask status structure */
 		if (!(pmstat = (struct mstat *) malloc(sizeof(struct mstat)))) {
 			perror("mail: out of memory for mstat");
-			plogin->ln_stat = NULL;
+			plogin->ln_stat = 0;
 			output(plogin,'C',0,PROMPT);
 			output(plogin,0,0,0);
 		} else {
 			pmstat->ms_stat = 'S';
-			plogin->ln_input[sizeof(pmstat->ms_towho)-1] = NULL;
+			plogin->ln_input[sizeof(pmstat->ms_towho)-1] = 0;
 			strcpy(pmstat->ms_towho,plogin->ln_input);
 			pmstat->ms_frst = pmstat->ms_lst = NULL;
 			plogin->ln_substat = (char *) pmstat;
@@ -276,7 +279,7 @@ register struct mstat *pmstat;
 			if (!dbmdata.dptr)	/* not found? */
 				perror("dspmail: can't find plyr");
 			else {
-				bcopy((char *)&getpldat,dbmdata.dptr,
+				bytecopy((char *)&getpldat,dbmdata.dptr,
 				sizeof(getpldat));
 				getpldat.pl_seenml =
 				    (pmstat->ms_cur < pmstat->ms_end) ?
@@ -288,8 +291,8 @@ register struct mstat *pmstat;
 			}
 
 			free((char *)pmstat);
-			plogin->ln_iomode = NULL;
-			plogin->ln_stat = NULL;
+			plogin->ln_iomode = 0;
+			plogin->ln_stat = 0;
 			plogin->ln_substat = NULL;
 			output(plogin,'C',0,PROMPT);
 			break;
@@ -362,7 +365,7 @@ register struct mstat *pmstat;
 	    } else {	/* terminate */
 
 		/* insert mlbx lines */
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 		binit((char *)&getmbkey,sizeof(getmbkey));
 		getmbkey.mb_mlbxkey = MLBX;
 		strcpy(getmbkey.mb_plyr,pmstat->ms_towho);
@@ -405,7 +408,7 @@ register struct mstat *pmstat;
 		/* back to command prompt */
 terminate:
 		free((char *)pmstat);
-		plogin->ln_stat = NULL;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);

@@ -24,7 +24,7 @@
 #include "flds.h"
 #include "aln.h"
 
-VOID remove(prmv)
+VOID removeu(prmv)
 idxptr prmv;
 {
 	struct universe *puniv=univlst+MAXUNIVERSE;
@@ -34,7 +34,7 @@ idxptr prmv;
 	struct torp *ptorp;
 
 #ifdef DEBUG
-	DBG("remove(#%d/'%c/%c')\n",prmv.ip_ptr-univlst,prmv.ip_ptr->uv_type,
+	DBG("removeu(#%d/'%c/%c')\n",prmv.ip_ptr-univlst,prmv.ip_ptr->uv_type,
 	prmv.ip_ptr->uv_pctr);
 #endif
 
@@ -83,7 +83,7 @@ idxptr prmv;
 			/**** don't remove (hee hee hee)****/
 			/****idxptr xrmv;		****/
 			/****xrmv.ip_ptr = puniv;	****/
-			/****remove(xrmv);		****/
+			/****removeu(xrmv);		****/
 			/****continue;			****/
 			ptorp->tp_fby.ip_ptr = NULL;
 		    }
@@ -96,7 +96,7 @@ idxptr prmv;
 			    rpt(pcrft,"Torpedo missed - target went away");
 			    fnshrpt(pcrft,1);
 			}
-			remove(ptorp->tp_univ);
+			removeu(ptorp->tp_univ);
 			continue;
 		    }
 		    break;

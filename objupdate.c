@@ -10,6 +10,10 @@
 #include "universe.h"
 #include "obj.h"
 
+// add missing headers
+#include <string.h>
+#include <unistd.h>
+
 VOID objupdate()
 {
 	char buf[128];

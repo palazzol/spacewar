@@ -18,6 +18,9 @@
 #include "sys.h"
 #include "crft.h"
 
+// add missing headers
+#include <string.h>
+
 VOID crftupdate(plogin)
 register struct login *plogin;
 {

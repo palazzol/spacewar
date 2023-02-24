@@ -8,6 +8,15 @@
 #include <signal.h>
 #include "spacewar.h"
 
+// add missing headers
+#include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <dbm.h>
+#include <stdarg.h>
+
 int numpling;
 
 #ifdef BSD
@@ -26,10 +35,10 @@ int numpling;
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 extern int doproctrap,doupdate;
-static int dbglvl;
+static int dbglvl = 0;
 static VOID catchtrp(),catchalrm();
 
-main(argc,argv)
+int main(argc,argv)
 int argc;
 char *argv[];
 {
@@ -70,7 +79,7 @@ char *argv[];
 	ioctl(0,TIOCNOTTY,0);
 	close(open("/dev/console",1));
 #endif
-	setpgrp(getpid(),getpid());
+	setpgid(getpid(),getpid());
 #endif
 	close(0);
 	close(1);
@@ -166,7 +175,7 @@ char *argv[];
 
 }
 
-firstplyr()
+VOID firstplyr()
 {catchalrm();}
 
 static VOID catchalrm()
@@ -251,14 +260,26 @@ va_dcl
 }
 #else
 /*VARARGS1*/
-VOID DBG(fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-char *fmt;
-{if (dbglvl > 0) fprintf(stderr,fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);}
+VOID DBG(char *fmt, ...)
+{
+	if (dbglvl > 0) {
+		va_list argp;
+		va_start(argp, fmt);
+		vfprintf(stderr,fmt,argp);
+		va_end(argp);
+	}
+}
 
 /*VARARGS1*/
-VOID VDBG(fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-char *fmt;
-{if (dbglvl > 1) fprintf(stderr,fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);}
+VOID VDBG(char *fmt, ...)
+{
+	if (dbglvl > 1) {
+		va_list argp;
+		va_start(argp, fmt);
+		vfprintf(stderr,fmt,argp);
+		va_end(argp);
+	}
+}
 #endif
 
 #endif

@@ -22,5 +22,5 @@ struct plyr {
 	short	pl_slst;	/* player number of ships lost */
 	short	pl_klst;	/* player number of kills lost */
 	long 	pl_plst;	/* player number of points lost */
-	time_t	pl_tlst;	/* player playing time lost */
+	long	pl_tlst;	/* player playing time lost */
 };

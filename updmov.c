@@ -184,7 +184,7 @@ VOID updmov()
 			} else {
 			    idxptr prmv;
 			    prmv.ip_ptr = puniv;
-			    remove(prmv);
+			    removeu(prmv);
 			}
 			goto nxtuobj;
 		    }

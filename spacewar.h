@@ -11,13 +11,13 @@
 #endif /* VMS */
 
 #ifdef BSD
-#	define SWPIDFILE	"/usr/dir/sw/swpid"
-#	define SWLGNFILE	"/usr/dir/sw/swlgn"
+#	define SWPIDFILE	"/home/palazzol/sw/swpid"
+#	define SWLGNFILE	"/home/palazzol/sw/swlgn"
 #else /* VMS SYSIII SYSV */
 #ifdef VMS
 #	define SWCOMFILE	"swmlbx"
 #else /* SYSIII SYSV */
-#	define SWCOMFILE	"/usr/dir/sw/swcomm"
+#	define SWCOMFILE	"/home/palazzol/sw/swcomm"
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
@@ -29,12 +29,12 @@
 #	define SWERR		"$DISK2:[TSDIR.SW]swerr"
 #	define SWOBJ		"$DISK2:[TSDIR.SW]swobj"
 #else /* BSD SYSIII SYSV */
-#	define SWDATABASE	"/usr/dir/sw/swdb"
-#	define SWGAME		"/usr/dir/sw/sw"
-#	define SWREAD		"/usr/dir/sw/rsw"
-#	define SWNEWS		"/usr/dir/sw/swnews"
-#	define SWERR		"/usr/dir/sw/swerr"
-#	define SWOBJ		"/usr/dir/sw/swobj" /* see objupdate.c */
+#	define SWDATABASE	"/home/palazzol/sw/swdb"
+#	define SWGAME		"/home/palazzol/sw/sw"
+#	define SWREAD		"/home/palazzol/sw/rsw"
+#	define SWNEWS		"/home/palazzol/sw/swnews"
+#	define SWERR		"/home/palazzol/sw/swerr"
+#	define SWOBJ		"/home/palazzol/sw/swobj" /* see objupdate.c */
 #endif /* VMS BSD SYSIII SYSV */
 
 #define SWMASTER	"Dan R"
@@ -80,9 +80,8 @@ extern double fmod();
 #define MAX(x,y)	(((x) > (y)) ? (x) : (y))
 #define MIN(x,y)	(((x) < (y)) ? (x) : (y))
 
-#ifdef DEBUG
-extern VOID DBG(),VDBG();
-#endif
+VOID DBG(char *fmt, ...);
+VOID VDBG(char *fmt, ...);
 
 typedef struct {
 	double vec[3];
@@ -93,3 +92,92 @@ typedef struct {
 #define DSTVALID 2
 
 dsplcmnt vdisp();
+
+// Added declarations
+VOID objinit();
+VOID alninit();
+VOID update();
+VOID firstplyr();
+
+struct login;
+VOID output(register struct login *plogin, 
+			char mode, 
+			int fld, 
+			char *str, 
+			...);
+
+VOID objupdate();
+VOID crftupdate(register struct login *plogin);
+VOID logoff(register struct login *plogin);
+VOID vinit(register double *dst);
+VOID updobjs();
+VOID unity(double mtrx[3][3]);
+VOID xrot(double rotmtrx[3][3], double rotangl);
+VOID yrot(double rotmtrx[3][3], double rotangl);
+VOID zrot(double rotmtrx[3][3], double rotangl);
+VOID binit(register char *dst, register int len);
+VOID unplay(register struct login *plogin);
+VOID play(register struct login *plogin);
+VOID mail(register struct login *plogin);
+VOID build(struct login *plogin);
+VOID see(register struct login *plogin);
+VOID usrcmd(register struct login *plogin);
+VOID who(register struct login *plogin);
+
+#include "uio.h"
+#include "uio2.h"
+
+#ifdef BSD
+//VOID proctrap(int trapmsgfd,int *ntrapmsg);
+#else
+#ifdef VMS
+//VOID proctrap(struct uio uio);
+#else /* SYSIII SYSV */
+VOID proctrap(struct uio2 uio);
+#endif /* VMS SYSIII SYSV */
+#endif
+
+VOID shutdown(int e);
+VOID prvlck(char *s);
+
+#include "universe.h"
+VOID removeu(idxptr prmv);
+
+int plinit(register struct login *plogin);
+VOID background(struct crft *pcrft);
+VOID biton(char ary[],int bitno);
+VOID rttosp(double rtvec[3],double spvec[3]);
+VOID vecmul(double avec[3],double bmtrx[3][3],double cvec[3]);
+VOID sptort(double spvec[3],double rtvec[3]);
+VOID vchngd(struct universe *puniv);
+VOID vcopy(register double *dst,register double *src);
+VOID rpt(struct crft *pcrft,char *msg);
+VOID setrpt(struct crft *pcrft);
+VOID fnshrpt(register struct crft *pcrft,int flsh);
+VOID damage(struct universe *patck,
+			struct universe *ptrgt,
+			double rng,
+			double dmg,
+			char *msg);
+VOID vdiff(register double *avec,register double *bvec,register double *cvec);
+VOID nums(register struct crft *pcrft);
+VOID view(register struct crft *pcrft);
+int tgetent(char *p1,char *termname);
+VOID fixdir(register struct crft *pcrft);
+VOID updmov();
+VOID updtorp();
+VOID updaln();
+VOID upddmg();
+VOID updsys();
+VOID upddsh();
+VOID bytecopy(register char *dst,
+		   register char *src,
+		   register int len);
+int nabit(char ary[],int bitno);
+VOID minit(register double dst[3][3]);
+VOID mcopy(register double dst[3][3],
+		   register double src[3][3]);
+VOID vrmv(struct universe *puniv);
+
+
+VOID bitoff(char ary[],int bitno);

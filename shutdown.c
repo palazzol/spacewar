@@ -14,6 +14,11 @@
 	extern short inmlbx;
 #endif /* VMS */
 
+// add missing headers
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 VOID shutdown(e)
 int e;
 {

@@ -25,14 +25,18 @@
 #include "torp.h"
 #include "build.h"
 
-extern char *malloc(),*tgetstr(),*lckmsg();
+// add missing headers
+#include <stdlib.h>
+#include <string.h>
+
+extern char *tgetstr(),*lckmsg();
 extern int numpling;
 
 int plinit(plogin)
 register struct login *plogin;
 {
 	char trmbuf[2048],trmcap[128],*ptrmcap,*pcm,*pcl,*pce,*pso,*pse;
-	char buf[80+1],*s,*so,*se;
+	char buf[80+1+18],*s,*so,*se;
 	register struct universe *puniv;
 	register struct crft *pcrft;
 	struct crftkey getcrkey;
@@ -112,7 +116,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 		goto noplay;
 	    }
 	    strcpy(plogin->ln_term,plogin->ln_input);
-	    plogin->ln_input[0] = NULL;
+	    plogin->ln_input[0] = 0;
 	    strcpy(plogin->ln_tcm,pcm);
 	    strcpy(plogin->ln_tcl,pcl);
 	    strcpy(plogin->ln_tce,pce);
@@ -135,7 +139,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	}
 
 	/* get craft */
-	plogin->ln_input[sizeof(plogin->ln_crft)-1] = NULL;
+	plogin->ln_input[sizeof(plogin->ln_crft)-1] = 0;
 	binit((char *)&getcrkey,sizeof(getcrkey));
 	getcrkey.cr_crftkey = CRAFT;
 	strcpy(getcrkey.cr_plyr,plogin->ln_name);
@@ -149,7 +153,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	    goto noplay;
 	}
 	binit((char *)&getcrdat,sizeof(getcrdat));
-	bcopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
+	bytecopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
 
 	/* must have a hull */
 	if (!getcrdat.cr_htyp) {
@@ -238,7 +242,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	    getskey.s_type = i;
 	    dbmdata = fetch(dbmkey);
 	    if (dbmdata.dptr)
-		bcopy((char *)(pcrft->cr_sys+i),dbmdata.dptr,dbmdata.dsize);
+		bytecopy((char *)(pcrft->cr_sys+i),dbmdata.dptr,dbmdata.dsize);
 	}
 
 	/* et al */
@@ -263,7 +267,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 #endif
 	return(1);
 
-noplay: plogin->ln_stat = NULL;
+noplay: plogin->ln_stat = 0;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
 #ifdef DEBUG

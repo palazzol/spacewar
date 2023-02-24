@@ -20,6 +20,9 @@
 #include "obj.h"
 #include "torp.h"
 
+// add missing headers
+#include <stdlib.h>
+#include <stdio.h>
 
 dsplcmnt vdisp(p1,p2,which)
 register struct universe *p1,*p2;
@@ -30,7 +33,6 @@ char which;
 	double vlen();
 	int i,p1off;
 	int negate=0;
-	char *malloc();
 
 
 	/* use higher of two pointers to cut storage in half ==> negate xyz */

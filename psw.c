@@ -20,12 +20,18 @@
 #include "spacewar.h"
 #include "uio2.h"
 
+// add missing headers
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 struct uio2 uio;
 int swpid,swlgnfd;
 char *thistty;
 static VOID fixttyexit(),catchsig();
 
-main()
+int main()
 {
 	int i;
 	char *ttyname();

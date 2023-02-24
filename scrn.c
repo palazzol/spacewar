@@ -115,17 +115,16 @@ register struct crft *pcrft;
 	}
 
 	/* time */
-	output(pcrft->cr_lgn,'H',FLD_TIME,gametime);
+	output(pcrft->cr_lgn,'H',FLD_TIME,(char *)gametime);
 }
 
 /*VARARGS4*/
 static VOID dofld(pcrft,fld,grp,bit,val1,val2,val3,val4)
 struct crft *pcrft;
 int fld,grp,bit;
-int val1,val2,val3,val4;
+char *val1;
+int val2,val3,val4;
 {
-	extern int nabit();
-
 	bit += grp * flds[fld].f_grpw;
 	if (nabit(pcrft->cr_chng,bit)) {
 		output(pcrft->cr_lgn,'H',(grp<<8)|fld,val1,val2,val3,val4);
@@ -161,7 +160,7 @@ register struct crft *pcrft;
 ";
 
 	/* init to 'nothing there' */
-	bcopy((char *)vnew,vinit,sizeof(vnew));
+	bytecopy((char *)vnew,vinit,sizeof(vnew));
 	binit((char *)vdst,sizeof(vdst));
 	savrow = flds[FLD_VIEWSCREEN].f_row;
 	savcol = flds[FLD_VIEWSCREEN].f_col;
@@ -169,9 +168,9 @@ register struct crft *pcrft;
 	/* special case: draw entire viewscreen */
 	if (pcrft->cr_scrn[0][0] == NULL) {
 	    buf[31] = NULL;
-	    bcopy((char *)pcrft->cr_scrn,vinit,sizeof(pcrft->cr_scrn));
+	    bytecopy((char *)pcrft->cr_scrn,vinit,sizeof(pcrft->cr_scrn));
 	    for (row=0;row < 15;++row) {
-		bcopy(buf,pcrft->cr_scrn[row],31);
+		bytecopy(buf,pcrft->cr_scrn[row],31);
 		flds[FLD_VIEWSCREEN].f_row = savrow + row;
 		output(pcrft->cr_lgn,'L',FLD_VIEWSCREEN,buf);
 	    }

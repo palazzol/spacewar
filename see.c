@@ -21,6 +21,10 @@
 #include "crft.h"
 #include "plyr.h"
 
+// add missing headers
+#include <stdlib.h>
+#include <string.h>
+
 struct sstat {
 	char	ss_stat;		/* C(raft) or P(layer) */
 	char	ss_savkey[32];		/* for nextkey(dbm); kludge */
@@ -31,14 +35,12 @@ struct pst {
 	struct pst *ps_nxt;		/* next player */
 	char	ps_name[8+1];		/* player's name */
 	long	ps_tpnts,ps_mpnts;	/* total,max points */
-	time_t	ps_ttm,ps_mtm;		/* total,max time */
+	long	ps_ttm,ps_mtm;		/* total,max time */
 	short	ps_tkls,ps_mkls;	/* total,max kills */
 	short	ps_opnts,ps_otm,ps_okls;/* ordering for points, time, kills */
 	short	ps_ncrfts;		/* number of crafts (for avg) */
 };
 static struct pst zpst;
-
-char *malloc();
 
 
 VOID see(plogin)
@@ -103,13 +105,13 @@ register struct login *plogin;
 again:	while (dbmkey.dptr) {
 	    if (dbmkey.dptr[0] == CRAFT && psstat->ss_stat == CRAFT) {
 
-		bcopy((char *)&getcrkey,dbmkey.dptr,sizeof(getcrkey));
+		bytecopy((char *)&getcrkey,dbmkey.dptr,sizeof(getcrkey));
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {
 		    perror("see: can't fetch craft");
 		    goto done;
 		}
-		bcopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
+		bytecopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
 
 		/* find/create player statistics structure */
 		for (ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt)
@@ -147,13 +149,13 @@ again:	while (dbmkey.dptr) {
 
 	    } else if (dbmkey.dptr[0] == PLYR && psstat->ss_stat == PLYR) {
 
-		bcopy((char *)&getplkey,dbmkey.dptr,sizeof(getplkey));
+		bytecopy((char *)&getplkey,dbmkey.dptr,sizeof(getplkey));
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {
 		    perror("see: can't fetch plyr");
 		    goto done;
 		}
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 		/* find player statistics structure */
 		for (ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt)
@@ -183,7 +185,7 @@ again:	while (dbmkey.dptr) {
 	    if (nlines <= 0) {
 		output(plogin,0,0,0);
 		psstat->ss_savsiz = (dbmkey.dptr) ? dbmkey.dsize : 0;
-		bcopy(psstat->ss_savkey,dbmkey.dptr,psstat->ss_savsiz);
+		bytecopy(psstat->ss_savkey,dbmkey.dptr,psstat->ss_savsiz);
 #ifdef DEBUG
 		VDBG("see return\n");
 #endif
@@ -245,8 +247,8 @@ done:	for (nxtpst=ppst=psstat->ss_lst;ppst;ppst=nxtpst) {
 	    free((char *)ppst);
 	}
 	free((char *)psstat);
-	plogin->ln_iomode = NULL;
-	plogin->ln_stat = NULL;
+	plogin->ln_iomode = 0;
+	plogin->ln_stat = 0;
 	plogin->ln_substat = NULL;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);

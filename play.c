@@ -24,6 +24,9 @@
 #include "torp.h"
 #include "ucmd.h"
 
+// add missing headers
+#include <string.h>
+
 extern VOID fixdir();
 extern double vdist(),vlen();
 static int okdir();
@@ -109,7 +112,7 @@ redraw:		background(pcrft);
 		/* indicate all fields changed so they get re-displayed */
 		for (j=0;j < sizeof(pcrft->cr_chng);++j)
 		    pcrft->cr_chng[j] = ~0;
-		pcrft->cr_scrn[0][0] = NULL;
+		pcrft->cr_scrn[0][0] = 0;
 
 		if (i == 0) { /* redraw instead of erase */
 
@@ -242,7 +245,7 @@ redraw:		background(pcrft);
 		}
 
 		pcrft->cr_hom[i].ip_ptr = NULL;
-		pcrft->cr_hdst[i] = NULL;
+		pcrft->cr_hdst[i] = 0;
 		biton(pcrft->cr_chng,BIT_HOMCHAN+i);
 		break;
 
@@ -267,7 +270,8 @@ redraw:		background(pcrft);
 	    /* autopilot */
 	    /*************/
 	    case 10:
-		if (sscanf(plogin->ln_input,"%*s%c",&i) != 1) /* null */
+		char c;
+		if (sscanf(plogin->ln_input,"%*s%c",&c) != 1) /* null */
 		    i = 0;
 		else if (sscanf(plogin->ln_input,"%*s %d",&i) != 1)
 		    goto badinp;
@@ -337,7 +341,7 @@ doauto:		    /* use viewing distance and smaller of */
 		    sprintf(buf,"%.24s - nothing there",plogin->ln_input);
 		    goto badinp2;
 		} else {
-		    pcrft->cr_ffwd = NULL;
+		    pcrft->cr_ffwd = 0;
 		    /*vdiff(pcrft->cr_auto.ip_ptr->uv_pstn,pcrft->cr_pstn,
 		    pcrft->cr_dir);*/
 		    tmpdspl = vdisp(pcrft->cr_auto.ip_ptr,pcrft->cr_univ.ip_ptr,'v');
@@ -395,9 +399,13 @@ doauto:		    /* use viewing distance and smaller of */
 		    goto badinp2;
 		}
 		vinit(tmpvec);
+		char tempc;
 		if ((i=sscanf(plogin->ln_input,"%*s %lf %lf %lf %lf%c",&ftmp,
-		tmpvec+0,tmpvec+1,tmpvec+2,&j)) < 1 || i > 4)
+		tmpvec+0,tmpvec+1,tmpvec+2,&tempc)) < 1 || i > 4)
+		{
+			j = (int)tempc;
 		    goto badinp;
+		}
 
 		/* first number is thrust in direction pointed	*/
 		/* others are cartesian components		*/
@@ -648,7 +656,7 @@ doauto:		    /* use viewing distance and smaller of */
 				setrpt(pcrft2);
 				rpt(pcrft2,"Torpedo missed - target docked");
 				fnshrpt(pcrft2,1);
-				remove(ptorp->tp_univ);
+				removeu(ptorp->tp_univ);
 			    }
 			    break;
 			case 'A':
@@ -705,21 +713,21 @@ doauto:		    /* use viewing distance and smaller of */
 	    /* who */
 	    /*******/
 	    case 19:
-		if (sscanf(plogin->ln_input,"%*s%c",&i) != 1) /* null */
+		if (sscanf(plogin->ln_input,"%*s%c",&tempc) != 1) /* null */
 		    i = 0;
 		else if (sscanf(plogin->ln_input,"%*s %d",&i) != 1 || i < 0)
 		    goto badinp;
 		i *= flds[FLD_REPORT].f_maxg; /* skip display group count */
 
 		setrpt(pcrft);
-		*buf = NULL;
+		*buf = 0;
 		for (plgn=loginlst+MAXLOGIN;plgn-- > loginlst;) {
 		    if (!plgn->ln_play.ip_ptr) continue;
 		    if (i-- > 0) continue;
 		    if (strlen(buf) + strlen(plgn->ln_name) +
 		    strlen(plgn->ln_crft) + 5 > flds[FLD_REPORT].f_len) {
 			rpt(pcrft,buf);
-			*buf = NULL;
+			*buf = 0;
 		    }
 		    sprintf(buf+strlen(buf),"%s/%s(%c) ",plgn->ln_name,
 		    plgn->ln_crft,plgn->ln_play.ip_ptr->uv_pctr);
@@ -732,7 +740,8 @@ doauto:		    /* use viewing distance and smaller of */
 	    /* report */
 	    /**********/
 	    case 20:
-		if (sscanf(plogin->ln_input,"%*s%c",&i) != 1) /* null */
+		char cbuf;
+		if (sscanf(plogin->ln_input,"%*s%c",&cbuf) != 1) /* null */
 		    i = 0;
 		else if (sscanf(plogin->ln_input,"%*s %d",&i) != 1 || i < 0)
 		    goto badinp;
@@ -954,7 +963,7 @@ doauto:		    /* use viewing distance and smaller of */
 		    sprintf(buf,"%.20s - no damage control",plogin->ln_input);
 		    goto badinp2;
 		}
-		if (sscanf(plogin->ln_input,"%*s%c",&i) != 1) /* null */
+		if (sscanf(plogin->ln_input,"%*s%c",&cbuf) != 1) /* null */
 		    i = 0;
 		else if (sscanf(plogin->ln_input,"%*s %d",&i) != 1)
 		    goto badinp;
@@ -981,13 +990,16 @@ doauto:		    /* use viewing distance and smaller of */
 		    sprintf(buf,"%.24s - nested '-cmd'",plogin->ln_input);
 		    goto badinp2;
 		}
-		for (i=0;i<9;ucargs[i++][0] = NULL) ;
+		for (i=0;i<9;ucargs[i++][0] = 0) ;
 		if ((i=sscanf(plogin->ln_input,
 		"-%s %20s %20s %20s %20s %20s %20s %20s %20s %20s%c",
 		buf,ucargs[0],ucargs[1],ucargs[2],ucargs[3],ucargs[4],
-		ucargs[5],ucargs[6],ucargs[7],ucargs[8],&j)) < 1 || i > 10)
+		ucargs[5],ucargs[6],ucargs[7],ucargs[8],&tempc)) < 1 || i > 10)
+		{
+			j = (int)tempc;
 		    goto badinp;
-		buf[sizeof(getuckey.uc_name)-1] = NULL;
+		}
+		buf[sizeof(getuckey.uc_name)-1] = 0;
 
 		/* set up data structure to get first line of ucmd */
 		binit((char *)&getuckey,sizeof(getuckey));
@@ -1011,7 +1023,7 @@ doauto:		    /* use viewing distance and smaller of */
 	    /* sensors */
 	    /***********/
 	    case 25:
-		if (sscanf(plogin->ln_input,"%*s%c",&i) != 1) /* null */
+		if (sscanf(plogin->ln_input,"%*s%c",&cbuf) != 1) /* null */
 		    i = 0;
 		else if (sscanf(plogin->ln_input,"%*s %d",&i) != 1 || i < 0)
 		    goto badinp;
@@ -1036,7 +1048,7 @@ doauto:		    /* use viewing distance and smaller of */
 			vecmul(tmpvec2,pcrft->cr_rmat,tmpvec2);
 			rttosp(tmpvec2,tmpvec2);
 			ftmp = DIV(pcrft->cr_vang,2.);
-			*buf = NULL;
+			*buf = 0;
 			if (SUB(ftmp,tmpvec2[2]) >= 0.) {
 			    tmpvec2[0] = DIV(tmpvec2[2],ftmp);
 			    tmpvec2[2] = DIV(PI,2.);
@@ -1132,7 +1144,7 @@ done:	if (inuc) {
 		} else
 		    *op++ = *ip++;
 	    }
-	    *op = NULL;
+	    *op = 0;
 
 	    goto douc;
 	}
@@ -1142,7 +1154,7 @@ done2:	nums(pcrft);
 	view(pcrft);
 	if (plogin->ln_input[0]) {
 	    output(plogin,'D',0,0);
-	    plogin->ln_input[0] = NULL;
+	    plogin->ln_input[0] = 0;
 	}
 	output(plogin,0,0,0);
 
@@ -1178,7 +1190,7 @@ static VOID fixaf(pcrft)
 register struct crft *pcrft;
 {
 	if (pcrft->cr_ffwd) {
-	    pcrft->cr_ffwd = NULL;
+	    pcrft->cr_ffwd = 0;
 	    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 	} else if (pcrft->cr_auto.ip_ptr) {
 	    pcrft->cr_auto.ip_ptr = NULL;

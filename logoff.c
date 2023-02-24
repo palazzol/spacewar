@@ -26,6 +26,11 @@
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
+// add missing headers
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/wait.h>
+
 VOID logoff(plogin)
 register struct login *plogin;
 {
@@ -77,7 +82,7 @@ register struct login *plogin;
 	/* (too bad the previous states weren't saved)  */
 	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
 	tmode.c_cc[VEOF] = CEOF;
-	tmode.c_cc[VEOL] = CNUL;
+	//tmode.c_cc[VEOL] = CNUL; // CNUL seems to be gone?
 
 	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
 		perror("ioctl TCSETA");
