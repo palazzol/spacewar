@@ -35,38 +35,28 @@ struct login *plogin;
 {
 	char buf[80+1];
 
-#ifdef DEBUG
 	DBG("build(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/****************/
 	/* no craft yet */
 	/****************/
-#ifdef DEBUG
 	VDBG("build: #%d/%s doing %s/%d\n",plogin-loginlst,plogin->ln_name,
 	plogin->ln_crft,(int)plogin->ln_substat);
-#endif
 	if (!plogin->ln_crft[0]) {
 
 	    /* nothing - prompt for craft name */
 	    if (!plogin->ln_input[0]) {
-#ifdef DEBUG
 		VDBG("build: prompt for craft name\n");
-#endif
 		output(plogin,'C',0,
 		"A single dot (.) on a line by itself terminates Build.\n\n");
 		output(plogin,'C',0,"What is the name of your ship?");
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("build return\n");
-#endif
 		return;
 
 	    /* craft name - store and get or create craft */
 	    } else {
-#ifdef DEBUG
 		VDBG("build: get/create craft '%s'\n",plogin->ln_input);
-#endif
 		plogin->ln_input[sizeof(plogin->ln_crft)-1] = 0;
 		strcpy(plogin->ln_crft,plogin->ln_input);
 		if (!strcmp(plogin->ln_input,".")) {
@@ -75,49 +65,37 @@ struct login *plogin;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
-#ifdef DEBUG
 		    VDBG("build return\n");
-#endif
 		    return;
 		}
 
 		/* exists */
 		if (getcrft(plogin)) {
-#ifdef DEBUG
 		    VDBG("build: craft exists\n");
-#endif
 
 		    /* has a valid hull type */
 		    if (getcrdat.cr_htyp) {
-#ifdef DEBUG
 			VDBG("build: has valid hull %d\n",getcrdat.cr_htyp);
-#endif
 
 			/* must be docked or priviledged */
 			if ((!getcrdat.cr_dock.ip_ofst ||
 			getcrdat.cr_dock.ip_ofst >= MAXOBJ) &&
 			!getcrdat.cr_plvl) {
-#ifdef DEBUG
 			    VDBG("build: docked=%d plvl=%d\n",
 			    getcrdat.cr_dock.ip_ofst,getcrdat.cr_plvl);
-#endif
 			    plogin->ln_crft[0] = 0;
 			    plogin->ln_stat = 0;
 			    plogin->ln_substat = NULL;
 			    output(plogin,'C',0,"Must be docked to rebuild.");
 			    output(plogin,'C',0,PROMPT);
 			    output(plogin,0,0,0);
-#ifdef DEBUG
 			    VDBG("build return\n");
-#endif
 			    return;
 
 			/* docked - fix hull damage; set next subsys prompt */
 			} else {
-#ifdef DEBUG
 			    VDBG("build: docked=%d plvl=%d\n",
 			    getcrdat.cr_dock.ip_ofst,getcrdat.cr_plvl);
-#endif
 			    if (!getsys(plogin,HULL)) {
 				perror("build: docked and can't find HULL");
 				plogin->ln_crft[0] = 0;
@@ -125,9 +103,7 @@ struct login *plogin;
 				plogin->ln_substat = NULL;
 				output(plogin,'C',0,PROMPT);
 				output(plogin,0,0,0);
-#ifdef DEBUG
 				VDBG("build return\n");
-#endif
 				return;
 			    }
 			    fixdmg();
@@ -137,18 +113,14 @@ struct login *plogin;
 
 		    /* invalid hull - set up prompting for hull type */
 		    } else {
-#ifdef DEBUG
 			VDBG("build: has invalid hull %d\n",getcrdat.cr_htyp);
-#endif
 			plogin->ln_substat = (char *)(HULL);
 		    }
 
 		/* craft doesn't exist - create it, */
 		/* set up prompting for hull type */
 		} else {
-#ifdef DEBUG
 		    VDBG("build: creating craft\n");
-#endif
 		    binit((char *)&getcrdat,sizeof(getcrdat));
 		    getcrdat.cr_dock.ip_ofst = -1;
 		    dbmdata.dptr = (char *)&getcrdat;
@@ -159,9 +131,7 @@ struct login *plogin;
 What is the name of your ship?");
 			output(plogin,0,0,0);
 			plogin->ln_crft[0] = 0;
-#ifdef DEBUG
 			VDBG("build return\n");
-#endif
 			return;
 		    }
 		    plogin->ln_substat = (char *)(HULL);
@@ -178,18 +148,14 @@ What is the name of your ship?");
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("build return\n");
-#endif
 		return;
 
 	/*************************************/
 	/* no hull type - input is hull type */
 	/*************************************/
 	} else if (!getcrdat.cr_htyp) {
-#ifdef DEBUG
 		VDBG("build: craft given hull '%s'\n",plogin->ln_input);
-#endif
 
 		if (!strcmp(plogin->ln_input,".")) {
 		    plogin->ln_crft[0] = 0;
@@ -197,9 +163,7 @@ What is the name of your ship?");
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
-#ifdef DEBUG
 		    VDBG("build return\n");
-#endif
 		    return;
 		}
 
@@ -234,10 +198,8 @@ What is the name of your ship?");
 	/* null response - fix damage and leave as is */
 	/**********************************************/
 	} else if (!plogin->ln_input[0]) {
-#ifdef DEBUG
 		VDBG("build: null response for subsys %d\n",
 		(int)plogin->ln_substat);
-#endif
 
 		/* only if system exists */
 		if (getsys(plogin,(int)plogin->ln_substat)) {
@@ -251,15 +213,11 @@ What is the name of your ship?");
 	/* zero - delete subsystem if at starbase, zero it out otherwise */
 	/*****************************************************************/
 	} else if (!strcmp("0",plogin->ln_input)) {
-#ifdef DEBUG
 	    VDBG("build: zero percent for subsys %d\n",(int)plogin->ln_substat);
-#endif
 
 	    /* only if system exists */
 	    if (getsys(plogin,(int)plogin->ln_substat)) {
-#ifdef DEBUG
 		VDBG("build: subsys exists\n");
-#endif
 		fixdmg();
 
 		/* delete if priviledged or brand new or */
@@ -268,9 +226,7 @@ What is the name of your ship?");
 		if (getcrdat.cr_plvl || getcrdat.cr_dock.ip_ofst < 0 ||
 		(getcrdat.cr_dock.ip_ofst > 0 &&
 		univlst[getcrdat.cr_dock.ip_ofst].uv_pctr == '#')) {
-#ifdef DEBUG
 		    VDBG("build: deleting subsys\n");
-#endif
 		    getcrdat.cr_flsp += getsc->sc_bsp +
 		    (getsc->sc_fsp * getsdat.s_pct) / 100L;
 		    getcrdat.cr_crew += getsc->sc_bcr +
@@ -280,9 +236,7 @@ What is the name of your ship?");
 		/* otherwise set to 0 keeping base space and */
 		/* crew freeing incremental space and crew */
 		} else {
-#ifdef DEBUG
 		    VDBG("build: zero out subsys\n");
-#endif
 		    getcrdat.cr_flsp += (getsc->sc_fsp * getsdat.s_pct) / 100L;
 		    getcrdat.cr_crew += (getsc->sc_fcr * getsdat.s_pct) / 100L;
 		    getsdat.s_pct = 0;
@@ -302,19 +256,15 @@ What is the name of your ship?");
 	    long fspc = getcrdat.cr_flsp;	/* current free space */
 	    long fcrw = getcrdat.cr_crew;	/* current free crew */
 
-#ifdef DEBUG
 	    VDBG("build: %s%% for subsys %d\n",plogin->ln_input,
 	    (int)plogin->ln_substat);
-#endif
 	    if (!strcmp(plogin->ln_input,".")) {
 		plogin->ln_crft[0] = 0;
 		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("build return\n");
-#endif
 		return;
 	    }
 
@@ -322,16 +272,12 @@ What is the name of your ship?");
 	    /* compute maximum percentage possible */
 	    /***************************************/
 	    if (getsys(plogin,(int)plogin->ln_substat)) {
-#ifdef DEBUG
 		VDBG("build: subsys exists with %d%%\n",getsdat.s_pct);
-#endif
 		getsc = &config[getskey.s_type][getcrdat.cr_htyp];
 		fspc += getsc->sc_bsp + (getsc->sc_fsp * getsdat.s_pct) / 100L;
 		fcrw += getsc->sc_bcr + (getsc->sc_fcr * getsdat.s_pct) / 100L;
 	    } else {
-#ifdef DEBUG
 		VDBG("build: subsys doesn't exist\n");
-#endif
 		binit((char *)&getsdat,sizeof(getsdat));
 	    }
 	    maxspcpct = ((fspc - getsc->sc_bsp) * 100L) / getsc->sc_fsp;
@@ -344,24 +290,18 @@ What is the name of your ship?");
 	    
 	    /* check request against limits */
 	    if (pct < 0L || pct > maxpct) {
-#ifdef DEBUG
 		VDBG("build: %ld%% not between %ld and %ld\n",pct,0,maxpct);
-#endif
 		sprintf(buf,
 		"\nPercent of subsystem '%s' must be between 0 and %ld?",
 		subsysnam[(int)plogin->ln_substat],maxpct);
 		output(plogin,'C',0,buf);
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("build return\n");
-#endif
 		return;
 
 	    /* create/update subsystem; update craft free space and crew */
 	    } else {
-#ifdef DEBUG
 		VDBG("build: subsys from %d%% to %ld%%\n",getsdat.s_pct,pct);
-#endif
 		getsdat.s_pct = pct;
 		fixdmg();
 		putsys(plogin);
@@ -415,9 +355,7 @@ What is the name of your ship?");
 	    output(plogin,'C',0,PROMPT);
 	    output(plogin,0,0,0);
 	}
-#ifdef DEBUG
 	VDBG("build return\n");
-#endif
 }
 
 static int getcrft(plogin)
@@ -430,10 +368,8 @@ struct login *plogin;
 	dbmkey.dptr = (char *)&getcrkey;
 	dbmkey.dsize = sizeof(getcrkey);
 	dbmdata = fetch(dbmkey);
-#ifdef DEBUG
 	VDBG("getcrft - %s %s\n",(dbmdata.dptr) ? "found" : "couldn't find",
 	getcrkey.cr_name);
-#endif
 	if (!dbmdata.dptr)
 		return(0);
 	bytecopy((char *)&getcrdat,dbmdata.dptr,CRDATSIZ);
@@ -444,9 +380,7 @@ struct login *plogin;
 static void putcrft(plogin)
 struct login *plogin;
 {
-#ifdef DEBUG
 	VDBG("putcrft - %s\n",getcrkey.cr_name);
-#endif
 	dbmkey.dptr = (char *)&getcrkey;
 	dbmkey.dsize = sizeof(getcrkey);
 	dbmdata.dptr = (char *)&getcrdat;
@@ -473,9 +407,7 @@ int styp;
 	dbmkey.dptr = (char *)&getskey;
 	dbmkey.dsize = sizeof(getskey);
 	dbmdata = fetch(dbmkey);
-#ifdef DEBUG
 	VDBG("getsys - %s %d\n",(dbmdata.dptr) ? "found" : "couldn't find",styp);
-#endif
 	if (!dbmdata.dptr)
 		return(0);
 	bytecopy((char *)&getsdat,dbmdata.dptr,sizeof(getsdat));
@@ -486,9 +418,7 @@ int styp;
 static void putsys(plogin)
 struct login *plogin;
 {
-#ifdef DEBUG
 	VDBG("putsys - %d\n",getskey.s_type);
-#endif
 	dbmkey.dptr = (char *)&getskey;
 	dbmkey.dsize = sizeof(getskey);
 	dbmdata.dptr = (char *)&getsdat;
@@ -507,9 +437,7 @@ struct login *plogin;
 static void delsys(plogin)
 struct login *plogin;
 {
-#ifdef DEBUG
 	VDBG("delsys - %d\n",getskey.s_type);
-#endif
 	dbmkey.dptr = (char *)&getskey;
 	dbmkey.dsize = sizeof(getskey);
 	if (delete(dbmkey)) {

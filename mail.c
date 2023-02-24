@@ -47,9 +47,7 @@ register struct login *plogin;
 	int i;
 	char buf[80+1],c;
 
-#ifdef DEBUG
 	DBG("mail(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/********************************/
 	/* call subtask based on status */
@@ -89,9 +87,7 @@ register struct login *plogin;
 		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
-#ifdef DEBUG
 		    VDBG("mail return\n");
-#endif
 		    return;
 		}
 		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
@@ -119,9 +115,7 @@ register struct login *plogin;
 		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
-#ifdef DEBUG
 		VDBG("mail return\n");
-#endif
 		return;
 	    }
 	    bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
@@ -215,9 +209,7 @@ register struct login *plogin;
 		}
 	}
 
-#ifdef DEBUG
 	VDBG("mail return\n");
-#endif
 }
 
 static void dspmail(plogin,pmstat)
@@ -231,10 +223,8 @@ register struct mstat *pmstat;
 	char buf[80+1];
 	int nlines=6;
 
-#ifdef DEBUG
 	DBG("dspmail(#%d/%s,{%d,%d,%d})\n",plogin-loginlst,plogin->ln_name,
 	pmstat->ms_bgn,pmstat->ms_cur,pmstat->ms_end);
-#endif
 
 	/* first time */
 	if (pmstat->ms_cur < pmstat->ms_bgn) {
@@ -306,9 +296,7 @@ register struct mstat *pmstat;
 	}
 
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("dspmail return\n");
-#endif
 }
 
 static void sndmail(plogin,pmstat)
@@ -325,10 +313,8 @@ register struct mstat *pmstat;
 	struct tm *localtime();
 	char *asctime(),*ctime(),buf[80+1];
 
-#ifdef DEBUG
 	DBG("sndmail(#%d/%s,%s)\n",plogin-loginlst,plogin->ln_name,
 	pmstat->ms_towho);
-#endif
 
 	/* first time or terminate */
 	if (!pmstat->ms_frst || !strcmp(plogin->ln_input,".")) {
@@ -403,9 +389,7 @@ terminate:
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("sndmail return\n");
-#endif
 		return;
 	    }
 	}
@@ -435,7 +419,5 @@ terminate:
 		output(plogin,0,0,0);
 	}
 
-#ifdef DEBUG
 	VDBG("sndmail return\n");
-#endif
 }

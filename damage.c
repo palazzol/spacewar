@@ -38,9 +38,7 @@ char *msg;
 	char buf[80+1];
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("damage(#%3d,.,%f,%f,%s)\n",patck-univlst,rng,dmg,msg);
-#endif
 
 	/* is it from hull damage; last hit by */
 	ishulldmg = (SUB(dmg,DIV(1.,690.)) <= 0.);
@@ -194,7 +192,5 @@ char *msg;
 	    rpt(pcrft,buf);
 	    fnshrpt(pcrft,1);
 	}
-#ifdef DEBUG
 	VDBG("damage return\n");
-#endif
 }

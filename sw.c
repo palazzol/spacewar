@@ -154,9 +154,7 @@ void firstplyr()
 static void catchalrm()
 {
 
-#ifdef DEBUG
 	VDBG("catchalrm\n");
-#endif
 	signal(SIGALRM,catchalrm);
 	if (doproctrap > 0 && doupdate > 0) {
 		doproctrap = 0;
@@ -171,9 +169,7 @@ static void catchalrm()
 #ifdef BSD
 static void catchtrp()
 {
-#ifdef DEBUG
 	VDBG("catchtrp [doproctrap=%d]\n",doproctrap);
-#endif
 	++sigtrap;
 	if (doproctrap > 0) {
 		doproctrap = 0;

@@ -20,9 +20,7 @@ void alninit()
 	struct sys *psys;
 	struct universe *puniv;
 
-#ifdef DEBUG
 	DBG("alninit()\n");
-#endif
 
 	/* build all the aliens, one at a time */
 	while (paln-- > alnlst) {
@@ -81,7 +79,6 @@ void alninit()
 		puniv->uv_ptr.uv_aln = paln;
 		paln->al_univ.ip_ptr = puniv;
 	}
-#ifdef DEBUG
+
 	VDBG("alninit return\n");
-#endif
 }

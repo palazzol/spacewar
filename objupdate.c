@@ -20,18 +20,14 @@ void objupdate()
 	FILE *fobj;
 	register struct obj *p=objlst;
 
-#ifdef DEBUG
 	DBG("objupdate()\n");
-#endif
 
 	/* write to secondary file to be renamed */
 	strcpy(buf,SWOBJ);
 	strcat(buf,"x");
 	if (!(fobj = fopen(buf,"w"))) {
 	    perror(buf);
-#ifdef DEBUG
 	    VDBG("objupdate return\n");
-#endif
 	    return;
 	}
 
@@ -44,9 +40,7 @@ void objupdate()
 
 	if (ferror(fobj) || fclose(fobj)) {
 	    perror(buf);
-#ifdef DEBUG
 	    VDBG("objupdate return\n");
-#endif
 	    return;
 	}
 
@@ -55,7 +49,5 @@ void objupdate()
 	    perror(buf);
 	}
 
-#ifdef DEBUG
 	VDBG("objupdate return\n");
-#endif
 }

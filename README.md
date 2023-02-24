@@ -20,6 +20,7 @@
 - fix varargs stuff
 - remove VMS code for clarity
 - remove -DVOID stuff
+- cleanup almost all the #ifdef DEBUG statements
 
 #### TBD 
 - playtesting

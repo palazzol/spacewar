@@ -35,15 +35,11 @@ struct login *plogin;
 	struct torp *ptorp;
 	int i;
 
-#ifdef DEBUG
 	DBG("prvcmd(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/* only allowed if priviledged */
 	if (strcmp(SWMASTER,plogin->ln_name)) {
-#ifdef DEBUG
 		VDBG("prvcmd return\n");
-#endif
 		return;
 	}
 
@@ -215,9 +211,7 @@ struct login *plogin;
 	}
 
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("prvcmd return\n");
-#endif
 }
 
 static char *fmtip(ip)

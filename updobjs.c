@@ -15,9 +15,7 @@ void updobjs()
 	double tmpvec[3];
 	int i;
 
-#ifdef DEBUG
 	DBG("updobjs()\n");
-#endif
 
 	for (pobj=objlst;pobj < objlst+MAXOBJ;++pobj) {
 
@@ -44,7 +42,5 @@ void updobjs()
 	    vdiff(pobj->oj_pstn,tmpvec,pobj->oj_vel);
 	}
 
-#ifdef DEBUG
 	VDBG("updobjs return\n");
-#endif
 }

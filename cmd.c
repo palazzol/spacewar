@@ -30,22 +30,16 @@ void cmd()
 {
 	register struct login *plogin;
 
-#ifdef DEBUG
 	DBG("cmd()\n");
-#endif
 
 	/* get and process a command */
 	if (!(plogin = getinp())) {
-#ifdef DEBUG
 		VDBG("cmd return\n");
-#endif
 		return;
 	}
 
 	/* based on current major command */
-#ifdef DEBUG
 	VDBG("cmd: stat #%d '%c'\n",plogin-loginlst,plogin->ln_stat);
-#endif
 	switch(plogin->ln_stat) {
 
 		case 'M':	/* Mail (Complain) */
@@ -92,9 +86,7 @@ void cmd()
 	}
 
 	plogin->ln_input[0] = 0;
-#ifdef DEBUG
 	VDBG("cmd return\n");
-#endif
 }
 
 static void cmd2(plogin)
@@ -105,27 +97,21 @@ register struct login *plogin;
 	struct plyr getpldat;
 	datum dbmkey,dbmdata;
 
-#ifdef DEBUG
 	DBG("cmd2()\n");
-#endif
 
 	/********************/
 	/* response is name */
 	/********************/
 	if (!plogin->ln_name[0]) { /* no name */
 
-#ifdef DEBUG
 		VDBG("cmd2: #%d response is name\n",plogin-loginlst);
-#endif
 
 		/* do again if too short or long */
 		if (inplen < 2 || inplen >= sizeof(plogin->ln_name)) {
 			output(plogin,'C',0,
 			"Name must be 2 to 8 characters\n\nWhat is your name?");
 			output(plogin,0,0,0);
-#ifdef DEBUG
 			VDBG("cmd2 return\n");
-#endif
 			return;
 		}
 
@@ -134,19 +120,15 @@ register struct login *plogin;
 			int i;
 			struct login *plgn;
 
-#ifdef DEBUG
 			VDBG("cmd2: #%d checking for dup login (%s)\n",
 			plogin-loginlst,plogin->ln_input);
-#endif
 			for (i=MAXLOGIN,plgn=loginlst;i-- > 0;++plgn) {
 				if (!strcmp(plogin->ln_input,plgn->ln_name)) {
 				    output(plogin,'C',0,
 				    "Someone is already playing that name.\n\n\
 How about another name?");
 				    output(plogin,0,0,0);
-#ifdef DEBUG
 				    VDBG("cmd2 return\n");
-#endif
 				    return;
 				}
 			}
@@ -166,10 +148,8 @@ How about another name?");
 	/************************/
 	} else if (plogin->ln_stat == 'p') { /* password state */
 
-#ifdef DEBUG
 		VDBG("cmd2: #%d (%s) response is password\n",
 		plogin-loginlst,plogin->ln_name);
-#endif
 
 		/* get player */
 		binit((char *)&getplkey,sizeof(getplkey));
@@ -182,10 +162,8 @@ How about another name?");
 		dbmdata = fetch(dbmkey);
 		if (dbmdata.dptr) {
 
-#ifdef DEBUG
 			VDBG("cmd2: #%d (%s) found, checking password\n",
 			plogin-loginlst,plogin->ln_name);
-#endif
 
 			bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
@@ -217,19 +195,15 @@ How about another name?");
 		/* not found; insert new player */
 		} else {
 
-#ifdef DEBUG
 			VDBG("cmd2: #%d (%s) not found, inserting\n",
 			plogin-loginlst,plogin->ln_name);
-#endif
 
 			/* do again if too short or long */
 			if (inplen < 2 || inplen >= sizeof(getpldat.pl_passwd)) {
 			    output(plogin,'C',0,
 			    "Password must be 2 to 8 characters\n\nPassword:");
 			    output(plogin,0,0,0);
-#ifdef DEBUG
 			    VDBG("cmd2 return\n");
-#endif
 			    return;
 			}
 
@@ -334,9 +308,7 @@ How about another name?");
 			break;
 	}
 
-#ifdef DEBUG
 	VDBG("cmd2 return\n");
-#endif
 }
 
 /* get input; return a ptr to where a full command is */
@@ -352,9 +324,7 @@ static struct login *getinp()
 	struct uio2 inp2;
 #endif /* BSD */
 
-#ifdef DEBUG
 	DBG("getinp()\n");
-#endif /* DEBUG */
 
 	/* get player input allowing asynchronous  */
 	/* trap processing; do echo and edit magic */
@@ -362,9 +332,7 @@ static struct login *getinp()
 	for (;;) {
 		/* get the uio header allowing asynch trap processing */
 		if (doproctrap < 0 || doupdate < 0) {
-#ifdef DEBUG
 			VDBG("getinp return\n");
-#endif
 			return(NULL);
 		}
 		doproctrap = 1;
@@ -378,10 +346,8 @@ static struct login *getinp()
 #ifndef BSD
 		if (((long)inp.uio_lgn) >= 0 && ((long)inp.uio_lgn) <= 20) {
 			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
-			VDBG("getinp: ");
-			VDBG("sig=%d ",inp2.uio2sig);
-			VDBG("pid=%d ",inp2.uio2pid);
-			VDBG("tty=%.*s\n",sizeof(inp2.uio2tty),inp2.uio2tty);
+			VDBG("getinp: uio sig %d %d %.*s\n",inp2.uio2sig,
+			inp2.uio2pid,sizeof(inp2.uio2tty),inp2.uio2tty);
 		} else
 #endif /* BSD */
 		{
@@ -426,9 +392,7 @@ static struct login *getinp()
 			    else
 				output(inp.uio_lgn,'C',0,"\n");
 			    output(inp.uio_lgn,0,0,0);
-#ifdef DEBUG
 			    VDBG("getinp return\n");
-#endif /* DEBUG */
 			    return(inp.uio_lgn);
 
 			case '\025':	/* control-U */
@@ -464,9 +428,7 @@ static struct login *getinp()
 			else
 			    output(inp.uio_lgn,'C',0,"\n");
 			output(inp.uio_lgn,0,0,0);
-#ifdef DEBUG
 			VDBG("getinp return\n");
-#endif /* DEBUG */
 			return(inp.uio_lgn);
 		    }
 

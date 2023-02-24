@@ -30,14 +30,10 @@ register struct login *plogin;
 
 	/* do a specific one or all */
 	if (plogin) {
-#ifdef DEBUG
 	    DBG("crftupdate(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 	    plow = phigh = plogin;
 	} else {
-#ifdef DEBUG
 	    DBG("crftupdate(#ALL)\n");
-#endif
 	    plow = loginlst;
 	    phigh = loginlst + MAXLOGIN - 1;
 	}
@@ -96,7 +92,5 @@ register struct login *plogin;
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("crftupdate return\n");
-#endif
 }

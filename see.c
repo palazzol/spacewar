@@ -53,9 +53,7 @@ register struct login *plogin;
 	struct plyr getpldat;
 
 
-#ifdef DEBUG
 	DBG("see(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/**************/
 	/* first time */
@@ -87,9 +85,7 @@ register struct login *plogin;
 	    psstat->ss_savkey : NULL;
 	}
 
-#ifdef DEBUG
 	VDBG("see: stat '%c'\n",psstat->ss_stat);
-#endif
 
 	/* terminate */
 	if (!strcmp(plogin->ln_input,".")) goto done;	/* horrendous */
@@ -181,9 +177,7 @@ again:	while (dbmkey.dptr) {
 		output(plogin,0,0,0);
 		psstat->ss_savsiz = (dbmkey.dptr) ? dbmkey.dsize : 0;
 		bytecopy(psstat->ss_savkey,dbmkey.dptr,psstat->ss_savsiz);
-#ifdef DEBUG
 		VDBG("see return\n");
-#endif
 		return;
 	    }
 	}
@@ -248,7 +242,5 @@ done:	for (nxtpst=ppst=psstat->ss_lst;ppst;ppst=nxtpst) {
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
 
-#ifdef DEBUG
 	VDBG("see return\n");
-#endif
 }

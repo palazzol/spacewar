@@ -56,9 +56,7 @@ register struct login *plogin;
 	char ucargs[9][20+1],inuc=0;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("play(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/* if not yet placed into the universe, try doing so */
 	if (!plogin->ln_play.ip_ptr) {
@@ -69,9 +67,7 @@ register struct login *plogin;
 		i = 0; /* force erase, not redraw */
 		goto erase;
 	    }
-#ifdef DEBUG
 	    VDBG("play return\n");
-#endif
 	    return;
 	}
 	pcrft = plogin->ln_play.ip_ptr->uv_ptr.uv_crft;
@@ -1153,9 +1149,7 @@ done2:	nums(pcrft);
 	}
 	output(plogin,0,0,0);
 
-#ifdef DEBUG
 	VDBG("play return\n");
-#endif
 	return;
 }
 

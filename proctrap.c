@@ -42,9 +42,7 @@ struct uio2 uio;
 	extern void logon(),logoff();
 
 #ifdef BSD
-#ifdef DEBUG
 	DBG("proctrap(%d,%d)\n",trapmsgfd,*ntrapmsg);
-#endif
 
 	/* for as many traps as received */
 	do {
@@ -53,33 +51,20 @@ struct uio2 uio;
 		if (read(trapmsgfd,&uio,sizeof(uio)) != sizeof(uio)) {
 			perror("trapmsg file uio");
 			*ntrapmsg = 0;
-#ifdef DEBUG
 			VDBG("proctrap return\n");
-#endif
 			return;
 		}
-#ifdef DEBUG
 		VDBG("proctrap: uio %d %d %.*s\n",uio.uio2sig,uio.uio2pid,
 		sizeof(uio.uio2tty),uio.uio2tty);
-#endif
 #else /* SYSIII SYSV */
-#ifdef DEBUG
-		DBG("HERE\n");
-		DBG("proctrap(%d)\n",uio.uio2sig);
-		if (uio.uio2sig == 0)
-			DBG("proctrap(%d,%d)\n",uio.uio2sig,uio.uio2pid);
-		else
-			DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
-#endif
+		DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
 #endif /* BSD SYSIII SYSV */
 
 		/* try to find player */
 		for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
 			if (plogin->ln_playpid == uio.uio2pid)
 				break;
-#ifdef DEBUG
 		VDBG("proctrap: login entry #%d\n",plogin-loginlst);
-#endif
 		/* player is already logged on, therefore its a signal */
 		if (i) {
 
@@ -112,10 +97,8 @@ struct uio2 uio;
 			for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
 				if (plogin->ln_tty == 0)
 					break;
-#ifdef DEBUG
 			VDBG("proctrap: available login entry #%d\n",
 			plogin-loginlst);
-#endif
 			if (i && setupread(plogin,uio.uio2pid,uio.uio2tty))
 				logon(plogin);
 			else
@@ -124,9 +107,7 @@ struct uio2 uio;
 #ifdef BSD
 	} while (--(*ntrapmsg) > 0);
 #endif /* BSD */
-#ifdef DEBUG
 	VDBG("proctrap return\n");
-#endif
 }
 
 /*
@@ -149,17 +130,13 @@ char *ttynm;
 	/* temporarily disable interrupts */
 	if (doproctrap == 1) doproctrap = 0;
 
-#ifdef DEBUG
 	DBG("setupread(#%d,%d,%s)\n",plogin-loginlst,playpid,ttynm);
-#endif
 
 	/* open the player's tty */
 	if ((ttyfd = open(ttynm,2)) < 0) {
 		perror(ttynm);
 		if (doproctrap == 0) doproctrap = 1;
-#ifdef DEBUG
 		VDBG("setupread return\n");
-#endif
 		return(0);
 	}
 
@@ -169,9 +146,7 @@ char *ttynm;
 			perror("fork");
 			if (close(ttyfd)) perror(ttynm);
 			if (doproctrap == 0) doproctrap = 1;
-#ifdef DEBUG
 			VDBG("setupread return\n");
-#endif
 			return(0);
 
 		case 0:		/* child */
@@ -210,9 +185,7 @@ char *ttynm;
 	plogin->ln_readpid = readpid;
 
 	if (doproctrap == 0) doproctrap = 1;
-#ifdef DEBUG
 	VDBG("setupread return\n");
-#endif
 	return(1);
 }
 

@@ -25,9 +25,7 @@ void updtorp()
 	int i;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("updtorp()\n");
-#endif
 
 	for (ptorp=torplst+MAXTORP;ptorp-- > torplst;) {
 	    if (!ptorp->tp_aim.ip_ptr) continue;
@@ -116,7 +114,5 @@ void updtorp()
 		ptorp->tp_thr[i] = ADD(SUB(tmpvec[i],ptorp->tp_vel[i]),pvel[i]);
 	}
 
-#ifdef DEBUG
 	VDBG("updtorp return\n");
-#endif
 }

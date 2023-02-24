@@ -40,9 +40,7 @@ void updaln()
 	int i;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("updaln()\n");
-#endif
 
 	for (paln=alnlst+MAXALN;paln-- > alnlst;paln->al_dly -= 1) {
 	    psys = paln->al_sys;
@@ -185,7 +183,5 @@ noatck:
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("updaln return\n");
-#endif
 }

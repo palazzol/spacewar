@@ -19,9 +19,7 @@ void objinit()
 	struct obj *p=objlst;
 	struct universe *puniv;
 
-#ifdef DEBUG
 	DBG("objinit()\n");
-#endif
 
 	if (!(fobj = fopen(SWOBJ,"r"))) {
 	    perror(SWOBJ);
@@ -87,7 +85,5 @@ void objinit()
 	/* into the universe the very first time)	       */
 	updobjs();
 
-#ifdef DEBUG
 	VDBG("objinit return\n");
-#endif
 }

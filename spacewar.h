@@ -62,8 +62,13 @@ extern double fmod();
 #define MAX(x,y)	(((x) > (y)) ? (x) : (y))
 #define MIN(x,y)	(((x) < (y)) ? (x) : (y))
 
+#ifdef DEBUG
 void DBG(char *fmt, ...);
 void VDBG(char *fmt, ...);
+#else
+#define DBG(A,...)
+#define VDBG(A,...)
+#endif
 
 typedef struct {
 	double vec[3];

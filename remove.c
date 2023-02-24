@@ -29,10 +29,8 @@ idxptr prmv;
 	int i;
 	struct torp *ptorp;
 
-#ifdef DEBUG
 	DBG("removeu(#%d/'%c/%c')\n",prmv.ip_ptr-univlst,prmv.ip_ptr->uv_type,
 	prmv.ip_ptr->uv_pctr);
-#endif
 
 	while (--puniv >= univlst) {
 	    if (!puniv->uv_type) continue;
@@ -130,7 +128,5 @@ idxptr prmv;
 	}
 
 
-#ifdef DEBUG
 	VDBG("remove return\n");
-#endif
 }

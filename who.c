@@ -18,9 +18,7 @@ register struct login *plogin;
 	register struct login *plgn=loginlst+MAXLOGIN;
 	char buf[40+1];
 
-#ifdef DEBUG
 	DBG("who(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	strcpy(buf,"\n");
 	while (--plgn >= loginlst) {
@@ -48,7 +46,5 @@ register struct login *plogin;
 	plogin->ln_stat = 0;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("who return\n");
-#endif
 }

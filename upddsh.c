@@ -27,9 +27,7 @@ void upddsh()
 	long l;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("upddsh()\n");
-#endif
 
 	for (pcrft=crftlst+MAXCRFT;pcrft-- > crftlst;) {
 	    if (!pcrft->cr_htyp) continue;
@@ -99,7 +97,5 @@ void upddsh()
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("upddsh return\n");
-#endif
 }

@@ -34,9 +34,7 @@ void updmov()
 	register int i;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("updmov()\n");
-#endif
 
 	for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
 
@@ -256,7 +254,5 @@ nxtuobj:;
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("updmov return\n");
-#endif
 }

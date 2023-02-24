@@ -26,9 +26,7 @@ void update()
 	char *s,*lckmsg();
 	extern int numpling;
 
-#ifdef DEBUG
 	DBG("update()\n");
-#endif
 
 	/* periodic sync and lockout check */
 	if (++gametime%60L == 0) {
@@ -82,7 +80,5 @@ void update()
 	    pcrft->cr_time += 1;
 	}
 
-#ifdef DEBUG
 	VDBG("update return\n");
-#endif
 }

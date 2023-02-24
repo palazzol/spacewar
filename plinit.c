@@ -40,9 +40,7 @@ register struct login *plogin;
 	datum dbmkey,dbmdata;
 	int i;
 
-#ifdef DEBUG
 	DBG("plinit(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	if (!strcmp(plogin->ln_input,".")) goto noplay;
 
@@ -55,9 +53,7 @@ register struct login *plogin;
 	    if (!plogin->ln_input[0]) {
 getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 		output(plogin,0,0,0);
-#ifdef DEBUG
 		VDBG("plinit return\n");
-#endif
 		return(0);
 	    }
 	    plogin->ln_rvslh = 0;
@@ -127,9 +123,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	if (!plogin->ln_input[0]) {
 	    output(plogin,'C',0,"\nWhat ship>");
 	    output(plogin,0,0,0);
-#ifdef DEBUG
 	    VDBG("plinit return\n");
-#endif
 	    return(0);
 	}
 
@@ -257,16 +251,12 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	/* first player must start universe update */
 	if (!numpling++) firstplyr();
 
-#ifdef DEBUG
 	VDBG("plinit return\n");
-#endif
 	return(1);
 
 noplay: plogin->ln_stat = 0;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("plinit return\n");
-#endif
 	return(0);
 }

@@ -21,9 +21,7 @@ int e;
 	int i;
 	extern int errno;
 
-#ifdef DEBUG
 	DBG("shutdown(%d)\n",e);
-#endif
 
 	/* don't update the universe any more */
 	alarm(0);
@@ -53,8 +51,6 @@ int e;
 	if (unlink(SWCOMFILE)) perror(SWCOMFILE);
 #endif /* BSD SYSIII SYSV */
 
-#ifdef DEBUG
 	VDBG("shutdown exiting\n");
-#endif
 	exit(e);
 }

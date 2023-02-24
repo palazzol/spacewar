@@ -30,9 +30,7 @@ void upddmg()
 	struct login *plogin;
 	int i;
 
-#ifdef DEBUG
 	DBG("upddmg()\n");
-#endif
 
 	for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
 
@@ -180,7 +178,5 @@ void upddmg()
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("upddmg return\n");
-#endif
 }

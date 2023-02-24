@@ -32,9 +32,7 @@ register struct login *plogin;
 	int i;
 	extern int numpling;
 
-#ifdef DEBUG
 	DBG("unplay(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/* privileged or docked with an object or nothing bad nearby */
 	pcrft = plogin->ln_play.ip_ptr->uv_ptr.uv_crft;
@@ -109,7 +107,5 @@ register struct login *plogin;
 	plogin->ln_stat = 0;
 	plogin->ln_substat = NULL;
 
-#ifdef DEBUG
 	VDBG("unplay return\n");
-#endif
 }

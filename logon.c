@@ -28,9 +28,7 @@ void logon(plogin)
 register struct login *plogin;
 {
 
-#ifdef DEBUG
 	DBG("logon(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/* clear out most of login structure */
 	plogin->ln_name[0] = 0;
@@ -70,9 +68,7 @@ register struct login *plogin;
 	if (gtty(plogin->ln_tty,&tmode)) {
 		perror("gtty");
 		logoff(plogin);
-#ifdef DEBUG
 		VDBG("logon return\n");
-#endif
 		return;
 	}
 
@@ -84,9 +80,7 @@ register struct login *plogin;
 	if (stty(plogin->ln_tty,&tmode)) {
 		perror("stty");
 		logoff(plogin);
-#ifdef DEBUG
 		VDBG("logon return\n");
-#endif
 		return;
 	}
 	}
@@ -97,9 +91,7 @@ register struct login *plogin;
 	if (ioctl(plogin->ln_tty,TCGETA,&tmode)) {
 		perror("ioctl TCGETA");
 		logoff(plogin);
-#ifdef DEBUG
 		VDBG("logon return\n");
-#endif
 		return;
 	}
 
@@ -112,9 +104,7 @@ register struct login *plogin;
 	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
 		perror("ioctl TCSETA");
 		logoff(plogin);
-#ifdef DEBUG
 		VDBG("logon return\n");
-#endif
 		return;
 	}
 	}
@@ -124,7 +114,5 @@ register struct login *plogin;
 	/* prompt player for name */
 	output(plogin,'C',0,"\nWhat is your name?");
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("logon return\n");
-#endif
 }

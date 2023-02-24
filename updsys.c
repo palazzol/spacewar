@@ -30,9 +30,7 @@ void updsys()
 	long i,elvl;
 	dsplcmnt tmpdspl;
 
-#ifdef DEBUG
 	DBG("updsys()\n");
-#endif
 
 	for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
 
@@ -130,9 +128,7 @@ void updsys()
 	    }
 	}
 
-#ifdef DEBUG
 	VDBG("updsys return\n");
-#endif
 }
 
 /* pro-rate level for %, %dmg */

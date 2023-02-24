@@ -32,9 +32,7 @@ register struct login *plogin;
 {
 	extern int errno;
 
-#ifdef DEBUG
 	DBG("logoff(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/* remove from universe if playing */
 	if (plogin->ln_play.ip_ptr) unplay(plogin);
@@ -96,7 +94,5 @@ sigh:
 
 	/* reset the login entry */
 	binit((char *)plogin,sizeof(*plogin));
-#ifdef DEBUG
 	VDBG("logoff return\n");
-#endif
 }

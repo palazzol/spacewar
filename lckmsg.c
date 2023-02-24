@@ -18,9 +18,7 @@ char *lckmsg()
 	time_t clock;
 	struct tm *curtm,*localtime();
 
-#ifdef DEBUG
 	DBG("lckmsg()\n");
-#endif
 
 	/* controlled by SWMASTER */
 	if (msg)

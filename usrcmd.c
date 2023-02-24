@@ -26,18 +26,14 @@ register struct login *plogin;
 	datum dbmkey,dbmdata;
 	char buf[40+1];
 
-#ifdef DEBUG
 	DBG("usrcmd(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
-#endif
 
 	/**************/
 	/* first time */
 	/**************/
 	if (!strcmp(plogin->ln_input,".")) goto done;
 	if (!(pucmdkey = (struct ucmdkey *)plogin->ln_substat)) {
-#ifdef DEBUG
 	    VDBG("usrcmd: inp '%s'\n",plogin->ln_input);
-#endif
 
 	    /* subtask prompt */
 	    if (!plogin->ln_input[0]) {
@@ -138,9 +134,7 @@ register struct login *plogin;
 	}
 
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("usrcmd return\n");
-#endif
 	return;
 
 done:	plogin->ln_stat = 0;
@@ -150,8 +144,6 @@ done:	plogin->ln_stat = 0;
 	}
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
-#ifdef DEBUG
 	VDBG("usrcmd return\n");
-#endif
 	return;
 }
