@@ -1,7 +1,7 @@
 
 # SPACEWAR
 
-## A multi-user UNIX game, from 1986
+## A multi-user UNIX game, from 1988
 
 ### Original Documentation is here:
 [README](README) - some installation notes
