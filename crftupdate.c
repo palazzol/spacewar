@@ -16,7 +16,7 @@
 // add missing headers
 #include <string.h>
 
-VOID crftupdate(plogin)
+void crftupdate(plogin)
 register struct login *plogin;
 {
 	struct login *plow,*phigh;

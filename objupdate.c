@@ -14,7 +14,7 @@
 #include <string.h>
 #include <unistd.h>
 
-VOID objupdate()
+void objupdate()
 {
 	char buf[128];
 	FILE *fobj;

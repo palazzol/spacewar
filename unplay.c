@@ -18,7 +18,7 @@
 // add missing headers
 #include <string.h>
 
-VOID unplay(plogin)
+void unplay(plogin)
 register struct login *plogin;
 {
 	register struct crft *pcrft;

@@ -28,13 +28,13 @@ int numpling;
 #endif /* BSD SYSIII SYSV */
 extern int doproctrap,doupdate;
 static int dbglvl = 0;
-static VOID catchtrp(),catchalrm();
+static void catchtrp(),catchalrm();
 
 int main(argc,argv)
 int argc;
 char *argv[];
 {
-	extern VOID proctrap(),shutdown(),cmd();
+	extern void proctrap(),shutdown(),cmd();
 	extern int errno;
 #ifdef BSD
 	int swpidfd,thispid,pfd[2];
@@ -148,10 +148,10 @@ char *argv[];
 
 }
 
-VOID firstplyr()
+void firstplyr()
 {catchalrm();}
 
-static VOID catchalrm()
+static void catchalrm()
 {
 
 #ifdef DEBUG
@@ -169,7 +169,7 @@ static VOID catchalrm()
 }
 
 #ifdef BSD
-static VOID catchtrp()
+static void catchtrp()
 {
 #ifdef DEBUG
 	VDBG("catchtrp [doproctrap=%d]\n",doproctrap);
@@ -191,7 +191,7 @@ static VOID catchtrp()
 #include <stdio.h>
 
 /*VARARGS1*/
-VOID DBG(char *fmt, ...)
+void DBG(char *fmt, ...)
 {
 	if (dbglvl > 0) {
 		va_list argp;
@@ -202,7 +202,7 @@ VOID DBG(char *fmt, ...)
 }
 
 /*VARARGS1*/
-VOID VDBG(char *fmt, ...)
+void VDBG(char *fmt, ...)
 {
 	if (dbglvl > 1) {
 		va_list argp;

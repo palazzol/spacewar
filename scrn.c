@@ -17,10 +17,10 @@
 #include "obj.h"
 #include "torp.h"
 
-static VOID dofld();
+static void dofld();
 extern long gametime;
 
-VOID background(pcrft)
+void background(pcrft)
 struct crft *pcrft;
 {
 	static struct {
@@ -55,7 +55,7 @@ struct crft *pcrft;
 	}
 }
 
-VOID nums(pcrft)
+void nums(pcrft)
 register struct crft *pcrft;
 {
 	int i,j;
@@ -115,7 +115,7 @@ register struct crft *pcrft;
 }
 
 /*VARARGS4*/
-static VOID dofld(pcrft,fld,grp,bit,val1,val2,val3,val4)
+static void dofld(pcrft,fld,grp,bit,val1,val2,val3,val4)
 struct crft *pcrft;
 int fld,grp,bit;
 char *val1;
@@ -128,7 +128,7 @@ int val2,val3,val4;
 	}
 }
 
-VOID view(pcrft)
+void view(pcrft)
 register struct crft *pcrft;
 {
 	char vnew[15][31],buf[31+1];

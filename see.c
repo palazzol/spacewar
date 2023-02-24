@@ -38,7 +38,7 @@ struct pst {
 static struct pst zpst;
 
 
-VOID see(plogin)
+void see(plogin)
 register struct login *plogin;
 {
 	struct sstat *psstat;

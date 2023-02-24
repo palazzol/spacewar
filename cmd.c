@@ -23,10 +23,10 @@
 
 int doproctrap,doupdate;
 static struct login *getinp();
-static VOID cmd2();
-extern VOID prvcmd();
+static void cmd2();
+extern void prvcmd();
 
-VOID cmd()
+void cmd()
 {
 	register struct login *plogin;
 
@@ -97,7 +97,7 @@ VOID cmd()
 #endif
 }
 
-static VOID cmd2(plogin)
+static void cmd2(plogin)
 register struct login *plogin;
 {
 	int inplen=strlen(plogin->ln_input);

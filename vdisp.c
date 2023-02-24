@@ -86,7 +86,7 @@ char which;
 }
 
 /* mark all displacements w.r.t. puniv as invalid */
-VOID vchngd(puniv)
+void vchngd(puniv)
 struct universe *puniv;
 {
 	register dsplcmnt *pd;
@@ -106,7 +106,7 @@ struct universe *puniv;
 
 }
 
-VOID vrmv(puniv)
+void vrmv(puniv)
 struct universe *puniv;
 {
 	if (puniv->uv_dspl)

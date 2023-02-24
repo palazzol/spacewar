@@ -19,6 +19,7 @@
 - Added temporary Makefile target to do some install stuff for debugging - WIP
 - fix varargs stuff
 - remove VMS code for clarity
+- remove -DVOID stuff
 
 #### TBD 
 - playtesting
@@ -27,8 +28,7 @@
 - fix time_t stuff to be 2038 compliant
 - do proper make install target
 
-#### Cleanup
-- remove -DVOID stuff
+
 
 
 

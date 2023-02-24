@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-VOID logoff(plogin)
+void logoff(plogin)
 register struct login *plogin;
 {
 	extern int errno;

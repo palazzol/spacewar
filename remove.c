@@ -20,7 +20,7 @@
 #include "flds.h"
 #include "aln.h"
 
-VOID removeu(prmv)
+void removeu(prmv)
 idxptr prmv;
 {
 	struct universe *puniv=univlst+MAXUNIVERSE;

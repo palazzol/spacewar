@@ -13,7 +13,7 @@
 // add missing headers
 #include <stdlib.h>
 
-VOID objinit()
+void objinit()
 {
 	FILE *fobj;
 	struct obj *p=objlst;

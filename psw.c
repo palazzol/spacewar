@@ -29,7 +29,7 @@
 struct uio2 uio;
 int swpid,swlgnfd;
 char *thistty;
-static VOID fixttyexit(),catchsig();
+static void fixttyexit(),catchsig();
 
 int main()
 {
@@ -159,7 +159,7 @@ tryagain:
 	for (;;) pause();
 }
 
-static VOID catchsig(sig)
+static void catchsig(sig)
 int sig;
 {
 	signal(sig,catchsig);
@@ -183,7 +183,7 @@ int sig;
 #endif /* BSD SYSIII SYSV */
 }
 
-static VOID fixttyexit(n)
+static void fixttyexit(n)
 int n;
 {
 	exit(n);

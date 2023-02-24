@@ -45,7 +45,7 @@ char *lckmsg()
 	return("A lockout exists from 0800-1130,1300-1700 Mon-Fri");
 }
 
-VOID prvlck(s)
+void prvlck(s)
 char *s;
 {
 	msg = s;

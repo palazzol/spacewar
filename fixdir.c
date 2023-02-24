@@ -12,7 +12,7 @@
 #include "crft.h"
 #include "flds.h"
 
-VOID fixdir(pcrft)
+void fixdir(pcrft)
 register struct crft *pcrft;
 {
 	double tmp;

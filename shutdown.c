@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-VOID shutdown(e)
+void shutdown(e)
 int e;
 {
 	register struct login *plogin;

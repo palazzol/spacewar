@@ -9,14 +9,14 @@
 
 #define BPB	8	/* bits per byte */
 
-VOID biton(ary,bitno)
+void biton(ary,bitno)
 char ary[];
 int bitno;
 {
 	ary[bitno/BPB] |= 1<<(bitno%BPB);
 }
 
-VOID bitoff(ary,bitno)
+void bitoff(ary,bitno)
 char ary[];
 int bitno;
 {

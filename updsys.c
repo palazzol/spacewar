@@ -20,7 +20,7 @@
 
 static long prtlvl(),strlvl();
 
-VOID updsys()
+void updsys()
 {
 	register struct universe *puniv;
 	register struct obj *pobj;

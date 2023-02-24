@@ -34,9 +34,9 @@ struct mlst {
 	char	*ml_lin;	/* line of mail */
 };
 
-static VOID sndmail(),dspmail();
+static void sndmail(),dspmail();
 
-VOID mail(plogin)
+void mail(plogin)
 register struct login *plogin;
 {
 	register struct mstat *pmstat;
@@ -220,7 +220,7 @@ register struct login *plogin;
 #endif
 }
 
-static VOID dspmail(plogin,pmstat)
+static void dspmail(plogin,pmstat)
 register struct login *plogin;
 register struct mstat *pmstat;
 {
@@ -311,7 +311,7 @@ register struct mstat *pmstat;
 #endif
 }
 
-static VOID sndmail(plogin,pmstat)
+static void sndmail(plogin,pmstat)
 register struct login *plogin;
 register struct mstat *pmstat;
 {

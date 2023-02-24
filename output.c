@@ -23,11 +23,11 @@
 #include <unistd.h>
 
 static char outbuf[80*24*2]="";
-static VOID doout(),dowrite();
+static void doout(),dowrite();
 extern int errno;
 
 /*VARARGS1*/
-VOID output(register struct login *plogin, char mode, int fld, char *str, ...)
+void output(register struct login *plogin, char mode, int fld, char *str, ...)
 {
 	int val2,val3,val4;
 	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();
@@ -87,7 +87,7 @@ VOID output(register struct login *plogin, char mode, int fld, char *str, ...)
 	}
 }
 
-static VOID doout(fd,s)
+static void doout(fd,s)
 short fd;
 char *s;
 {
@@ -105,7 +105,7 @@ char *s;
 }
 
 #include <signal.h>
-static VOID dowrite(fd,s,ls)
+static void dowrite(fd,s,ls)
 int fd,ls;
 char *s;
 {

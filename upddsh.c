@@ -18,7 +18,7 @@
 
 extern double vlen(),vdist();
 
-VOID upddsh()
+void upddsh()
 {
 	register struct crft *pcrft;
 	register struct universe *puniv;

@@ -23,7 +23,7 @@
 
 extern double vlen();
 
-VOID updmov()
+void updmov()
 {
 	register struct universe *puniv,*pobj;
 	register struct sys *psys;

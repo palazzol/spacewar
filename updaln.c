@@ -20,7 +20,7 @@
 #include "torp.h"
 #include "obj.h"
 
-static VOID thr(paln,tmpvec)
+static void thr(paln,tmpvec)
 struct aln *paln;
 double *tmpvec;
 {
@@ -30,7 +30,7 @@ double *tmpvec;
 	vdiff(tmpvec,paln->al_vel,paln->al_thr);
 }
 
-VOID updaln()
+void updaln()
 {
 	register struct aln *paln;
 	struct sys *psys;

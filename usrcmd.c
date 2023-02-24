@@ -18,7 +18,7 @@
 
 #define UCMDPROMPT	"\ncommand/L(ist)/.(quit)>"
 
-VOID usrcmd(plogin)
+void usrcmd(plogin)
 register struct login *plogin;
 {
 	struct ucmdkey *pucmdkey;

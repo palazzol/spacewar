@@ -24,7 +24,7 @@
 #	include <termio.h>
 #endif /* BSD SYSIII SYSV */
 
-VOID logon(plogin)
+void logon(plogin)
 register struct login *plogin;
 {
 

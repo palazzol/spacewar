@@ -9,7 +9,7 @@
 #include "universe.h"
 #include "obj.h"
 
-VOID updobjs()
+void updobjs()
 {
 	register struct obj *pobj;
 	double tmpvec[3];

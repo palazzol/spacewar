@@ -22,10 +22,10 @@
 // add missing headers
 #include <string.h>
 
-extern VOID fixdir();
+extern void fixdir();
 extern double vdist(),vlen();
 static int okdir();
-static VOID fixaf();
+static void fixaf();
 
 static struct {
 	char	*pc_cmd;
@@ -40,7 +40,7 @@ static struct {
 /* 24 */{"-",1},	{"sensors",2},	{"lockon",2},	{"redraw",3}
 };
 
-VOID play(plogin)
+void play(plogin)
 register struct login *plogin;
 {
 	int i,j;
@@ -1181,7 +1181,7 @@ double *pftmp;
 	return(1);
 }
 
-static VOID fixaf(pcrft)
+static void fixaf(pcrft)
 register struct crft *pcrft;
 {
 	if (pcrft->cr_ffwd) {

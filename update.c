@@ -18,7 +18,7 @@
 
 long gametime;
 
-VOID update()
+void update()
 {
 	struct universe *puniv;
 	register struct login *plogin;

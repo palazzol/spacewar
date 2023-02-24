@@ -12,7 +12,7 @@
 // add missing headers
 #include <string.h>
 
-VOID who(plogin)
+void who(plogin)
 register struct login *plogin;
 {
 	register struct login *plgn=loginlst+MAXLOGIN;

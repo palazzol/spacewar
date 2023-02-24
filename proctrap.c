@@ -28,18 +28,18 @@
 static int setupread();
 
 #ifdef BSD
-VOID proctrap(trapmsgfd,ntrapmsg)
+void proctrap(trapmsgfd,ntrapmsg)
 int trapmsgfd,*ntrapmsg;
 {
 	struct uio2 uio;
 #else /* SYSIII SYSV */
-VOID proctrap(uio)
+void proctrap(uio)
 struct uio2 uio;
 {
 #endif /* BSD SYSIII SYSV */
 	register struct login *plogin;
 	int i;
-	extern VOID logon(),logoff();
+	extern void logon(),logoff();
 
 #ifdef BSD
 #ifdef DEBUG

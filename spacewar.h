@@ -62,8 +62,8 @@ extern double fmod();
 #define MAX(x,y)	(((x) > (y)) ? (x) : (y))
 #define MIN(x,y)	(((x) < (y)) ? (x) : (y))
 
-VOID DBG(char *fmt, ...);
-VOID VDBG(char *fmt, ...);
+void DBG(char *fmt, ...);
+void VDBG(char *fmt, ...);
 
 typedef struct {
 	double vec[3];
@@ -76,86 +76,86 @@ typedef struct {
 dsplcmnt vdisp();
 
 // Added declarations
-VOID objinit();
-VOID alninit();
-VOID update();
-VOID firstplyr();
+void objinit();
+void alninit();
+void update();
+void firstplyr();
 
 struct login;
-VOID output(register struct login *plogin, 
+void output(register struct login *plogin, 
 			char mode, 
 			int fld, 
 			char *str, 
 			...);
 
-VOID objupdate();
-VOID crftupdate(register struct login *plogin);
-VOID logoff(register struct login *plogin);
-VOID vinit(register double *dst);
-VOID updobjs();
-VOID unity(double mtrx[3][3]);
-VOID xrot(double rotmtrx[3][3], double rotangl);
-VOID yrot(double rotmtrx[3][3], double rotangl);
-VOID zrot(double rotmtrx[3][3], double rotangl);
-VOID binit(register char *dst, register int len);
-VOID unplay(register struct login *plogin);
-VOID play(register struct login *plogin);
-VOID mail(register struct login *plogin);
-VOID build(struct login *plogin);
-VOID see(register struct login *plogin);
-VOID usrcmd(register struct login *plogin);
-VOID who(register struct login *plogin);
+void objupdate();
+void crftupdate(register struct login *plogin);
+void logoff(register struct login *plogin);
+void vinit(register double *dst);
+void updobjs();
+void unity(double mtrx[3][3]);
+void xrot(double rotmtrx[3][3], double rotangl);
+void yrot(double rotmtrx[3][3], double rotangl);
+void zrot(double rotmtrx[3][3], double rotangl);
+void binit(register char *dst, register int len);
+void unplay(register struct login *plogin);
+void play(register struct login *plogin);
+void mail(register struct login *plogin);
+void build(struct login *plogin);
+void see(register struct login *plogin);
+void usrcmd(register struct login *plogin);
+void who(register struct login *plogin);
 
 #include "uio.h"
 #include "uio2.h"
 
 #ifdef BSD
-VOID proctrap(int trapmsgfd,int *ntrapmsg);
+void proctrap(int trapmsgfd,int *ntrapmsg);
 #else
-VOID proctrap(struct uio2 uio);
+void proctrap(struct uio2 uio);
 #endif
 
-VOID shutdown(int e);
-VOID prvlck(char *s);
+void shutdown(int e);
+void prvlck(char *s);
 
 #include "universe.h"
-VOID removeu(idxptr prmv);
+void removeu(idxptr prmv);
 
 int plinit(register struct login *plogin);
-VOID background(struct crft *pcrft);
-VOID biton(char ary[],int bitno);
-VOID rttosp(double rtvec[3],double spvec[3]);
-VOID vecmul(double avec[3],double bmtrx[3][3],double cvec[3]);
-VOID sptort(double spvec[3],double rtvec[3]);
-VOID vchngd(struct universe *puniv);
-VOID vcopy(register double *dst,register double *src);
-VOID rpt(struct crft *pcrft,char *msg);
-VOID setrpt(struct crft *pcrft);
-VOID fnshrpt(register struct crft *pcrft,int flsh);
-VOID damage(struct universe *patck,
+void background(struct crft *pcrft);
+void biton(char ary[],int bitno);
+void rttosp(double rtvec[3],double spvec[3]);
+void vecmul(double avec[3],double bmtrx[3][3],double cvec[3]);
+void sptort(double spvec[3],double rtvec[3]);
+void vchngd(struct universe *puniv);
+void vcopy(register double *dst,register double *src);
+void rpt(struct crft *pcrft,char *msg);
+void setrpt(struct crft *pcrft);
+void fnshrpt(register struct crft *pcrft,int flsh);
+void damage(struct universe *patck,
 			struct universe *ptrgt,
 			double rng,
 			double dmg,
 			char *msg);
-VOID vdiff(register double *avec,register double *bvec,register double *cvec);
-VOID nums(register struct crft *pcrft);
-VOID view(register struct crft *pcrft);
+void vdiff(register double *avec,register double *bvec,register double *cvec);
+void nums(register struct crft *pcrft);
+void view(register struct crft *pcrft);
 int tgetent(char *p1,char *termname);
-VOID fixdir(register struct crft *pcrft);
-VOID updmov();
-VOID updtorp();
-VOID updaln();
-VOID upddmg();
-VOID updsys();
-VOID upddsh();
-VOID bytecopy(register char *dst,
+void fixdir(register struct crft *pcrft);
+void updmov();
+void updtorp();
+void updaln();
+void upddmg();
+void updsys();
+void upddsh();
+void bytecopy(register char *dst,
 		   register char *src,
 		   register int len);
 int nabit(char ary[],int bitno);
-VOID minit(register double dst[3][3]);
-VOID mcopy(register double dst[3][3],
+void minit(register double dst[3][3]);
+void mcopy(register double dst[3][3],
 		   register double src[3][3]);
-VOID vrmv(struct universe *puniv);
+void vrmv(struct universe *puniv);
 
 
-VOID bitoff(char ary[],int bitno);
+void bitoff(char ary[],int bitno);

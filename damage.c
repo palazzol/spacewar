@@ -22,7 +22,7 @@
 // add missing headers
 #include <stdio.h>
 
-VOID damage(patck,ptrgt,rng,dmg,msg)
+void damage(patck,ptrgt,rng,dmg,msg)
 struct universe *patck,*ptrgt;
 double rng,dmg;
 char *msg;

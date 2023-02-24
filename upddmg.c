@@ -20,7 +20,7 @@
 #include "obj.h"
 #include "torp.h"
 
-VOID upddmg()
+void upddmg()
 {
 	struct universe *puniv;
 	register struct sys *psys,*pdmgcon;
