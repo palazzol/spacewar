@@ -13,7 +13,7 @@
 ### Linux Porting notes - WIP 2/2023
 
 #### Current Status
-- ** "I just got this to run, but I don't know if it works yet - Frank" **
+- **"I just got this to run, but I don't know if it works yet - Frank"**
 - Built as 32-bit executable, because there are places where pointer/integer sizes matter
 - Compiles/links with gcc-11 on Ubuntu
 - Fixed all warnings by adding #includes, prototypes (in spacewar.h)
