@@ -1,5 +1,5 @@
 
-# SPACEWAR
+# SPACEWAR - by Daniel Rosenblatt
 
 ## A multi-user UNIX game, from 1988
 
