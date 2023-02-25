@@ -3,7 +3,7 @@
 
 ## A multi-user UNIX game, from 1988
 
-![img/spacewar.png](screenshot)
+![screenshot](img/spacewar.png)
 
 ### Original Documentation is here:
 [README](README) - some installation notes
