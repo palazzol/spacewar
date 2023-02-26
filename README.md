@@ -6,9 +6,9 @@
 ![screenshot](img/spacewar.png)
 
 ### Original Documentation is here:
-[README](README) - some installation notes
+[README](src/README) - some installation notes
 
-[doc.pdf](doc.pdf) - nice user manual
+[doc.pdf](src/doc.pdf) - nice user manual
 
 ### Linux Porting notes - WIP 2/2023
 

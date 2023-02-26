@@ -73,18 +73,18 @@ tstsz : tstsz.c uio.h uio2.h spacewar.h
 	./tstsz
 
 install :
-	rm -f ../sw/*
-	#mkdir ../sw
-	cp psw ../sw
-	chmod u+s ../sw/psw
-	cp sw ../sw
-	chmod u+s ../sw/sw
-	cp rsw ../sw
-	cp swobj.init ../sw/swobj
-	cp dmpdbm ../sw
-	cp upddbm ../sw
-	touch ../sw/swdb.dir
-	touch ../sw/swdb.pag
+	rm -f ../../sw/*
+	#mkdir ../../sw
+	cp psw ../../sw
+	chmod u+s ../../sw/psw
+	cp sw ../../sw
+	chmod u+s ../../sw/sw
+	cp rsw ../../sw
+	cp swobj.init ../../sw/swobj
+	cp dmpdbm ../../sw
+	cp upddbm ../../sw
+	touch ../../sw/swdb.dir
+	touch ../../sw/swdb.pag
 
 lint : ${SOURCES} psw.c rsw.c dmpdbm.c upddbm.c tstsz.c
 	lint ${CFLAGS} ${SOURCES}

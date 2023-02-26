@@ -14,6 +14,7 @@
 #include "universe.h"
 #include "login.h"
 
+#if 0
 #ifdef BSD
 #	include <sgtty.h>
 #else /* SYSIII SYSV */
@@ -21,11 +22,13 @@
 #	include <sys/ioctl.h>
 #	include <termio.h>
 #endif /* BSD SYSIII SYSV */
+#endif
 
 // add missing headers
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+#include <termios.h>
 
 void logoff(plogin)
 register struct login *plogin;
@@ -40,6 +43,7 @@ register struct login *plogin;
 	/*****************/
 	/* set tty modes */
 	/*****************/
+#if 0
 #ifdef BSD
 	{
 	struct sgttyb tmode;
@@ -72,7 +76,7 @@ register struct login *plogin;
 	/* (too bad the previous states weren't saved)  */
 	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
 	tmode.c_cc[VEOF] = CEOF;
-	//tmode.c_cc[VEOL] = CNUL; // CNUL seems to be gone?
+	tmode.c_cc[VEOL] = CEOL;
 
 	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
 		perror("ioctl TCSETA");
@@ -80,6 +84,27 @@ register struct login *plogin;
 	}
 	}
 #endif /* BSD SYSIII SYSV */
+#endif
+
+	{
+	struct termios tmode;
+
+	if (tcgetattr(plogin->ln_tty,&tmode)) {
+		perror("tcgetattr");
+		goto sigh;	/* horrendous */
+	}
+
+	/* reset echo and erase/kill edit processing */
+	/* (too bad the previous states weren't saved)  */
+	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
+	tmode.c_cc[VEOF] = CEOF;
+	tmode.c_cc[VEOL] = CEOL;
+
+	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
+		perror("tcsetattr");
+		goto sigh;	/* horrendous */
+	}
+	}
 
 	/* close the player's terminal and kill the read and play processes */
 sigh:

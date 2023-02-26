@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#if 0
 #ifdef BSD
 #	include <sgtty.h>
 #else /* SYSIII SYSV */
@@ -23,6 +24,9 @@
 #	include <sys/ioctl.h>
 #	include <termio.h>
 #endif /* BSD SYSIII SYSV */
+#endif
+
+#include <termios.h>
 
 void logon(plogin)
 register struct login *plogin;
@@ -61,6 +65,7 @@ register struct login *plogin;
 	/*****************/
 	/* set tty modes */
 	/*****************/
+#if 0
 #ifdef BSD
 	{
 	struct sgttyb tmode;
@@ -109,8 +114,38 @@ register struct login *plogin;
 	}
 	}
 #endif /* BSD SYSIII SYSV */
+#endif
+	{
+	struct termios tmode;
+	// Get the current tty settings
+	if (tcgetattr(plogin->ln_tty, &tmode))
+	{
+		perror("tcgetattr");
+		logoff(plogin);
+		VDBG("logon return\n");
+		return;
+	}
 
+	// noncanonical mode
+	// dont echo input chars
+	// dont echo erase char
+	// dont echo kill
+	// dont echo newline
+	// set minimum number of character for noncanon read to 1
+	// set timeout for noncanonical read to 0
 
+	tmode.c_lflag &= ~(ICANON+ECHO+ECHOE+ECHOK+ECHONL);
+	tmode.c_cc[VMIN] = 1;
+	tmode.c_cc[VTIME] = 0;
+
+	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
+		perror("tcsetattr");
+		logoff(plogin);
+		VDBG("logon return\n");
+		return;
+	}
+
+	}
 	/* prompt player for name */
 	output(plogin,'C',0,"\nWhat is your name?");
 	output(plogin,0,0,0);
