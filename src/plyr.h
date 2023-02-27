@@ -5,6 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __PLYR_H__
+#define __PLYR_H__
+
 #define PLYR	'P'	/* prefix for dbm(3) key */
 
 struct plyrkey {
@@ -24,3 +27,5 @@ struct plyr {
 	long 	pl_plst;	/* player number of points lost */
 	long	pl_tlst;	/* player playing time lost */
 };
+
+#endif

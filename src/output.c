@@ -13,7 +13,6 @@
 #include "universe.h"
 #include "login.h"
 #include "sys.h"
-#define FLDS
 #include "flds.h"
 
 // add missing headers

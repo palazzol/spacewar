@@ -6,6 +6,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __CRAFT_H__
+#define __CRAFT_H__
+
 #define CRAFT	'C'	/* prefix for dbm(3) key */
 
 struct crftkey {
@@ -55,3 +58,5 @@ struct crft {
 extern struct crft crftlst[];
 
 #define CRDATSIZ (((char *)(&crftlst[0].cr_lgn))-((char *)(&crftlst[0].cr_htyp)))
+
+#endif

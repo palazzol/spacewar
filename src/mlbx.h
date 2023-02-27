@@ -5,6 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __MLBX_H__
+#define __MLBX_H__
+
 #define MLBX	'M'	/* prefix for dbm(3) key */
 
 struct mlbxkey {
@@ -12,3 +15,5 @@ struct mlbxkey {
 	char	mb_plyr[8+1];	/* player(recipient) name */
 	short	mb_mlbx;	/* mailbox sequence */
 };
+
+#endif

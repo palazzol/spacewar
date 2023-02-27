@@ -6,6 +6,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __LOGIN_H__
+#define __LOGIN_H__
+
 struct login {
 	short	ln_tty;		/* login terminal I/O channel */
 	short	ln_playpid;	/* login play process pid */
@@ -26,3 +29,5 @@ struct login {
 #define MAXLOGIN	30	/* same as MAXCRFT */
 
 extern struct login loginlst[];
+
+#endif

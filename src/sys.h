@@ -5,6 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __SYS_H__
+#define __SYS_H__
+
 #define SUBSYS	'S'	/* prefix for dbm(3) key */
 
 struct syskey {
@@ -23,3 +26,5 @@ struct sys {
 };
 
 #define MSYS	16	/* maximum possible number of systems */
+
+#endif

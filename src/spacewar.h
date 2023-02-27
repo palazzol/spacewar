@@ -5,6 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __SPACEWAR_H__
+#define __SPACEWAR_H__
+
 #define SWCOMFILE	"/home/palazzol/sw/swcomm"
 
 #define SWDATABASE	"/home/palazzol/sw/swdb"
@@ -155,3 +158,5 @@ void vrmv(struct universe *puniv);
 
 
 void bitoff(char ary[],int bitno);
+
+#endif

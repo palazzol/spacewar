@@ -6,6 +6,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __OBJ_H__
+#define __OBJ_H__
+
 struct obj {
 	long	oj_mass;	/* object mass (for gravity) */
 	short	oj_rad;		/* object radius */
@@ -30,3 +33,5 @@ void objinit();
 #define MAXOBJ	42
 
 extern struct obj objlst[];
+
+#endif

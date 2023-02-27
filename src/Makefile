@@ -19,7 +19,7 @@ SOURCES= sw.c globals.c lckmsg.c proctrap.c shutdown.c \
 	update.c \
 	updaln.c upddmg.c upddsh.c updmov.c updobjs.c updsys.c updtorp.c \
 	bfuncs.c bits.c damage.c fixdir.c mutils.c vdisp.c remove.c rpt.c \
-	output.c scrn.c
+	output.c scrn.c flds.c
 OBJECTS= sw.o globals.o lckmsg.o proctrap.o shutdown.o \
 	alninit.o objinit.o crftupdate.o objupdate.o \
 	logon.o logoff.o \
@@ -29,7 +29,7 @@ OBJECTS= sw.o globals.o lckmsg.o proctrap.o shutdown.o \
 	update.o \
 	updaln.o upddmg.o upddsh.o updmov.o updobjs.o updsys.o updtorp.o \
 	bfuncs.o bits.o damage.o fixdir.o mutils.o vdisp.o remove.o rpt.o \
-	output.o scrn.o
+	output.o scrn.o flds.o
 
 all : sw psw rsw dmpdbm upddbm tstsz install
 

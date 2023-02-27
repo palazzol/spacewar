@@ -6,6 +6,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __TORP_H__
+#define __TORP_H__
+
 struct torp {
 	double	tp_pstn[3];	/* torpedo position */
 	double	tp_vel[3];	/* torpedo velocity */
@@ -23,3 +26,5 @@ struct torp {
 extern struct torp torplst[];
 
 #define MAXTTHR	50	/* maximum torp thrust from rockets */
+
+#endif

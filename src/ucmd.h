@@ -5,6 +5,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __UCMD_H__
+#define __UCMD_H__
+
 #define UCMD	'U'	/* prefix for dbm(3) key */
 
 struct ucmdkey {
@@ -13,3 +16,5 @@ struct ucmdkey {
 	char	uc_name[8+1];	/* user-command name */
 	short	uc_ucmd;	/* user-command sequence */
 };
+
+#endif

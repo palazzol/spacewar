@@ -6,6 +6,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __ALN_H__
+#define __ALN_H__
+
 struct aln {
 	double	al_pstn[3];	/* alien position */
 	double	al_vel[3];	/* alien velocity */
@@ -22,3 +25,5 @@ struct aln {
 #define MAXALN	30
 
 extern struct aln alnlst[];
+
+#endif
