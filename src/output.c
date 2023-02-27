@@ -23,7 +23,6 @@
 
 static char outbuf[80*24*2]="";
 static void doout(),dowrite();
-extern int errno;
 
 /*VARARGS1*/
 void output(struct login *plogin, char mode, int fld, char *str, ...)

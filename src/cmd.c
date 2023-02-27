@@ -318,7 +318,6 @@ static struct login *getinp()
 	int i;
 	char *p;
 	char *input;
-	extern int errno;
 #include "uio2.h"
 	struct uio2 inp2;
 

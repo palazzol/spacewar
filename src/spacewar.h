@@ -42,17 +42,16 @@
 #define SQUARE(x)	((x)*(x))
 #define CUBE(x)		((x)*(x)*(x))
 
-extern double sqrt();
-extern int rand();
+#include <stdlib.h>
+#include <math.h>
+
 #define SQRT(x)		(sqrt(x))
 #define RANDOM(x)	(rand()%(x))
 
-extern double atan2(),sin(),cos();
 #define ATAN2(x,y)	(atan2((x),(y)))
 #define SIN(x)		(sin(x))
 #define COS(x)		(cos(x))
 
-extern double fmod();
 #define FMOD(x,y)	(fmod((x),(y)))
 #define NEG(x)		(-(x))
 #define INT(x)		((long)(x))

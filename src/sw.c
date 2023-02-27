@@ -22,6 +22,9 @@ int numpling;
 #include <sys/types.h>
 #include <sys/stat.h>
 
+// add missing headers
+#include <errno.h>
+
 extern int doproctrap,doupdate;
 static int dbglvl = 0;
 static void catchtrp(),catchalrm();
@@ -31,7 +34,6 @@ int argc;
 char *argv[];
 {
 	extern void proctrap(),shutdown(),cmd();
-	extern int errno;
 
 	if (argc > 1) dbglvl = atoi(argv[1]);
 

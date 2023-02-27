@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <sys/wait.h>
 #include <termios.h>
+#include <errno.h>
 
 static void setTtyModes(plogin)
 struct login *plogin;
@@ -43,8 +44,6 @@ struct login *plogin;
 void logoff(plogin)
 struct login *plogin;
 {
-	extern int errno;
-
 	DBG("logoff(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
 
 	/* remove from universe if playing */

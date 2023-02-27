@@ -13,13 +13,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 
 void shutdown(e)
 int e;
 {
 	struct login *plogin;
 	int i;
-	extern int errno;
 
 	DBG("shutdown(%d)\n",e);
 

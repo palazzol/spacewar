@@ -172,10 +172,10 @@ static struct sysc *getsc;
 static int getsys();
 static int getcrft();
 static void fixdmg(),putcrft(),putsys(),delsys();
-extern long atol();
 
 // add missing headers
 #include <string.h>
+#include <stdlib.h>
 
 void build(plogin)
 struct login *plogin;
