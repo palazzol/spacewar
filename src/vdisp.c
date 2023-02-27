@@ -21,11 +21,11 @@
 #include <stdio.h>
 
 dsplcmnt vdisp(p1,p2,which)
-register struct universe *p1,*p2;
+struct universe *p1,*p2;
 char which;
 {
 	dsplcmnt d;
-	register dsplcmnt *pd;
+	dsplcmnt *pd;
 	double vlen();
 	int i,p1off;
 	int negate=0;
@@ -89,9 +89,9 @@ char which;
 void vchngd(puniv)
 struct universe *puniv;
 {
-	register dsplcmnt *pd;
+	dsplcmnt *pd;
 	int poff = (puniv - univlst);
-	register int i;
+	int i;
 
 	/* up to diagonal */
 	if (pd = puniv->uv_dspl) {

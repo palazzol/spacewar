@@ -28,12 +28,12 @@ extern char *tgetstr(),*lckmsg();
 extern int numpling;
 
 int plinit(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 	char trmbuf[2048],trmcap[128],*ptrmcap,*pcm,*pcl,*pce,*pso,*pse;
 	char buf[80+1+18],*s,*so,*se;
-	register struct universe *puniv;
-	register struct crft *pcrft;
+	struct universe *puniv;
+	struct crft *pcrft;
 	struct crftkey getcrkey;
 	struct crft getcrdat;
 	struct syskey getskey;

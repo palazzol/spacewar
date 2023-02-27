@@ -17,7 +17,7 @@
 void shutdown(e)
 int e;
 {
-	register struct login *plogin;
+	struct login *plogin;
 	int i;
 	extern int errno;
 

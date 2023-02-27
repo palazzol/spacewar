@@ -22,9 +22,9 @@ static long prtlvl(),strlvl();
 
 void updsys()
 {
-	register struct universe *puniv;
-	register struct obj *pobj;
-	register struct sys *psys,*psh;
+	struct universe *puniv;
+	struct obj *pobj;
+	struct sys *psys,*psh;
 	char *pchng;
 	double vdist(),ftmp;
 	long i,elvl;
@@ -133,7 +133,7 @@ void updsys()
 
 /* pro-rate level for %, %dmg */
 static long prtlvl(psys,isys,lvl)
-register struct sys *psys;
+struct sys *psys;
 int isys;
 long lvl;
 {

@@ -21,7 +21,7 @@ long gametime;
 void update()
 {
 	struct universe *puniv;
-	register struct login *plogin;
+	struct login *plogin;
 	struct crft *pcrft;
 	char *s,*lckmsg();
 	extern int numpling;

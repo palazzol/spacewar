@@ -19,9 +19,9 @@
 #include <string.h>
 
 void unplay(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
-	register struct crft *pcrft;
+	struct crft *pcrft;
 	struct crft *pcrft2;
 	struct sys *psys;
 	struct crftkey getcrkey;

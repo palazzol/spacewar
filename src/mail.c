@@ -37,9 +37,9 @@ struct mlst {
 static void sndmail(),dspmail();
 
 void mail(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
-	register struct mstat *pmstat;
+	struct mstat *pmstat;
 	struct mlbxkey getmbkey;
 	struct plyrkey getplkey;
 	struct plyr getpldat;
@@ -213,8 +213,8 @@ register struct login *plogin;
 }
 
 static void dspmail(plogin,pmstat)
-register struct login *plogin;
-register struct mstat *pmstat;
+struct login *plogin;
+struct mstat *pmstat;
 {
 	struct mlbxkey getmbkey;
 	struct plyrkey getplkey;
@@ -300,8 +300,8 @@ register struct mstat *pmstat;
 }
 
 static void sndmail(plogin,pmstat)
-register struct login *plogin;
-register struct mstat *pmstat;
+struct login *plogin;
+struct mstat *pmstat;
 {
 	time_t clock;
 	struct mlst *pmlst,*nxtmlst;

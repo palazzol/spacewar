@@ -28,7 +28,7 @@ extern void prvcmd();
 
 void cmd()
 {
-	register struct login *plogin;
+	struct login *plogin;
 
 	DBG("cmd()\n");
 
@@ -90,7 +90,7 @@ void cmd()
 }
 
 static void cmd2(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 	int inplen=strlen(plogin->ln_input);
 	struct plyrkey getplkey;
@@ -316,8 +316,8 @@ static struct login *getinp()
 {
 	struct uio inp;
 	int i;
-	register char *p;
-	register char *input;
+	char *p;
+	char *input;
 	extern int errno;
 #include "uio2.h"
 	struct uio2 inp2;

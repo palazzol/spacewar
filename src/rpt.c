@@ -33,7 +33,7 @@ struct crft *pcrft;
 }
 
 void fnshrpt(pcrft,flsh)
-register struct crft *pcrft;
+struct crft *pcrft;
 int flsh;
 {
 	int i;

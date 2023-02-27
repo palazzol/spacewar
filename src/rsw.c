@@ -22,7 +22,7 @@ int argc;
 char *argv[];
 {
 	struct uio ttyuio;
-	register int i;
+	int i;
 
 	/* get, save, and clear player's login pointer */
 	if (argc != 2) exit(1);

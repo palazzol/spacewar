@@ -23,8 +23,8 @@
 void upddmg()
 {
 	struct universe *puniv;
-	register struct sys *psys,*pdmgcon;
-	register struct crft *pcrft,*phit;
+	struct sys *psys,*pdmgcon;
+	struct crft *pcrft,*phit;
 	struct aln *paln;
 	struct torp *ptorp;
 	struct login *plogin;

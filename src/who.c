@@ -13,9 +13,9 @@
 #include <string.h>
 
 void who(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
-	register struct login *plgn=loginlst+MAXLOGIN;
+	struct login *plgn=loginlst+MAXLOGIN;
 	char buf[40+1];
 
 	DBG("who(#%d/%s)\n",plogin-loginlst,plogin->ln_name);

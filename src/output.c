@@ -27,7 +27,7 @@ static void doout(),dowrite();
 extern int errno;
 
 /*VARARGS1*/
-void output(register struct login *plogin, char mode, int fld, char *str, ...)
+void output(struct login *plogin, char mode, int fld, char *str, ...)
 {
 	int val2,val3,val4;
 	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();

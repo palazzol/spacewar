@@ -18,7 +18,7 @@
 #include <termios.h>
 
 void logon(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 
 	DBG("logon(#%d/%s)\n",plogin-loginlst,plogin->ln_name);

@@ -46,7 +46,7 @@ struct crft *pcrft;
 		{0,	75,	"%DMG"}
 	};
 	int i;
-	register struct flddesc *pfld;
+	struct flddesc *pfld;
 
 	for (pfld=flds+FLD_BACKGROUND,i=0;i < sizeof(bg)/sizeof(bg[0]);++i) {
 		pfld->f_row = bg[i].bg_row;
@@ -56,7 +56,7 @@ struct crft *pcrft;
 }
 
 void nums(pcrft)
-register struct crft *pcrft;
+struct crft *pcrft;
 {
 	int i,j;
 	struct sys *psys;
@@ -129,14 +129,14 @@ int val2,val3,val4;
 }
 
 void view(pcrft)
-register struct crft *pcrft;
+struct crft *pcrft;
 {
 	char vnew[15][31],buf[31+1];
 	double vdst[15][31],tmpdst,tmpvec[3],hlfvang;
 	dsplcmnt tmpdspl;
 	long ldst;
 	int row,col,savrow,savcol;
-	register struct universe *puniv;
+	struct universe *puniv;
 	static char vinit[]="\
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\
 @@@@@@@@       |       @@@@@@@@\

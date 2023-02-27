@@ -13,7 +13,7 @@
 #include "flds.h"
 
 void fixdir(pcrft)
-register struct crft *pcrft;
+struct crft *pcrft;
 {
 	double tmp;
 

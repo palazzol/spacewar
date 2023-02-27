@@ -18,7 +18,7 @@ void objupdate()
 {
 	char buf[128];
 	FILE *fobj;
-	register struct obj *p=objlst;
+	struct obj *p=objlst;
 
 	DBG("objupdate()\n");
 

@@ -25,13 +25,13 @@ extern double vlen();
 
 void updmov()
 {
-	register struct universe *puniv,*pobj;
-	register struct sys *psys;
+	struct universe *puniv,*pobj;
+	struct sys *psys;
 	double *ppstn,*pvel,*pthr;
 	double accel[3],ftmp,tmpvec[3];
 	char *pchng;
 	long l,m,sub;
-	register int i;
+	int i;
 	dsplcmnt tmpdspl;
 
 	DBG("updmov()\n");

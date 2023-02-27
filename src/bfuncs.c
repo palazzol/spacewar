@@ -10,39 +10,39 @@
 #include <string.h>
 
 void bytecopy(dst,src,len)
-register char *dst,*src;
-register int len;
+char *dst,*src;
+int len;
 {
 	memcpy(dst,src,len);
 }
 
 void binit(dst,len)
-register char *dst;
-register int len;
+char *dst;
+int len;
 {
 	memset(dst, 0, len);
 }
 
 void vcopy(dst,src)
-register double *dst,*src;
+double *dst,*src;
 {
 	memcpy(dst,src,3*sizeof(double));
 }
 
 void mcopy(dst,src)
-register double dst[3][3],src[3][3];
+double dst[3][3],src[3][3];
 {
 	memcpy(dst,src,9*sizeof(double));
 }
 
 void vinit(dst)
-register double *dst;
+double *dst;
 {
 	memset(dst, 0, 3*sizeof(double));
 }
 
 void minit(dst)
-register double dst[3][3];
+double dst[3][3];
 {
 	memset(dst, 0, 9*sizeof(double));
 }

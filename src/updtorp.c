@@ -19,7 +19,7 @@
 
 void updtorp()
 {
-	register struct torp *ptorp;
+	struct torp *ptorp;
 	double tmpvec[3],*pvel,vlen();
 	long l,m;
 	int i;

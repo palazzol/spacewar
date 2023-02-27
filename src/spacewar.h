@@ -82,29 +82,29 @@ void update();
 void firstplyr();
 
 struct login;
-void output(register struct login *plogin, 
+void output(struct login *plogin, 
 			char mode, 
 			int fld, 
 			char *str, 
 			...);
 
 void objupdate();
-void crftupdate(register struct login *plogin);
-void logoff(register struct login *plogin);
-void vinit(register double *dst);
+void crftupdate(struct login *plogin);
+void logoff(struct login *plogin);
+void vinit(double *dst);
 void updobjs();
 void unity(double mtrx[3][3]);
 void xrot(double rotmtrx[3][3], double rotangl);
 void yrot(double rotmtrx[3][3], double rotangl);
 void zrot(double rotmtrx[3][3], double rotangl);
-void binit(register char *dst, register int len);
-void unplay(register struct login *plogin);
-void play(register struct login *plogin);
-void mail(register struct login *plogin);
+void binit(char *dst, int len);
+void unplay(struct login *plogin);
+void play(struct login *plogin);
+void mail(struct login *plogin);
 void build(struct login *plogin);
-void see(register struct login *plogin);
-void usrcmd(register struct login *plogin);
-void who(register struct login *plogin);
+void see(struct login *plogin);
+void usrcmd(struct login *plogin);
+void who(struct login *plogin);
 
 #include "uio.h"
 #include "uio2.h"
@@ -117,40 +117,40 @@ void prvlck(char *s);
 #include "universe.h"
 void removeu(idxptr prmv);
 
-int plinit(register struct login *plogin);
+int plinit(struct login *plogin);
 void background(struct crft *pcrft);
 void biton(char ary[],int bitno);
 void rttosp(double rtvec[3],double spvec[3]);
 void vecmul(double avec[3],double bmtrx[3][3],double cvec[3]);
 void sptort(double spvec[3],double rtvec[3]);
 void vchngd(struct universe *puniv);
-void vcopy(register double *dst,register double *src);
+void vcopy(double *dst,double *src);
 void rpt(struct crft *pcrft,char *msg);
 void setrpt(struct crft *pcrft);
-void fnshrpt(register struct crft *pcrft,int flsh);
+void fnshrpt(struct crft *pcrft,int flsh);
 void damage(struct universe *patck,
 			struct universe *ptrgt,
 			double rng,
 			double dmg,
 			char *msg);
-void vdiff(register double *avec,register double *bvec,register double *cvec);
-void nums(register struct crft *pcrft);
-void view(register struct crft *pcrft);
+void vdiff(double *avec,double *bvec,double *cvec);
+void nums(struct crft *pcrft);
+void view(struct crft *pcrft);
 int tgetent(char *p1,char *termname);
-void fixdir(register struct crft *pcrft);
+void fixdir(struct crft *pcrft);
 void updmov();
 void updtorp();
 void updaln();
 void upddmg();
 void updsys();
 void upddsh();
-void bytecopy(register char *dst,
-		   register char *src,
-		   register int len);
+void bytecopy(char *dst,
+		   char *src,
+		   int len);
 int nabit(char ary[],int bitno);
-void minit(register double dst[3][3]);
-void mcopy(register double dst[3][3],
-		   register double src[3][3]);
+void minit(double dst[3][3]);
+void mcopy(double dst[3][3],
+		   double src[3][3]);
 void vrmv(struct universe *puniv);
 
 

@@ -20,8 +20,8 @@ extern double vlen(),vdist();
 
 void upddsh()
 {
-	register struct crft *pcrft;
-	register struct universe *puniv;
+	struct crft *pcrft;
+	struct universe *puniv;
 	double tmpvec[3];
 	int i,sens0,sens1;
 	long l;

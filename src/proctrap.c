@@ -26,7 +26,7 @@ static int setupread();
 void proctrap(uio)
 struct uio2 uio;
 {
-	register struct login *plogin;
+	struct login *plogin;
 	int i;
 	extern void logon(),logoff();
 
@@ -88,7 +88,7 @@ struct uio2 uio;
  * returns non-zero if successful, 0 otherwise
  */
 static int setupread(plogin,playpid,ttynm)
-register struct login *plogin;
+struct login *plogin;
 int playpid;
 char *ttynm;
 {

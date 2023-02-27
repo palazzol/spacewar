@@ -17,15 +17,15 @@
 #include <string.h>
 
 void crftupdate(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 	struct login *plow,*phigh;
 	struct crftkey getcrkey;
 	struct crft getcrdat;
 	struct syskey getskey;
 	datum dbmkey,dbmdata;
-	register struct sys *psys;
-	register int i;
+	struct sys *psys;
+	int i;
 
 
 	/* do a specific one or all */

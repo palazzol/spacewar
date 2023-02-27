@@ -21,7 +21,7 @@
 #include <termios.h>
 
 static void setTtyModes(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 	struct termios tmode;
 
@@ -41,7 +41,7 @@ register struct login *plogin;
 }
 
 void logoff(plogin)
-register struct login *plogin;
+struct login *plogin;
 {
 	extern int errno;
 

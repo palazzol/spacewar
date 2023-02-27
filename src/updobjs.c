@@ -11,7 +11,7 @@
 
 void updobjs()
 {
-	register struct obj *pobj;
+	struct obj *pobj;
 	double tmpvec[3];
 	int i;
 

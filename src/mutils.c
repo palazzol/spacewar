@@ -117,9 +117,9 @@ double rtvec[3],spvec[3];
 }
 
 void vdiff(avec,bvec,cvec)
-register double *avec,*bvec,*cvec;
+double *avec,*bvec,*cvec;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<3;)
 		*cvec++ = *avec++ - *bvec++;

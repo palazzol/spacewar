@@ -27,9 +27,9 @@ struct universe *patck,*ptrgt;
 double rng,dmg;
 char *msg;
 {
-	register struct universe *puniv;
+	struct universe *puniv;
 	struct universe *plhit,*prvatck;
-	register struct sys *psys,*psysdmg;
+	struct sys *psys,*psysdmg;
 	struct crft *pcrft;
 	struct aln *paln;
 	struct torp *ptorp;
