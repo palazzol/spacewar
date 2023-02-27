@@ -7,55 +7,42 @@
 
 #include "spacewar.h"
 
+#include <string.h>
+
 void bytecopy(dst,src,len)
 register char *dst,*src;
 register int len;
 {
-	while (len-- > 0)
-		*dst++ = *src++;
+	memcpy(dst,src,len);
 }
 
 void binit(dst,len)
 register char *dst;
 register int len;
 {
-	while (len-- > 0)
-		*dst++ = 0;
+	memset(dst, 0, len);
 }
 
 void vcopy(dst,src)
 register double *dst,*src;
 {
-	register int i;
-
-	for (i=0;i++<3;)
-		*dst++ = *src++;
+	memcpy(dst,src,3*sizeof(double));
 }
 
 void mcopy(dst,src)
 register double dst[3][3],src[3][3];
 {
-	register int i;
-	register double *dst2 = (double *)dst;
-	register double *src2 = (double *)src;	
-	for (i=0;i++<9;)
-		*dst2++ = *src2++;
+	memcpy(dst,src,9*sizeof(double));
 }
 
 void vinit(dst)
 register double *dst;
 {
-	register int i;
-
-	for (i=0;i++<3;)
-		*dst++ = 0.;
+	memset(dst, 0, 3*sizeof(double));
 }
 
 void minit(dst)
 register double dst[3][3];
 {
-	register int i;
-	register double *dst2 = (double *)dst;
-	for (i=0;i++<9;)
-		*dst2++ = 0.;
+	memset(dst, 0, 9*sizeof(double));
 }
