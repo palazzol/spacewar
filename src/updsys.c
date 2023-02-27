@@ -40,7 +40,7 @@ void updsys()
 	    switch(puniv->uv_type) {
 		case 'A':
 		    psys = puniv->uv_ptr.uv_aln->al_sys;
-		    pchng = NULL;
+		    pchng = nullptr;
 		    break;
 		case 'P':
 		    psys = puniv->uv_ptr.uv_crft->cr_sys;

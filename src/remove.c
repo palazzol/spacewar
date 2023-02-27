@@ -41,11 +41,11 @@ idxptr prmv;
 		case 'A':
 		    paln = puniv->uv_ptr.uv_aln;
 		    if (paln->al_lhit.ip_ptr == prmv.ip_ptr) {
-			paln->al_lhit.ip_ptr = NULL;
+			paln->al_lhit.ip_ptr = nullptr;
 			paln->al_aeval = 0;
 		    }
 		    if (paln->al_atck.ip_ptr == prmv.ip_ptr) {
-			paln->al_atck.ip_ptr = NULL;
+			paln->al_atck.ip_ptr = nullptr;
 			paln->al_dly = 0;
 		    }
 		    break;
@@ -53,33 +53,33 @@ idxptr prmv;
 		case 'P':
 		    pcrft = puniv->uv_ptr.uv_crft;
 		    if (pcrft->cr_dock.ip_ptr == prmv.ip_ptr) {
-			pcrft->cr_dock.ip_ptr = NULL;
+			pcrft->cr_dock.ip_ptr = nullptr;
 			pcrft->cr_scrn[7][15] = '?';
 		    }
 		    for (i=0;i < MHOM;++i)
 			if (pcrft->cr_hom[i].ip_ptr == prmv.ip_ptr) {
-			    pcrft->cr_hom[i].ip_ptr = NULL;
+			    pcrft->cr_hom[i].ip_ptr = nullptr;
 			    biton(pcrft->cr_chng,BIT_HOMCHAN+i);
 			}
 		    if (pcrft->cr_auto.ip_ptr == prmv.ip_ptr) {
-			pcrft->cr_auto.ip_ptr = NULL;
+			pcrft->cr_auto.ip_ptr = nullptr;
 			biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		    }
 		    if (pcrft->cr_lhit.ip_ptr == prmv.ip_ptr)
-			pcrft->cr_lhit.ip_ptr = NULL;
+			pcrft->cr_lhit.ip_ptr = nullptr;
 		    break;
 
 		case 'T':
 		    ptorp = puniv->uv_ptr.uv_torp;
 		    if (ptorp->tp_lhit.ip_ptr == prmv.ip_ptr)
-			ptorp->tp_lhit.ip_ptr = NULL;
+			ptorp->tp_lhit.ip_ptr = nullptr;
 		    if (ptorp->tp_fby.ip_ptr == prmv.ip_ptr) {
 			/**** don't remove (hee hee hee)****/
 			/****idxptr xrmv;		****/
 			/****xrmv.ip_ptr = puniv;	****/
 			/****removeu(xrmv);		****/
 			/****continue;			****/
-			ptorp->tp_fby.ip_ptr = NULL;
+			ptorp->tp_fby.ip_ptr = nullptr;
 		    }
 		    if (ptorp->tp_aim.ip_ptr == prmv.ip_ptr) {
 			if (ptorp->tp_fby.ip_ptr &&
@@ -105,8 +105,8 @@ idxptr prmv;
 	    vinit(paln->al_vel);
 	    vinit(paln->al_thr);
 	    paln->al_dly = 0;
-	    paln->al_lhit.ip_ptr = NULL;
-	    paln->al_atck.ip_ptr = NULL;
+	    paln->al_lhit.ip_ptr = nullptr;
+	    paln->al_atck.ip_ptr = nullptr;
 	    paln->al_aeval = 0;
 	    for (i=0;i<MSYS;++i)
 		paln->al_sys[i].s_dmg = 0;

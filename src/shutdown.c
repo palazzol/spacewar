@@ -34,7 +34,7 @@ int e;
 	for (plogin=loginlst,i=MAXLOGIN;i-- > 0;++plogin)
 		if (plogin->ln_tty) {
 			if (plogin->ln_play.ip_ptr) {
-				plogin->ln_play.ip_ptr = NULL;
+				plogin->ln_play.ip_ptr = nullptr;
 				output(plogin,'E',0,0);
 			}
 			output(plogin,'B',0,0);

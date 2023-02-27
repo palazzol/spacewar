@@ -98,12 +98,12 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	    !(plogin->ln_tso = malloc((unsigned)strlen(pso)+1)) ||
 	    !(plogin->ln_tse = malloc((unsigned)strlen(pse)+1))) {
 		perror("plinit: out of memory for termcaps");
-		plogin->ln_term = NULL;
-		plogin->ln_tcm = NULL;
-		plogin->ln_tcl = NULL;
-		plogin->ln_tce = NULL;
-		plogin->ln_tso = NULL;
-		plogin->ln_tse = NULL;
+		plogin->ln_term = nullptr;
+		plogin->ln_tcm = nullptr;
+		plogin->ln_tcl = nullptr;
+		plogin->ln_tce = nullptr;
+		plogin->ln_tso = nullptr;
+		plogin->ln_tse = nullptr;
 		goto noplay;
 	    }
 	    strcpy(plogin->ln_term,plogin->ln_input);
@@ -179,7 +179,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 
 	/* if first time playing, pick a pstn near the object */
 	if (pcrft->cr_dock.ip_ofst == -1) {
-	    pcrft->cr_dock.ip_ptr = NULL;
+	    pcrft->cr_dock.ip_ptr = nullptr;
 	    i = RANDOM(MAXOBJ-1) + 1; /* 1:MAXOBJ-1 */
 	    vcopy(pcrft->cr_pstn,univlst[i].uv_pstn);
 	    pcrft->cr_pstn[0] =
@@ -197,7 +197,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 	/* previously docked with a non-object; pstn remains the same */
 	} else if (pcrft->cr_dock.ip_ofst >= MAXOBJ ||
 	pcrft->cr_dock.ip_ofst <= 0) {
-	    pcrft->cr_dock.ip_ptr = NULL;
+	    pcrft->cr_dock.ip_ptr = nullptr;
 
 	/* prevsiously docked with an object; pstn shifts to object */
 	} else if (pcrft->cr_dock.ip_ofst) {
@@ -207,12 +207,12 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 
 	/* turn off inappropriate homing/autopilot */
 	if (pcrft->cr_auto.ip_ofst >= MAXOBJ || pcrft->cr_auto.ip_ofst <= 0)
-	    pcrft->cr_auto.ip_ptr = NULL;
+	    pcrft->cr_auto.ip_ptr = nullptr;
 	else
 	    pcrft->cr_auto.ip_ptr = univlst + pcrft->cr_auto.ip_ofst;
 	for (i=0;i < MHOM;++i) {
 	    if (pcrft->cr_hom[i].ip_ofst >= MAXOBJ || pcrft->cr_hom[i].ip_ofst <= 0)
-		pcrft->cr_hom[i].ip_ptr = NULL;
+		pcrft->cr_hom[i].ip_ptr = nullptr;
 	    else
 		pcrft->cr_hom[i].ip_ptr = univlst + pcrft->cr_hom[i].ip_ofst;
 	}
@@ -236,7 +236,7 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 
 	/* et al */
 	pcrft->cr_lgn = plogin;
-	pcrft->cr_lhit.ip_ptr = NULL;
+	pcrft->cr_lhit.ip_ptr = nullptr;
 	plogin->ln_iomode = 's';
 	strcpy(plogin->ln_crft,getcrkey.cr_name);
 	plogin->ln_play.ip_ptr = puniv;

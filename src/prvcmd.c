@@ -204,7 +204,7 @@ struct login *plogin;
 	    s += 5;
 	    while (*s == ' ') ++s;
 	    strcpy(msg,s);
-	    prvlck((*s) ? msg : NULL);
+	    prvlck((*s) ? msg : nullptr);
 
 	} else if (!strcmp(".unlock",s)) {
 	    prvlck("");
@@ -221,6 +221,6 @@ idxptr ip;
 	if (ip.ip_ptr)
 	    sprintf(buf,"#%-3d",ip.ip_ptr-univlst);
 	else
-	    strcpy(buf,"NULL");
+	    strcpy(buf,"nullptr");
 	return(buf);
 }

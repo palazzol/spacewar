@@ -27,28 +27,28 @@ struct login *plogin;
 	plogin->ln_name[0] = 0;
 	if (plogin->ln_term)
 		free(plogin->ln_term);
-	plogin->ln_term = NULL;
+	plogin->ln_term = nullptr;
 	if (plogin->ln_tcm)
 		free(plogin->ln_tcm);
-	plogin->ln_tcm = NULL;
+	plogin->ln_tcm = nullptr;
 	if (plogin->ln_tcl)
 		free(plogin->ln_tcl);
-	plogin->ln_tcl = NULL;
+	plogin->ln_tcl = nullptr;
 	if (plogin->ln_tce)
 		free(plogin->ln_tce);
-	plogin->ln_tce = NULL;
+	plogin->ln_tce = nullptr;
 	if (plogin->ln_tso)
 		free(plogin->ln_tso);
-	plogin->ln_tso = NULL;
+	plogin->ln_tso = nullptr;
 	if (plogin->ln_tse)
 		free(plogin->ln_tse);
-	plogin->ln_tse = NULL;
+	plogin->ln_tse = nullptr;
 	plogin->ln_rvslh = 0;
 	plogin->ln_iomode = 0;
 	plogin->ln_crft[0] = 0;
-	plogin->ln_play.ip_ptr = NULL;
+	plogin->ln_play.ip_ptr = nullptr;
 	plogin->ln_stat = 0;
-	plogin->ln_substat = NULL;
+	plogin->ln_substat = nullptr;
 	plogin->ln_input[0] = 0;
 
 	/*****************/

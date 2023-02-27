@@ -60,10 +60,10 @@ char *msg;
 	    /*******************************/
 	    /* figure shielding protection */
 	    /*******************************/
-	    psys = NULL;
-	    pcrft = NULL;
-	    paln = NULL;
-	    ptorp = NULL;
+	    psys = nullptr;
+	    pcrft = nullptr;
+	    paln = nullptr;
+	    ptorp = nullptr;
 	    switch(puniv->uv_type) {
 		case 'T':
 		    if (patck == puniv) continue;

@@ -235,7 +235,7 @@ redraw:		background(pcrft);
 		    goto badinp2;
 		}
 
-		pcrft->cr_hom[i].ip_ptr = NULL;
+		pcrft->cr_hom[i].ip_ptr = nullptr;
 		pcrft->cr_hdst[i] = 0;
 		biton(pcrft->cr_chng,BIT_HOMCHAN+i);
 		break;
@@ -249,7 +249,7 @@ redraw:		background(pcrft);
 		    goto badinp2;
 		}
 		pcrft->cr_ffwd = 1;
-		pcrft->cr_auto.ip_ptr = NULL;
+		pcrft->cr_auto.ip_ptr = nullptr;
 		rttosp(pcrft->cr_vel,pcrft->cr_dir);
 		biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		biton(pcrft->cr_chng,BIT_DIR1);
@@ -295,7 +295,7 @@ redraw:		background(pcrft);
 			puniv->uv_ptr.uv_crft->cr_dock.ip_ptr;
 		    /* but not to player's own craft */
 		    if (pcrft->cr_auto.ip_ptr == plogin->ln_play.ip_ptr)
-			pcrft->cr_auto.ip_ptr = NULL;
+			pcrft->cr_auto.ip_ptr = nullptr;
 
 		/* to closest to center/closest object */
 		} else {
@@ -307,7 +307,7 @@ doauto:		    /* use viewing distance and smaller of */
 			ftmp = pcrft->cr_vang;
 		    ftmp = DIV(ftmp,2.);
 		    l = pcrft->cr_vdst;
-		    pcrft->cr_auto.ip_ptr = NULL;
+		    pcrft->cr_auto.ip_ptr = nullptr;
 
 		    /* select based on closest to center/closest */
 		    for (puniv = univlst+MAXUNIVERSE;puniv-- > univlst;) {
@@ -421,7 +421,7 @@ doauto:		    /* use viewing distance and smaller of */
 		    for (i=0;i<3;++i)
 			pcrft->cr_pstn[i] = ADD(pcrft->cr_pstn[i],tmpvec[i]);
 		    vchngd(pcrft->cr_univ.ip_ptr);
-		    pcrft->cr_dock.ip_ptr = NULL;
+		    pcrft->cr_dock.ip_ptr = nullptr;
 		    pcrft->cr_scrn[7][15] = '?';
 		}
 
@@ -465,11 +465,11 @@ doauto:		    /* use viewing distance and smaller of */
 
 		/* turn off auto/dock for this and other crafts on this craft */
 		if (pcrft->cr_dock.ip_ptr) {
-		    pcrft->cr_dock.ip_ptr = NULL;
+		    pcrft->cr_dock.ip_ptr = nullptr;
 		    pcrft->cr_scrn[7][15] = '?';
 		}
 		if (pcrft->cr_auto.ip_ptr) {
-		    pcrft->cr_auto.ip_ptr = NULL;
+		    pcrft->cr_auto.ip_ptr = nullptr;
 		    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		}
 		for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
@@ -477,12 +477,12 @@ doauto:		    /* use viewing distance and smaller of */
 		    if (puniv->uv_type != 'P') continue;
 		    pcrft2 = puniv->uv_ptr.uv_crft;
 		    if (pcrft2->cr_dock.ip_ptr == plogin->ln_play.ip_ptr) {
-			pcrft2->cr_dock.ip_ptr = NULL;
+			pcrft2->cr_dock.ip_ptr = nullptr;
 			pcrft2->cr_scrn[7][15] = '?';
 			pcrft->cr_scrn[7][15] = '?';
 		    }
 		    if (pcrft2->cr_auto.ip_ptr == plogin->ln_play.ip_ptr) {
-			pcrft2->cr_auto.ip_ptr = NULL;
+			pcrft2->cr_auto.ip_ptr = nullptr;
 			biton(pcrft2->cr_chng,BIT_AUTOFFWD);
 		    }
 		}
@@ -537,7 +537,7 @@ doauto:		    /* use viewing distance and smaller of */
 	    case 17:
 		/* find the closest, dock'able object */
 		l = 10000L;
-		pcrft->cr_dock.ip_ptr = NULL;
+		pcrft->cr_dock.ip_ptr = nullptr;
 		for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
 		    double *pvel;
 		    switch(puniv->uv_type) {
@@ -582,7 +582,7 @@ doauto:		    /* use viewing distance and smaller of */
 		    ADD(pcrft->cr_pstn[i],pcrft->cr_vel[i]));
 		if (INT(vlen(tmpvec)) > 5*(puniv->uv_rad+1)) {
 		    sprintf(buf,"%.22s - moving too fast",plogin->ln_input);
-		    pcrft->cr_dock.ip_ptr = NULL;
+		    pcrft->cr_dock.ip_ptr = nullptr;
 		    goto badinp2;
 		}
 
@@ -616,7 +616,7 @@ doauto:		    /* use viewing distance and smaller of */
 
 				/* its an object or itself - lose autopilot */
 				else
-				    pcrft2->cr_auto.ip_ptr = NULL;
+				    pcrft2->cr_auto.ip_ptr = nullptr;
 				biton(pcrft2->cr_chng,BIT_AUTOFFWD);
 				pcrft2->cr_scrn[7][15] = '?';
 			    }
@@ -630,7 +630,7 @@ doauto:		    /* use viewing distance and smaller of */
 				    pcrft2->cr_dock.ip_ptr =
 				    pcrft->cr_dock.ip_ptr;
 				else
-				    pcrft2->cr_dock.ip_ptr = NULL;
+				    pcrft2->cr_dock.ip_ptr = nullptr;
 				pcrft2->cr_scrn[7][15] = '?';
 			    }
 
@@ -655,7 +655,7 @@ doauto:		    /* use viewing distance and smaller of */
 			    if (paln->al_atck.ip_ptr == plogin->ln_play.ip_ptr
 			    && (pcrft->cr_dock.ip_ptr->uv_type == 'O' ||
 			    pcrft->cr_dock.ip_ptr == puniv)) {
-				paln->al_atck.ip_ptr = NULL;
+				paln->al_atck.ip_ptr = nullptr;
 			    }
 			    break;
 		    }
@@ -935,7 +935,7 @@ doauto:		    /* use viewing distance and smaller of */
 		ptorp->tp_dist = INT(vdist(ptorp->tp_pstn,
 		ptorp->tp_aim.ip_ptr->uv_pstn));
 		ptorp->tp_dmg = 0;
-		ptorp->tp_lhit.ip_ptr = NULL;
+		ptorp->tp_lhit.ip_ptr = nullptr;
 		puniv->uv_type = 'T';
 		puniv->uv_pctr = '+';
 		puniv->uv_pstn = ptorp->tp_pstn;
@@ -1182,7 +1182,7 @@ struct crft *pcrft;
 	    pcrft->cr_ffwd = 0;
 	    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 	} else if (pcrft->cr_auto.ip_ptr) {
-	    pcrft->cr_auto.ip_ptr = NULL;
+	    pcrft->cr_auto.ip_ptr = nullptr;
 	    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 	}
 }

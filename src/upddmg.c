@@ -44,9 +44,9 @@ void upddmg()
 		    paln->al_lhit.ip_ptr->uv_type == 'P')
 			phit = paln->al_lhit.ip_ptr->uv_ptr.uv_crft;
 		    else
-			phit = NULL;
+			phit = nullptr;
 		    psys = paln->al_sys;
-		    pcrft = NULL;
+		    pcrft = nullptr;
 		    break;
 		case 'P':
 		    pcrft = puniv->uv_ptr.uv_crft;
@@ -54,9 +54,9 @@ void upddmg()
 		    pcrft->cr_lhit.ip_ptr->uv_type == 'P')
 			phit = pcrft->cr_lhit.ip_ptr->uv_ptr.uv_crft;
 		    else
-			phit = NULL;
+			phit = nullptr;
 		    psys = pcrft->cr_sys;
-		    paln = NULL;
+		    paln = nullptr;
 		    break;
 		case 'T':
 		    ptorp = puniv->uv_ptr.uv_torp;
@@ -111,7 +111,7 @@ void upddmg()
 
 		/* craft */
 		} else {
-		    pcrft->cr_dock.ip_ptr = NULL; /* assure destruction */
+		    pcrft->cr_dock.ip_ptr = nullptr; /* assure destruction */
 		    pcrft->cr_sens[1] = 1; /* assure destruction */
 		    unplay(plogin=pcrft->cr_lgn); /* *pcrft gets zeroed out */
 		    output(plogin,'E',0,0);
@@ -125,7 +125,7 @@ void upddmg()
 	    /* hull damage >= 60% causes gradual damage to all subsystems */
 	    /**************************************************************/
 	    } else if (psys[HULL].s_dmg >= 60) 
-		damage(NULL,puniv,1.,DIV(FLOAT(RANDOM(100)),69000.),
+		damage(nullptr,puniv,1.,DIV(FLOAT(RANDOM(100)),69000.),
 		"Hull damage >=60%");
 
 	    /******************/
@@ -167,7 +167,7 @@ void upddmg()
 			    if (pdmgcon->s_dmg < 45 && pdmgcon->s_dmg+i > 45)
 				pdmgcon->s_dmg = 45;
 			} else { /* can't be fixed any further */
-			    psys[DMGCON].s_lvl = NULL;
+			    psys[DMGCON].s_lvl = nullptr;
 			    biton(pcrft->cr_chng,
 			    BIT_SLEVEL+DMGCON*flds[FLD_SLEVEL].f_grpw);
 			}

@@ -120,7 +120,7 @@ static void catchalrm()
 
 #ifdef DEBUG
 
-#undef NULL
+#undef nullptr
 #include <stdio.h>
 
 /*VARARGS1*/

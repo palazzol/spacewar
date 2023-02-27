@@ -50,7 +50,7 @@ struct uio2 uio;
 			break;
 
 			case SIGINT:	/* restart if not playing */
-			if (plogin->ln_play.ip_ptr == NULL) {
+			if (plogin->ln_play.ip_ptr == nullptr) {
 				output(plogin,'C',0,
 				"\n\n\nInterrupt - restarting\n");
 				logon(plogin);
@@ -130,7 +130,7 @@ char *ttynm;
 			if (close(ttyfd)) perror(ttynm);
 			for (i=3;i < 20;fcntl(i++,F_SETFD,1));
 			sprintf(buf,"%ld",(long)plogin);
-			execlp(SWREAD,"rsw",buf,NULL);
+			execlp(SWREAD,"rsw",buf,(char *)nullptr);
 			perror(SWREAD);
 			exit(1);
 	}

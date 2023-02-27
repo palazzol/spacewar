@@ -162,8 +162,8 @@ struct crft *pcrft;
 	savcol = flds[FLD_VIEWSCREEN].f_col;
 
 	/* special case: draw entire viewscreen */
-	if (pcrft->cr_scrn[0][0] == NULL) {
-	    buf[31] = NULL;
+	if (pcrft->cr_scrn[0][0] == nullptr) {
+	    buf[31] = nullptr;
 	    bytecopy((char *)pcrft->cr_scrn,vinit,sizeof(pcrft->cr_scrn));
 	    for (row=0;row < 15;++row) {
 		bytecopy(buf,pcrft->cr_scrn[row],31);
@@ -209,7 +209,7 @@ struct crft *pcrft;
 	}
 
 	/* correct actual viewscreen (only put out differences) */
-	buf[1] = NULL;
+	buf[1] = nullptr;
 	for (row=0;row < 15;++row) {
 	    for (col=0;col < 31;++col) {
 		if (pcrft->cr_scrn[row][col] != vnew[row][col]) {

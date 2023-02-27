@@ -37,8 +37,8 @@ void alninit()
 
 		/* not doing(attacking) anything */
 		paln->al_dly = 0;
-		paln->al_lhit.ip_ptr = NULL;
-		paln->al_atck.ip_ptr = NULL;
+		paln->al_lhit.ip_ptr = nullptr;
+		paln->al_atck.ip_ptr = nullptr;
 		paln->al_aeval = 0;
 
 		/* choose a (random) hull type and give */

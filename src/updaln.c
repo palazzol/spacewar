@@ -117,7 +117,7 @@ noatck:
 	    /* randomly de-assign; decreasing probability based on aeval */
 	    if (paln->al_atck.ip_ptr &&
 	    RANDOM(5000) < 500 - paln->al_aeval)
-		paln->al_atck.ip_ptr = NULL;
+		paln->al_atck.ip_ptr = nullptr;
 	    if (paln->al_aeval > 0)
 		paln->al_aeval -= 1; /* decay of evaluation (lose interest) */
 
@@ -137,13 +137,13 @@ noatck:
 		    if (pcrft->cr_auto.ip_ptr &&
 		    pcrft->cr_auto.ip_ptr->uv_type == 'A' &&
 		    pcrft->cr_auto.ip_ptr->uv_ptr.uv_aln == paln) {
-			pcrft->cr_auto.ip_ptr = NULL;
+			pcrft->cr_auto.ip_ptr = nullptr;
 			biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		    }
 		    if (pcrft->cr_dock.ip_ptr &&
 		    pcrft->cr_dock.ip_ptr->uv_type == 'A' &&
 		    pcrft->cr_auto.ip_ptr->uv_ptr.uv_aln == paln) {
-			pcrft->cr_dock.ip_ptr = NULL;
+			pcrft->cr_dock.ip_ptr = nullptr;
 			pcrft->cr_scrn[7][15] = '?';
 		    }
 		}
@@ -166,7 +166,7 @@ noatck:
 		    tmpdspl = vdisp(paln->al_univ.ip_ptr,paln->al_atck.ip_ptr,'v');
 		    thr(paln,/*tmpvec*/tmpdspl.vec);
 		    paln->al_dly = 20;
-		    paln->al_atck.ip_ptr = NULL;
+		    paln->al_atck.ip_ptr = nullptr;
 		} else {
 		    /*ftmp = vdist(paln->al_pstn,paln->al_atck.ip_ptr->uv_pstn);*/
 		    tmpdspl = vdisp(paln->al_univ.ip_ptr,paln->al_atck.ip_ptr,'d');

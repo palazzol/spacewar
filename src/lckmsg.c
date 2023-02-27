@@ -22,7 +22,7 @@ char *lckmsg()
 
 	/* controlled by SWMASTER */
 	if (msg)
-	    return((*msg) ? msg : NULL);
+	    return((*msg) ? msg : nullptr);
 
 	/* get current date&time */
 	time(&clock);
@@ -30,15 +30,15 @@ char *lckmsg()
 
 	/* OK if Sat or Sun */
 	if (curtm->tm_wday == 0 || curtm->tm_wday == 6)
-	    return(NULL);
+	    return(nullptr);
 
 	/* OK if before 8AM or after 5PM */
 	if (curtm->tm_hour < 8 || curtm->tm_hour >= 17)
-	    return(NULL);
+	    return(nullptr);
 
 	/* OK if during lunch: 1130PM to 1PM */
 	if (curtm->tm_hour < 13 && curtm->tm_hour*100 + curtm->tm_min >= 1130)
-	    return(NULL);
+	    return(nullptr);
 
 	return("A lockout exists from 0800-1130,1300-1700 Mon-Fri");
 }

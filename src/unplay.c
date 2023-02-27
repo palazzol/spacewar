@@ -103,9 +103,9 @@ struct login *plogin;
 	/* put player back to command mode */
 	plogin->ln_iomode = 0;
 	plogin->ln_crft[0] = 0;
-	plogin->ln_play.ip_ptr = NULL;
+	plogin->ln_play.ip_ptr = nullptr;
 	plogin->ln_stat = 0;
-	plogin->ln_substat = NULL;
+	plogin->ln_substat = nullptr;
 
 	VDBG("unplay return\n");
 }

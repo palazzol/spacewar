@@ -23,10 +23,10 @@
 #define TWOPI		(6.2831853072)
 #define DEGTORAD	DIV(TWOPI,360.)
 #define PROMPT		"\nPlay/See/Info/Complain/Mail/reBuild/Usercmd/Logoff/Who>"
-#ifdef NULL
-#undef	NULL
+#ifdef nullptr
+#undef	nullptr
 #endif
-#define	NULL		(0)
+#define	nullptr		(0)
 
 /* uninteresting fudge factors */
 #define VANGVDST	(3084.2514)		/* makes 45deg match 5000 */

@@ -56,7 +56,7 @@ tryagain:
 				fcntl(2,F_SETFD,0);
 				close(2);
 				lseek(open(SWERR,1),0L,2);
-				environ = NULL;
+				environ = nullptr;
 				execle(SWGAME,"sw",(char *)0,(char *)0);
 				perror(SWGAME);
 				kill(uio.uio2pid,SIGKILL); /* inform parent */
