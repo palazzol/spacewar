@@ -9,13 +9,7 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#ifdef BSD
-#	include <sys/ioctl.h>
-	extern long lseek();
-#else /* SYSIII SYSV */
-#	include <fcntl.h>
-#endif /* BSD SYSIII SYSV */
-
+#include <fcntl.h>
 #include <signal.h>
 #include "spacewar.h"
 #include "uio2.h"
@@ -50,11 +44,7 @@ int main()
 	uio.uio2pid = getpid();
 
 	/* if spacewar not running, run it */
-#ifdef BSD
-	if (access(SWPIDFILE,0)) {
-#else /* SYSIII SYSV */
 	if (access(SWCOMFILE,0)) {
-#endif /* BSD SYSIII SYSV */
 tryagain:
 		write(2,waitmsg,strlen(waitmsg));
 		switch(fork()) {
@@ -62,13 +52,8 @@ tryagain:
 				perror("fork");
 				exit(1);
 			case 0: /* child */
-#ifdef BSD
-				for (i=0;i < 20;ioctl(i++,FIOCLEX,NULL));
-				ioctl(2,FIONCLEX,NULL);
-#else /* SYSIII SYSV */
 				for (i=0;i < 20;fcntl(i++,F_SETFD,1));
 				fcntl(2,F_SETFD,0);
-#endif /* BSD SYSIII SYSV */
 				close(2);
 				lseek(open(SWERR,1),0L,2);
 				environ = NULL;
@@ -77,11 +62,7 @@ tryagain:
 				kill(uio.uio2pid,SIGKILL); /* inform parent */
 				exit(1);
 			default: /* parent; wait for the game to get going */
-#ifdef BSD
-				while (access(SWPIDFILE,0))
-#else /* SYSIII SYSV */
 				while (access(SWCOMFILE,0))
-#endif /* BSD SYSIII SYSV */
 					sleep(2);
 				break;
 		}
@@ -97,21 +78,6 @@ tryagain:
 	signal(SIGQUIT,catchsig);
 	signal(SIGTERM,fixttyexit);
 
-#ifdef BSD
-	/* get pid of game to notify it of a new player */
-	if ((i=open(SWPIDFILE,0)) < 0 ||
-	read(i,&swpid,sizeof(swpid)) != sizeof(swpid) ||
-	close(i)) {
-		perror(SWPIDFILE);
-		exit(1);
-	}
-
-	/* open notification information file */
-	if ((swlgnfd=open(SWLGNFILE,1)) < 0) {
-		perror(SWLGNFILE);
-		exit(1);
-	}
-#else /* SYSIII SYSV */
 	/* open communication file */
 	if ((swlgnfd=open(SWCOMFILE,O_WRONLY|O_NDELAY)) < 0) {
 		perror("notify spacewar");
@@ -122,7 +88,6 @@ tryagain:
 		 *exit(1);
 		 */
 	}
-#endif /* BSD SYSIII SYSV */
 
 	/* get tty name and set permissions so */
 	/* that the spacewar game can communicate */
@@ -132,27 +97,10 @@ tryagain:
 	}
 	strcpy(uio.uio2tty,thistty);
 
-#ifdef BSD
-	/* notify spacewar of new player's tty and this program's pid */
-	if (lseek(swlgnfd,0L,2) < 0L ||
-	write(swlgnfd,&uio,sizeof(uio)) != sizeof(uio)) {
-		perror(SWLGNFILE);
-		fixttyexit(1);
-	}
-	if (kill(swpid,SIGTRAP)) {
-		perror("notify spacewar");
-		write(2,"Restarting!\n",12);
-		close(swlgnfd);
-		unlink(SWPIDFILE);
-		unlink(SWLGNFILE);
-		goto tryagain;
-	}
-#else /* SYSIII SYSV */
 	if (write(swlgnfd,&uio,sizeof(uio)) != sizeof(uio)) {
 		perror(SWCOMFILE);
 		fixttyexit(1);
 	}
-#endif /* BSD SYSIII SYSV */
 
 	/* wait for notification so that shell is tied up */
 	uio.uio2tty[0] = '\0';
@@ -165,22 +113,10 @@ int sig;
 	signal(sig,catchsig);
 	uio.uio2sig = sig;
 
-#ifdef BSD
-	if (lseek(swlgnfd,0L,2) < 0L ||
-	write(swlgnfd,&uio,sizeof(uio)) != sizeof(uio)) {
-		perror(SWLGNFILE);
-		fixttyexit(1);
-	}
-	if (kill(swpid,SIGTRAP)) {
-		perror("notify spacewar");
-		fixttyexit(1);
-	}
-#else /* SYSIII SYSV */
 	if (write(swlgnfd,&uio,sizeof(uio)) != sizeof(uio)) {
 		perror(SWCOMFILE);
 		fixttyexit(1);
 	}
-#endif /* BSD SYSIII SYSV */
 }
 
 static void fixttyexit(n)

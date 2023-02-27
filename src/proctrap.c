@@ -10,11 +10,7 @@
  */
 
 #include "spacewar.h"
-#ifdef BSD
-#	include <sys/ioctl.h>
-#else /* SYSIII SYSV */
-#	include <fcntl.h>
-#endif /* BSD SYSIII SYSV */
+#include <fcntl.h>
 #include <signal.h>
 #include "universe.h"
 #include "login.h"
@@ -27,86 +23,59 @@
 
 static int setupread();
 
-#ifdef BSD
-void proctrap(trapmsgfd,ntrapmsg)
-int trapmsgfd,*ntrapmsg;
-{
-	struct uio2 uio;
-#else /* SYSIII SYSV */
 void proctrap(uio)
 struct uio2 uio;
 {
-#endif /* BSD SYSIII SYSV */
 	register struct login *plogin;
 	int i;
 	extern void logon(),logoff();
 
-#ifdef BSD
-	DBG("proctrap(%d,%d)\n",trapmsgfd,*ntrapmsg);
+	DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
 
-	/* for as many traps as received */
-	do {
+	/* try to find player */
+	for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
+		if (plogin->ln_playpid == uio.uio2pid)
+			break;
+	VDBG("proctrap: login entry #%d\n",plogin-loginlst);
+	/* player is already logged on, therefore its a signal */
+	if (i) {
 
-		/* get the pid */
-		if (read(trapmsgfd,&uio,sizeof(uio)) != sizeof(uio)) {
-			perror("trapmsg file uio");
-			*ntrapmsg = 0;
-			VDBG("proctrap return\n");
-			return;
-		}
-		VDBG("proctrap: uio %d %d %.*s\n",uio.uio2sig,uio.uio2pid,
-		sizeof(uio.uio2tty),uio.uio2tty);
-#else /* SYSIII SYSV */
-		DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
-#endif /* BSD SYSIII SYSV */
+		/* process according to signal# */
+		switch(uio.uio2sig) {
 
-		/* try to find player */
-		for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
-			if (plogin->ln_playpid == uio.uio2pid)
-				break;
-		VDBG("proctrap: login entry #%d\n",plogin-loginlst);
-		/* player is already logged on, therefore its a signal */
-		if (i) {
+			case SIGQUIT:	/* wants to go away */
+			output(plogin,'E',0,0);
+			case SIGHUP:	/* or just went away */
+			logoff(plogin);
+			break;
 
-			/* process according to signal# */
-			switch(uio.uio2sig) {
-
-			    case SIGQUIT:	/* wants to go away */
-				output(plogin,'E',0,0);
-			    case SIGHUP:	/* or just went away */
-				logoff(plogin);
-				break;
-
-			    case SIGINT:	/* restart if not playing */
-				if (plogin->ln_play.ip_ptr == NULL) {
-					output(plogin,'C',0,
-					"\n\n\nInterrupt - restarting\n");
-					logon(plogin);
-				}
-				break;
-
-			    default:
-				perror("proctrap: unknown signal");
-				break;
-			}
-
-		/* not logged in, therefore its the ttyname */
-		} else {
-
-			/* find an available login */
-			for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
-				if (plogin->ln_tty == 0)
-					break;
-			VDBG("proctrap: available login entry #%d\n",
-			plogin-loginlst);
-			if (i && setupread(plogin,uio.uio2pid,uio.uio2tty))
+			case SIGINT:	/* restart if not playing */
+			if (plogin->ln_play.ip_ptr == NULL) {
+				output(plogin,'C',0,
+				"\n\n\nInterrupt - restarting\n");
 				logon(plogin);
-			else
-				kill(uio.uio2pid,SIGTERM);
+			}
+			break;
+
+			default:
+			perror("proctrap: unknown signal");
+			break;
 		}
-#ifdef BSD
-	} while (--(*ntrapmsg) > 0);
-#endif /* BSD */
+
+	/* not logged in, therefore its the ttyname */
+	} else {
+
+		/* find an available login */
+		for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
+			if (plogin->ln_tty == 0)
+				break;
+		VDBG("proctrap: available login entry #%d\n",
+		plogin-loginlst);
+		if (i && setupread(plogin,uio.uio2pid,uio.uio2tty))
+			logon(plogin);
+		else
+			kill(uio.uio2pid,SIGTERM);
+	}
 	VDBG("proctrap return\n");
 }
 
@@ -150,18 +119,6 @@ char *ttynm;
 			return(0);
 
 		case 0:		/* child */
-#ifdef BSD
-			if (dup2(ttyfd,0) < 0) {
-				perror("dup2");
-				exit(1);
-			}
-			if (close(ttyfd)) perror(ttynm);
-			for (i=3;i < 20;ioctl(i++,FIOCLEX,NULL));
-#ifdef TIOCGPGRP
-			ioctl(0,TIOCGPGRP,&i);
-			setpgrp(0,i);
-#endif
-#else /* SYSIII SYSV */
 			if (close(0)) {
 				perror("close(0)");
 				exit(1);
@@ -172,7 +129,6 @@ char *ttynm;
 			}
 			if (close(ttyfd)) perror(ttynm);
 			for (i=3;i < 20;fcntl(i++,F_SETFD,1));
-#endif /* BSD SYSIII SYSV */
 			sprintf(buf,"%ld",(long)plogin);
 			execlp(SWREAD,"rsw",buf,NULL);
 			perror(SWREAD);

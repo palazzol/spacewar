@@ -14,21 +14,31 @@
 #include "universe.h"
 #include "login.h"
 
-#if 0
-#ifdef BSD
-#	include <sgtty.h>
-#else /* SYSIII SYSV */
-#	include <sys/types.h>
-#	include <sys/ioctl.h>
-#	include <termio.h>
-#endif /* BSD SYSIII SYSV */
-#endif
-
 // add missing headers
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
 #include <termios.h>
+
+static void setTtyModes(plogin)
+register struct login *plogin;
+{
+	struct termios tmode;
+
+	if (tcgetattr(plogin->ln_tty,&tmode)) {
+		perror("tcgetattr");
+	}
+
+	/* reset echo and erase/kill edit processing */
+	/* (too bad the previous states weren't saved)  */
+	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
+	tmode.c_cc[VEOF] = CEOF;
+	tmode.c_cc[VEOL] = CEOL;
+
+	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
+		perror("tcsetattr");
+	}
+}
 
 void logoff(plogin)
 register struct login *plogin;
@@ -43,71 +53,10 @@ register struct login *plogin;
 	/*****************/
 	/* set tty modes */
 	/*****************/
-#if 0
-#ifdef BSD
-	{
-	struct sgttyb tmode;
-
-	if (gtty(plogin->ln_tty,&tmode)) {
-		perror("gtty");
-		goto sigh;	/* horrendous */
-	}
-
-	/* reset echo and no cbreak mode */
-	/* (too bad the previous states weren't saved)  */
-	tmode.sg_flags &= ~CBREAK;
-	tmode.sg_flags |= ECHO;
-
-	if (stty(plogin->ln_tty,&tmode)) {
-		perror("stty");
-		goto sigh;	/* horrendous */
-	}
-	}
-#else /* SYSIII SYSV */
-	{
-	struct termio tmode;
-
-	if (ioctl(plogin->ln_tty,TCGETA,&tmode)) {
-		perror("ioctl TCGETA");
-		goto sigh;	/* horrendous */
-	}
-
-	/* reset echo and erase/kill edit processing */
-	/* (too bad the previous states weren't saved)  */
-	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
-	tmode.c_cc[VEOF] = CEOF;
-	tmode.c_cc[VEOL] = CEOL;
-
-	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
-		perror("ioctl TCSETA");
-		goto sigh;	/* horrendous */
-	}
-	}
-#endif /* BSD SYSIII SYSV */
-#endif
-
-	{
-	struct termios tmode;
-
-	if (tcgetattr(plogin->ln_tty,&tmode)) {
-		perror("tcgetattr");
-		goto sigh;	/* horrendous */
-	}
-
-	/* reset echo and erase/kill edit processing */
-	/* (too bad the previous states weren't saved)  */
-	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
-	tmode.c_cc[VEOF] = CEOF;
-	tmode.c_cc[VEOL] = CEOL;
-
-	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
-		perror("tcsetattr");
-		goto sigh;	/* horrendous */
-	}
-	}
+	setTtyModes(plogin);
 
 	/* close the player's terminal and kill the read and play processes */
-sigh:
+	
 	if (close(plogin->ln_tty))
 		perror("close");
 	if (kill(plogin->ln_readpid,SIGTERM))

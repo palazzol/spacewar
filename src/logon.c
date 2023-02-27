@@ -15,17 +15,6 @@
 // add missing headers
 #include <stdlib.h>
 #include <stdio.h>
-
-#if 0
-#ifdef BSD
-#	include <sgtty.h>
-#else /* SYSIII SYSV */
-#	include <sys/types.h>
-#	include <sys/ioctl.h>
-#	include <termio.h>
-#endif /* BSD SYSIII SYSV */
-#endif
-
 #include <termios.h>
 
 void logon(plogin)
@@ -65,57 +54,6 @@ register struct login *plogin;
 	/*****************/
 	/* set tty modes */
 	/*****************/
-#if 0
-#ifdef BSD
-	{
-	struct sgttyb tmode;
-
-	if (gtty(plogin->ln_tty,&tmode)) {
-		perror("gtty");
-		logoff(plogin);
-		VDBG("logon return\n");
-		return;
-	}
-
-	/* insure no echo and cbreak mode */
-	/* (too bad the previous states aren't saved)  */
-	tmode.sg_flags |= CBREAK;
-	tmode.sg_flags &= ~(RAW+ECHO);
-
-	if (stty(plogin->ln_tty,&tmode)) {
-		perror("stty");
-		logoff(plogin);
-		VDBG("logon return\n");
-		return;
-	}
-	}
-#else /* SYSIII SYSV */
-	{
-	struct termio tmode;
-
-	if (ioctl(plogin->ln_tty,TCGETA,&tmode)) {
-		perror("ioctl TCGETA");
-		logoff(plogin);
-		VDBG("logon return\n");
-		return;
-	}
-
-	/* insure no echo and no erase/kill edit processing */
-	/* (too bad the previous states aren't saved)  */
-	tmode.c_lflag &= ~(ICANON+ECHO+ECHOE+ECHOK+ECHONL);
-	tmode.c_cc[VMIN] = 1;
-	tmode.c_cc[VTIME] = 0;
-
-	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
-		perror("ioctl TCSETA");
-		logoff(plogin);
-		VDBG("logon return\n");
-		return;
-	}
-	}
-#endif /* BSD SYSIII SYSV */
-#endif
-	{
 	struct termios tmode;
 	// Get the current tty settings
 	if (tcgetattr(plogin->ln_tty, &tmode))
@@ -145,7 +83,6 @@ register struct login *plogin;
 		return;
 	}
 
-	}
 	/* prompt player for name */
 	output(plogin,'C',0,"\nWhat is your name?");
 	output(plogin,0,0,0);

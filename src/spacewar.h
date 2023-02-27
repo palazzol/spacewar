@@ -5,12 +5,7 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#ifdef BSD
-#	define SWPIDFILE	"/home/palazzol/sw/swpid"
-#	define SWLGNFILE	"/home/palazzol/sw/swlgn"
-#else /* SYSIII SYSV */
-#	define SWCOMFILE	"/home/palazzol/sw/swcomm"
-#endif /* BSD SYSIII SYSV */
+#define SWCOMFILE	"/home/palazzol/sw/swcomm"
 
 #define SWDATABASE	"/home/palazzol/sw/swdb"
 #define SWGAME		"/home/palazzol/sw/sw"
@@ -114,11 +109,7 @@ void who(register struct login *plogin);
 #include "uio.h"
 #include "uio2.h"
 
-#ifdef BSD
-void proctrap(int trapmsgfd,int *ntrapmsg);
-#else
 void proctrap(struct uio2 uio);
-#endif
 
 void shutdown(int e);
 void prvlck(char *s);

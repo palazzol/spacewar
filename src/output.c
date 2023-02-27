@@ -109,13 +109,6 @@ static void dowrite(fd,s,ls)
 int fd,ls;
 char *s;
 {
-	int oldmask;
-#ifdef BSD
-	oldmask = sigblock(1<<(SIGALRM-1));
-#endif
 	while (write(fd,s,ls) == -1 && errno == EINTR);
-#ifdef BSD
-	sigsetmask(oldmask);
-#endif
 }
 

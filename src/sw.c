@@ -19,13 +19,9 @@
 
 int numpling;
 
-#ifdef BSD
-#   include <sys/ioctl.h>
-    static int sigtrap,swlgnfd;
-#else /* SYSIII SYSV */
-#    include <sys/types.h>
-#    include <sys/stat.h>
-#endif /* BSD SYSIII SYSV */
+#include <sys/types.h>
+#include <sys/stat.h>
+
 extern int doproctrap,doupdate;
 static int dbglvl = 0;
 static void catchtrp(),catchalrm();
@@ -36,9 +32,6 @@ char *argv[];
 {
 	extern void proctrap(),shutdown(),cmd();
 	extern int errno;
-#ifdef BSD
-	int swpidfd,thispid,pfd[2];
-#endif /* BSD */
 
 	if (argc > 1) dbglvl = atoi(argv[1]);
 
@@ -61,10 +54,6 @@ char *argv[];
 #ifdef SIGTTOU
 	signal(SIGTTOU,SIG_IGN);
 #endif
-#ifdef TIOCNOTTY
-	ioctl(0,TIOCNOTTY,0);
-	close(open("/dev/console",1));
-#endif
 	setpgid(getpid(),getpid());
 	close(0);
 	close(1);
@@ -75,51 +64,21 @@ char *argv[];
 	alninit();
 
 	/* set up readsw pipe/named pipe/mailbox  */
-#ifdef BSD
-	if (pipe(pfd) || pfd[0] != 0 || pfd[1] != 1) {
-		perror("pipe");
-		exit(1);
-	}
-
-	/* set up communication files */
-	thispid = getpid();
-	if ((swpidfd=creat(SWPIDFILE,0644)) < 0 ||
-	write(swpidfd,&thispid,sizeof(thispid)) != sizeof(thispid) ||
-	close(swpidfd)) {
-		perror(SWPIDFILE);
-		exit(1);
-	}
-	if ((swlgnfd=creat(SWLGNFILE,0666)) < 0 || close(swlgnfd) ||
-	(swlgnfd=open(SWLGNFILE,0)) < 0) {
-		perror(SWLGNFILE);
-		if (unlink(SWPIDFILE)) perror(SWPIDFILE);
-		exit(1);
-	}
-#else /* SYSIII SYSV */
 	if (mknod(SWCOMFILE,0666+S_IFIFO,0) ||
 	open(SWCOMFILE,0) != 0 ||
 	open(SWCOMFILE,1) != 1) {
 		perror(SWCOMFILE);
 		exit(1);
 	}
-#endif /* BSD SYSIII SYSV */
 
 	/* open dbm(3) file */
 	if (dbminit(SWDATABASE)) {
 		perror(SWDATABASE);
-#ifdef BSD
-		if (unlink(SWLGNFILE)) perror(SWLGNFILE);
-		if (unlink(SWPIDFILE)) perror(SWPIDFILE);
-#else /* SYSIII SYSV */
 		if (unlink(SWCOMFILE)) perror(SWCOMFILE);
-#endif /* BSD SYSIII SYSV */
 		exit(1);
 	}
 
 	/* catch asynchronous event notification from playsw */
-#ifdef BSD
-	signal(SIGTRAP,catchtrp);
-#endif /* BSD */
 
 	/* trap alarm to update universe */
 	signal(SIGALRM,catchalrm);
@@ -131,13 +90,6 @@ char *argv[];
 	/* get and process commands and interrupts */
 	for (;;) {
 		cmd();
-#ifdef BSD
-		if (sigtrap) {
-			doproctrap = 0;
-			proctrap(swlgnfd,&sigtrap);
-			doproctrap = 1;
-		}
-#endif /* BSD */
 		if (doupdate < 0) {
 			doproctrap = 0;
 			update();
@@ -165,21 +117,6 @@ static void catchalrm()
 	if (numpling)
 		alarm(1);
 }
-
-#ifdef BSD
-static void catchtrp()
-{
-	VDBG("catchtrp [doproctrap=%d]\n",doproctrap);
-	++sigtrap;
-	if (doproctrap > 0) {
-		doproctrap = 0;
-		proctrap(swlgnfd,&sigtrap);
-		doproctrap = 1;
-	} else
-		doproctrap = -1;
-}
-#endif /* BSD */
-
 
 #ifdef DEBUG
 

@@ -23,6 +23,8 @@
 - remove VMS code for clarity
 - remove -DVOID stuff
 - cleanup almost all the #ifdef DEBUG statements
+- remove BSD-specific stuff
+- remove ioctl() code, replace with termios.h stuff for now
 
 #### TBD 
 - playtesting

@@ -319,10 +319,8 @@ static struct login *getinp()
 	register char *p;
 	register char *input;
 	extern int errno;
-#ifndef BSD
-#	include "uio2.h"
+#include "uio2.h"
 	struct uio2 inp2;
-#endif /* BSD */
 
 	DBG("getinp()\n");
 
@@ -343,13 +341,11 @@ static struct login *getinp()
 		}
 		doproctrap = 0;
 #ifdef DEBUG
-#ifndef BSD
 		if (((long)inp.uio_lgn) >= 0 && ((long)inp.uio_lgn) <= 20) {
 			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			VDBG("getinp: uio sig %d %d %.*s\n",inp2.uio2sig,
 			inp2.uio2pid,sizeof(inp2.uio2tty),inp2.uio2tty);
 		} else
-#endif /* BSD */
 		{
 			VDBG("getinp: uio #%d '",inp.uio_lgn-loginlst);
 			for (p=inp.uio_chrs;*p;++p)  
@@ -359,13 +355,11 @@ static struct login *getinp()
 #endif /* DEBUG */
 
 		/* validate login pointer */
-#ifndef BSD
 		if (((long)inp.uio_lgn) >= 0 &&((long)inp.uio_lgn) <= 20) {
 			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			proctrap(inp2);
 			continue;
 		}
-#endif /* BSD */
 		if (inp.uio_lgn < loginlst ||
 		inp.uio_lgn >= loginlst+MAXLOGIN) {
 			perror("uio_lgn out of range");

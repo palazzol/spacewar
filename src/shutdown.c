@@ -43,13 +43,8 @@ int e;
 			logoff(plogin);
 		}
 
-	/* remove communication files */
-#ifdef BSD
-	if (unlink(SWLGNFILE)) perror(SWLGNFILE);
-	if (unlink(SWPIDFILE)) perror(SWPIDFILE);
-#else /* SYSIII SYSV */
+	/* remove communication file */
 	if (unlink(SWCOMFILE)) perror(SWCOMFILE);
-#endif /* BSD SYSIII SYSV */
 
 	VDBG("shutdown exiting\n");
 	exit(e);
