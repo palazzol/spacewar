@@ -24,6 +24,17 @@
 #include <time.h>
 #include <stdio.h>
 
+static char *gets_(char *buf, int count)
+{
+	char *rv = fgets(buf, count, stdin );
+	for(int i=0;i<count;i++)
+		if (buf[i] == '\n') {
+			buf[i] == '\0';
+			break;
+		}
+	return rv;
+}
+
 int main()
 {
 	datum srchkey,dbmkey,dbmdata;
@@ -36,9 +47,8 @@ int main()
 	struct ucmdkey uck;
 	struct syskey sk;
 	struct sys s;
-	char *gets(),buf[32],dnam[100][8+1],*pnam;
-	int i,nd=0,atoi();
-	long atol();
+	char buf[32],dnam[100][8+1],*pnam;
+	int i,nd=0;
 
 	if (dbminit(SWDATABASE)) {
 		perror(SWDATABASE);
@@ -65,7 +75,7 @@ int main()
 
 	    /* prompt for delete or craft name to endow */
 getcrnam:   printf("(d/craftname)>");
-	    gets(buf);
+	    gets_(buf, 32);
 
 	    /* save player name to delete */
 	    if (!strcmp(buf,"d"))
@@ -89,11 +99,11 @@ getcrnam:   printf("(d/craftname)>");
 		printf("[htyp=%d] flsp=%ld crew=%ld plvl=%d\n",
 		crd.cr_htyp,crd.cr_flsp,crd.cr_crew,crd.cr_plvl);
 		printf("flsp>");
-		if (strlen(gets(buf)) > 0) crd.cr_flsp = atol(buf);
+		if (strlen(gets_(buf,32)) > 0) crd.cr_flsp = atol(buf);
 		printf("crew>");
-		if (strlen(gets(buf)) > 0) crd.cr_crew = atol(buf);
+		if (strlen(gets_(buf,32)) > 0) crd.cr_crew = atol(buf);
 		printf("plvl>");
-		if (strlen(gets(buf)) > 0) crd.cr_plvl = atoi(buf);
+		if (strlen(gets_(buf,32)) > 0) crd.cr_plvl = atoi(buf);
 		dbmkey.dptr = (char *)&crk;
 		dbmdata.dptr = (char *)&crd;
 		if (store(dbmkey,dbmdata))
@@ -170,7 +180,7 @@ getcrnam:   printf("(d/craftname)>");
 		    break;
 	    }
 	    printf(" (d/)>");
-	    if (!strcmp(gets(buf),"d") && delete(srchkey))
+	    if (!strcmp(gets_(buf,32),"d") && delete(srchkey))
 		printf("Can't delete\n");
 	}
 }

@@ -25,19 +25,19 @@ char *p1,*termname;
 char *tgetstr(cap)
 char *cap;
 {
-	if (!strcmp(cap,"cm"))
+	if (!strcmp(cap,"cm")) // position to line l, column c
 		return(tptr->tcm);
-	if (!strcmp(cap,"cl"))
+	if (!strcmp(cap,"cl")) // clear screen and home cursor
 		return(tptr->tcl);
-	if (!strcmp(cap,"ce"))
+	if (!strcmp(cap,"ce")) // clear from cursor to end of line
 		return(tptr->tce);
-	if (!strcmp(cap,"so"))
+	if (!strcmp(cap,"so")) // enter standout mode
 		return(tptr->tso);
-	if (!strcmp(cap,"se"))
+	if (!strcmp(cap,"se")) // exit standout mode
 		return(tptr->tse);
-	if (!strcmp(cap,"us"))
+	if (!strcmp(cap,"us")) // enter underline mode
 		return(tptr->tus);
-	if (!strcmp(cap,"ue"))
+	if (!strcmp(cap,"ue")) // exit underline mode
 		return(tptr->tue);
 	return(0);
 }

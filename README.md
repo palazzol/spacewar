@@ -25,11 +25,11 @@
 - cleanup almost all the #ifdef DEBUG statements
 - remove BSD-specific stuff
 - remove ioctl() code, replace with termios.h stuff for now
+- review termcap stuff
 
 #### TBD 
 - playtesting
 - fixup hardcoded user stuff for install
-- review termcap stuff
 - fix time_t stuff to be 2038 compliant
 - do proper make install target
 

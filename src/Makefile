@@ -33,18 +33,18 @@ OBJECTS= sw.o globals.o lckmsg.o proctrap.o shutdown.o \
 
 all : sw psw rsw dmpdbm upddbm tstsz install
 
-.PRECIOUS: print send
+#.PRECIOUS: print send
 
-print : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
-	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init \
-	pr $? | ${LPR}
-	touch print
+#print : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
+#	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init \
+#	pr $? | ${LPR}
+#	touch print
 
-send : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
-	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init doc \
-	swnews
-	uucp $? 'obo586!~/sw/'
-	touch send
+#send : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh rsw.c \
+#	tget.c dmpdbm.c upddbm.c tstsz.c swobj.init doc \
+#	swnews
+#	uucp $? 'obo586!~/sw/'
+#	touch send
 
 clean :
 	rm *.o sw psw rsw dmpdbm upddbm tstsz

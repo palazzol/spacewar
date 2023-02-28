@@ -16,7 +16,7 @@ static char *msg;	/* NULL if normal locking applies */
 char *lckmsg()
 {
 	time_t clock;
-	struct tm *curtm,*localtime();
+	struct tm *curtm;
 
 	DBG("lckmsg()\n");
 

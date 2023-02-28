@@ -169,9 +169,6 @@ void damage(struct universe *patck,	// damage.c
 			double dmg,
 			char *msg);
 
-int tgetent(char *p1,char *termname);	// tget.c
-char *tgetstr(char *cap); // tget.c
-
 void fixdir(struct crft *pcrft); // fixdir.c
 
 void updmov(); // updmov.c

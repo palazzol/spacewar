@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <term.h>
 
 static char outbuf[80*24*2]="";
 static void doout(),dowrite();
@@ -28,7 +29,7 @@ static void doout(),dowrite();
 void output(struct login *plogin, char mode, int fld, char *str, ...)
 {
 	int val2,val3,val4;
-	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();
+	char *s,buf[256],fmt[16],*so="",*se="";
 	int grp;
 
 	switch(mode) {

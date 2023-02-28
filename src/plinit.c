@@ -23,6 +23,7 @@
 // add missing headers
 #include <stdlib.h>
 #include <string.h>
+#include <term.h>
 
 int plinit(plogin)
 struct login *plogin;
@@ -77,11 +78,11 @@ getterm:	output(plogin,'C',0,"\nWhat (termcap) terminal type>");
 
 	    /* get necessary capabilities */
 	    ptrmcap = trmcap;
-	    if (!(pcm=tgetstr("cm")) ||
-	    !(pcl=tgetstr("cl")) ||
-	    !(pce=tgetstr("ce")) ||
-	    !(pso=tgetstr(so)) ||
-	    !(pse=tgetstr(se))) {
+	    if (!(pcm=tgetstr("cm",&ptrmcap)) ||
+	    !(pcl=tgetstr("cl",&ptrmcap)) ||
+	    !(pce=tgetstr("ce",&ptrmcap)) ||
+	    !(pso=tgetstr(so,&ptrmcap)) ||
+	    !(pse=tgetstr(se,&ptrmcap))) {
 		output(plogin,'C',0,
 		"\nMissing minimum necessary terminal capabilities\n");
 		goto noplay;

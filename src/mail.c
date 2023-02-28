@@ -310,8 +310,7 @@ struct mstat *pmstat;
 	struct mlbxkey getmbkey;
 	datum dbmkey,dbmdata;
 	int mlost=0,nlines;
-	struct tm *localtime();
-	char *asctime(),*ctime(),buf[80+1];
+	char buf[80+1];
 
 	DBG("sndmail(#%d/%s,%s)\n",plogin-loginlst,plogin->ln_name,
 	pmstat->ms_towho);

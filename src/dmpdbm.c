@@ -34,7 +34,6 @@ char *argv[];
 	struct syskey sk;
 	struct sys s;
 	int dodtl = (argc > 1);
-	char *asctime(),*ctime();
 
 	if (dbminit(SWDATABASE)) {
 		perror(SWDATABASE);
