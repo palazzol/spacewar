@@ -245,7 +245,7 @@ How about another name?");
 		case 'B': case 'b':	/* reBuild */
 			plogin->ln_stat = 'B';
 			plogin->ln_crft[0] = 0;
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			build(plogin);
 			break;
@@ -259,35 +259,35 @@ How about another name?");
 
 		case 'C': case 'c':	/* Complain -> Mail to Dan */
 			plogin->ln_stat = 'M';
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			strcpy(plogin->ln_input,SWMASTER);
 			mail(plogin);
 			break;
 
 		case 'M': case 'm':	/* Mail */
 			plogin->ln_stat = 'M';
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			mail(plogin);
 			break;
 
 		case 'U': case 'u':	/* Usercmd */
 			plogin->ln_stat = 'U';
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			usrcmd(plogin);
 			break;
 
 		case 'S': case 's':	/* See */
 			plogin->ln_stat = 'S';
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			see(plogin);
 			break;
 
 		case 'W': case 'w':	/* Who */
 			plogin->ln_stat = 'W';
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			who(plogin);
 			break;
@@ -295,7 +295,7 @@ How about another name?");
 		case 'P': case 'p':	/* Play */
 			plogin->ln_stat = 'P';
 			plogin->ln_crft[0] = 0;
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			plogin->ln_input[0] = 0;
 			play(plogin);
 			break;
@@ -329,7 +329,7 @@ static struct login *getinp()
 		/* get the uio header allowing asynch trap processing */
 		if (doproctrap < 0 || doupdate < 0) {
 			VDBG("getinp return\n");
-			return(nullptr);
+			return(NULL);
 		}
 		doproctrap = 1;
 		if (read(0,&inp,sizeof(inp)) != sizeof(inp)) {

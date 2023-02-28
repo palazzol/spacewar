@@ -36,11 +36,11 @@ void update()
 		for (plogin=loginlst+MAXLOGIN;plogin-- > loginlst;) {
 		    if (plogin->ln_tty && plogin->ln_play.ip_ptr) {
 			removeu(plogin->ln_play);
-			plogin->ln_iomode = nullptr;
-			plogin->ln_crft[0] = nullptr;
-			plogin->ln_play.ip_ptr = nullptr;
-			plogin->ln_stat = nullptr;
-			plogin->ln_substat = nullptr;
+			plogin->ln_iomode = 0;
+			plogin->ln_crft[0] = 0;
+			plogin->ln_play.ip_ptr = NULL;
+			plogin->ln_stat = 0;
+			plogin->ln_substat = NULL;
 			output(plogin,'E',0,0);
 			output(plogin,'B',0,0);
 			output(plogin,'C',0,"\n\n");

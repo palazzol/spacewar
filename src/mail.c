@@ -63,7 +63,7 @@ struct login *plogin;
 		default:
 		    perror("mail: unknown ms_stat");
 		    plogin->ln_stat = 0;
-		    plogin->ln_substat = nullptr;
+		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
 		    break;
@@ -85,7 +85,7 @@ struct login *plogin;
 		if (!dbmdata.dptr) {	/* not found? */
 		    perror("mail: can't find plyr");
 		    plogin->ln_stat = 0;
-		    plogin->ln_substat = nullptr;
+		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    VDBG("mail return\n");
 		    return;
@@ -113,7 +113,7 @@ struct login *plogin;
 	    if (!dbmdata.dptr) {	/* not found? */
 		perror("mail: can't find plyr");
 		plogin->ln_stat = 0;
-		plogin->ln_substat = nullptr;
+		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		VDBG("mail return\n");
 		return;
@@ -203,7 +203,7 @@ struct login *plogin;
 			pmstat->ms_stat = 'S';
 			plogin->ln_input[sizeof(pmstat->ms_towho)-1] = 0;
 			strcpy(pmstat->ms_towho,plogin->ln_input);
-			pmstat->ms_frst = pmstat->ms_lst = nullptr;
+			pmstat->ms_frst = pmstat->ms_lst = NULL;
 			plogin->ln_substat = (char *) pmstat;
 			sndmail(plogin,pmstat);
 		}
@@ -278,7 +278,7 @@ struct mstat *pmstat;
 			free((char *)pmstat);
 			plogin->ln_iomode = 0;
 			plogin->ln_stat = 0;
-			plogin->ln_substat = nullptr;
+			plogin->ln_substat = NULL;
 			output(plogin,'C',0,PROMPT);
 			break;
 
@@ -386,7 +386,7 @@ struct mstat *pmstat;
 terminate:
 		free((char *)pmstat);
 		plogin->ln_stat = 0;
-		plogin->ln_substat = nullptr;
+		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
 		VDBG("sndmail return\n");
@@ -408,7 +408,7 @@ terminate:
 
 	/* save text and link in to list */
 	} else {
-		pmlst->ml_nxt = nullptr;
+		pmlst->ml_nxt = NULL;
 		strcpy(pmlst->ml_lin,plogin->ln_input);
 		if (pmstat->ms_frst)
 			pmstat->ms_lst->ml_nxt = pmlst;

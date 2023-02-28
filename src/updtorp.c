@@ -20,7 +20,7 @@
 void updtorp()
 {
 	struct torp *ptorp;
-	double tmpvec[3],*pvel,vlen();
+	double tmpvec[3],*pvel;
 	long l,m;
 	int i;
 	dsplcmnt tmpdspl;

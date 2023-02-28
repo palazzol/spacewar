@@ -46,7 +46,7 @@ void updmov()
 		    pvel = puniv->uv_ptr.uv_aln->al_vel;
 		    pthr = puniv->uv_ptr.uv_aln->al_thr;
 		    psys = puniv->uv_ptr.uv_aln->al_sys;
-		    pchng = nullptr;
+		    pchng = NULL;
 		    break;
 		case 'P':
 		    if (puniv->uv_ptr.uv_crft->cr_dock.ip_ptr) continue;
@@ -58,8 +58,8 @@ void updmov()
 		case 'T':
 		    pvel = puniv->uv_ptr.uv_torp->tp_vel;
 		    pthr = puniv->uv_ptr.uv_torp->tp_thr;
-		    psys = nullptr;
-		    pchng = nullptr;
+		    psys = NULL;
+		    pchng = NULL;
 		    break;
 		default:
 		    continue;
@@ -165,7 +165,7 @@ void updmov()
 			if (pchng) {
 			    struct login *plgn;
 			    pcrft = puniv->uv_ptr.uv_crft;
-			    pcrft->cr_dock.ip_ptr = nullptr; /* assure destruc. */
+			    pcrft->cr_dock.ip_ptr = NULL; /* assure destruc. */
 			    pcrft->cr_sens[1] = 1; /* assure destruction */
 			    unplay(plgn=pcrft->cr_lgn);
 			    output(plgn,'B',0,0);

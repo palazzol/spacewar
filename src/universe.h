@@ -11,7 +11,7 @@
 #define __UNIVERSE_H__
 
 struct universe {
-	char	uv_type;	/* universe type of object: nullptr 'A|P|O|T' */
+	char	uv_type;	/* universe type of object: NULL 'A|P|O|T' */
 	char	uv_pctr;	/* universe screen character of object */
 	double	*uv_pstn;	/* universe position of object */
 	long	uv_mass;	/* universe mass/hull damage of object */

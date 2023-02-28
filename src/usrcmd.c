@@ -140,7 +140,7 @@ struct login *plogin;
 done:	plogin->ln_stat = 0;
 	if (plogin->ln_substat) {
 	    free(plogin->ln_substat);
-	    plogin->ln_substat = nullptr;
+	    plogin->ln_substat = NULL;
 	}
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);

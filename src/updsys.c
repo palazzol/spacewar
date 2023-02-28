@@ -26,7 +26,7 @@ void updsys()
 	struct obj *pobj;
 	struct sys *psys,*psh;
 	char *pchng;
-	double vdist(),ftmp;
+	double ftmp;
 	long i,elvl;
 	dsplcmnt tmpdspl;
 
@@ -40,7 +40,7 @@ void updsys()
 	    switch(puniv->uv_type) {
 		case 'A':
 		    psys = puniv->uv_ptr.uv_aln->al_sys;
-		    pchng = nullptr;
+		    pchng = NULL;
 		    break;
 		case 'P':
 		    psys = puniv->uv_ptr.uv_crft->cr_sys;

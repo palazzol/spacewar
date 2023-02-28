@@ -35,7 +35,7 @@ void upddsh()
 	    /********************************************/
 	    if (pcrft->cr_ffwd)
 		if (vlen(pcrft->cr_vel) == 0.) {
-		    pcrft->cr_ffwd = nullptr;
+		    pcrft->cr_ffwd = 0;
 		    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		} else
 		    rttosp(pcrft->cr_vel,tmpvec);

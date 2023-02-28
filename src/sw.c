@@ -7,6 +7,7 @@
 
 #include <signal.h>
 #include "spacewar.h"
+#include "obj.h"
 
 // add missing headers
 #include <unistd.h>
@@ -25,7 +26,6 @@ int numpling;
 // add missing headers
 #include <errno.h>
 
-extern int doproctrap,doupdate;
 static int dbglvl = 0;
 static void catchtrp(),catchalrm();
 
@@ -120,7 +120,7 @@ static void catchalrm()
 
 #ifdef DEBUG
 
-#undef nullptr
+#undef NULL
 #include <stdio.h>
 
 /*VARARGS1*/

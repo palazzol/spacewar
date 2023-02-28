@@ -26,7 +26,6 @@ char which;
 {
 	dsplcmnt d;
 	dsplcmnt *pd;
-	double vlen();
 	int i,p1off;
 	int negate=0;
 

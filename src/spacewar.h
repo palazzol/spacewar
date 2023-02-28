@@ -9,7 +9,6 @@
 #define __SPACEWAR_H__
 
 #define SWCOMFILE	"/home/palazzol/sw/swcomm"
-
 #define SWDATABASE	"/home/palazzol/sw/swdb"
 #define SWGAME		"/home/palazzol/sw/sw"
 #define SWREAD		"/home/palazzol/sw/rsw"
@@ -23,10 +22,6 @@
 #define TWOPI		(6.2831853072)
 #define DEGTORAD	DIV(TWOPI,360.)
 #define PROMPT		"\nPlay/See/Info/Complain/Mail/reBuild/Usercmd/Logoff/Who>"
-#ifdef nullptr
-#undef	nullptr
-#endif
-#define	nullptr		(0)
 
 /* uninteresting fudge factors */
 #define VANGVDST	(3084.2514)		/* makes 45deg match 5000 */
@@ -63,7 +58,7 @@
 void DBG(char *fmt, ...);
 void VDBG(char *fmt, ...);
 #else
-#define DBG(A,...)
+#define DBG(A,...)cmd
 #define VDBG(A,...)
 #endif
 
@@ -75,103 +70,134 @@ typedef struct {
 #define VECVALID 1
 #define DSTVALID 2
 
-dsplcmnt vdisp();
+#include "universe.h"
+
+dsplcmnt vdisp(struct universe *p1,  // vdisp.c
+               struct universe *p2,
+			   char which);
 
 // Added declarations
-void objinit();
-void alninit();
-void update();
-void firstplyr();
+void vrmv(struct universe *puniv); // vdisp.c
+void vchngd(struct universe *puniv); // vdisp.c
 
-struct login;
-void output(struct login *plogin, 
+void alninit();	// alninit.c
+
+void update(); // update.c
+
+void firstplyr(); // sw.c
+
+struct login;	// login.h
+
+void output(struct login *plogin, 	// output.c
 			char mode, 
 			int fld, 
 			char *str, 
 			...);
 
-void objupdate();
-void crftupdate(struct login *plogin);
-void logoff(struct login *plogin);
-void vinit(double *dst);
-void updobjs();
-void unity(double mtrx[3][3]);
-void xrot(double rotmtrx[3][3], double rotangl);
-void yrot(double rotmtrx[3][3], double rotangl);
-void zrot(double rotmtrx[3][3], double rotangl);
-void binit(char *dst, int len);
-void unplay(struct login *plogin);
-void play(struct login *plogin);
-void mail(struct login *plogin);
-void build(struct login *plogin);
-void see(struct login *plogin);
-void usrcmd(struct login *plogin);
-void who(struct login *plogin);
+void objupdate(); // objupdate.c
+
+void crftupdate(struct login *plogin); // crftupdate.c
+
+void logoff(struct login *plogin); // logoff.c
+
+void vinit(double *dst); // bfuncs.c
+void binit(char *dst, int len);	// bfuncs.c
+void bytecopy(char *dst, // bfuncs.c
+		   char *src,
+		   int len);
+void vcopy(double *dst,double *src); // bfuncs.c
+void minit(double dst[3][3]); // bfuncs.c
+void mcopy(double dst[3][3], // bfuncs.c
+		   double src[3][3]);
+
+void updobjs(); // updobjs.c
+
+void unity(double mtrx[3][3]);	// mutils.c
+void xrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+void yrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+void zrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+void rttosp(double rtvec[3],double spvec[3]); // mutils.c
+void vecmul(double avec[3],double bmtrx[3][3],double cvec[3]); // mutils.c
+void sptort(double spvec[3],double rtvec[3]); // mutils.c
+void vdiff(double *avec,double *bvec,double *cvec); // mutils.c
+double vdist(double avec[3],double bvec[3]); // mutils.c
+double vlen(double avec[3]); // mutils.c
+
+void unplay(struct login *plogin); // unplay.c
+
+void play(struct login *plogin); // play.c
+
+void mail(struct login *plogin); // mail.c
+
+void build(struct login *plogin); // build.c
+
+void see(struct login *plogin); // see.c
+
+void usrcmd(struct login *plogin); // usrcmd.c
+
+void who(struct login *plogin); // who.c
 
 #include "uio.h"
 #include "uio2.h"
 
-void proctrap(struct uio2 uio);
+void proctrap(struct uio2 uio); // proctrap.c
 
-void shutdown(int e);
-void prvlck(char *s);
+void shutdown(int e);	// shutdown.c
 
-#include "universe.h"
-void removeu(idxptr prmv);
+void prvlck(char *s);	// lckmsg.c
+char *lckmsg(); // lckmsg.c
 
-int plinit(struct login *plogin);
-void background(struct crft *pcrft);
-void biton(char ary[],int bitno);
-void rttosp(double rtvec[3],double spvec[3]);
-void vecmul(double avec[3],double bmtrx[3][3],double cvec[3]);
-void sptort(double spvec[3],double rtvec[3]);
-void vchngd(struct universe *puniv);
-void vcopy(double *dst,double *src);
-void rpt(struct crft *pcrft,char *msg);
-void setrpt(struct crft *pcrft);
-void fnshrpt(struct crft *pcrft,int flsh);
-void damage(struct universe *patck,
+void removeu(idxptr prmv);	// remove.c
+
+int plinit(struct login *plogin); // plinit.c
+
+void background(struct crft *pcrft); // scrn.c
+void nums(struct crft *pcrft); // scrn.c
+void view(struct crft *pcrft); // scrn.c
+
+void biton(char ary[],int bitno); // bits.c
+void bitoff(char ary[],int bitno); // bits.c
+int nabit(char ary[],int bitno); // bits.c
+
+void rpt(struct crft *pcrft,char *msg); // rpt.c
+void setrpt(struct crft *pcrft); // rpt.c
+void fnshrpt(struct crft *pcrft,int flsh); // rpt.c
+
+void damage(struct universe *patck,	// damage.c
 			struct universe *ptrgt,
 			double rng,
 			double dmg,
 			char *msg);
-void vdiff(double *avec,double *bvec,double *cvec);
-void nums(struct crft *pcrft);
-void view(struct crft *pcrft);
-int tgetent(char *p1,char *termname);
-void fixdir(struct crft *pcrft);
-void updmov();
-void updtorp();
-void updaln();
-void upddmg();
-void updsys();
-void upddsh();
-void bytecopy(char *dst,
-		   char *src,
-		   int len);
-int nabit(char ary[],int bitno);
-void minit(double dst[3][3]);
-void mcopy(double dst[3][3],
-		   double src[3][3]);
-void vrmv(struct universe *puniv);
 
+int tgetent(char *p1,char *termname);	// tget.c
+char *tgetstr(char *cap); // tget.c
 
-void bitoff(char ary[],int bitno);
+void fixdir(struct crft *pcrft); // fixdir.c
 
-void prvcmd(struct login *plogin);
-void fixdir(struct crft *pcrft);
-double vdist(double avec[3],double bvec[3]);
-double vlen(double avec[3]);
-char *tgetstr(char *cap);
-char *lckmsg();
-void logon(struct login *plogin);
-void cmd();
+void updmov(); // updmov.c
 
-extern int numpling;
-extern int doproctrap;
-extern int doupdate;
-extern long gametime;
+void updtorp(); // updtorp.c
 
-extern char **environ;
+void updaln(); // updaln.c
+
+void upddmg(); // upddmg.c
+
+void updsys(); // updsys.c
+
+void upddsh(); // upddsh.c
+
+void prvcmd(struct login *plogin); // prvcmd.c
+
+void logon(struct login *plogin); // logon.c
+
+void cmd(); // cmd.c
+extern int doproctrap;	// cmd.c
+extern int doupdate;	// cmd.c
+
+extern int numpling;	// sw.c
+
+extern long gametime;	// update.c
+
+extern char **environ; 	// Linux main???
 
 #endif

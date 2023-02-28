@@ -82,7 +82,7 @@ struct login *plogin;
 	/****************/
 	} else {
 	    dbmkey.dptr = ((dbmkey.dsize = psstat->ss_savsiz) > 0) ?
-	    psstat->ss_savkey : nullptr;
+	    psstat->ss_savkey : NULL;
 	}
 
 	VDBG("see: stat '%c'\n",psstat->ss_stat);
@@ -196,7 +196,7 @@ again:	while (dbmkey.dptr) {
 	    /*************************************************************/
 	    nc = 0;
 	    do {
-		for (nxtpst=nullptr,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
+		for (nxtpst=NULL,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
 		    if (!ppst->ps_opnts)
 			if (!nxtpst || ppst->ps_mpnts > nxtpst->ps_mpnts)
 			    nxtpst = ppst;
@@ -206,7 +206,7 @@ again:	while (dbmkey.dptr) {
 	    } while (nxtpst);
 	    nc = 0;
 	    do {
-		for (nxtpst=nullptr,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
+		for (nxtpst=NULL,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
 		    if (!ppst->ps_otm)
 			if (!nxtpst || ppst->ps_mtm > nxtpst->ps_mtm)
 			    nxtpst = ppst;
@@ -216,7 +216,7 @@ again:	while (dbmkey.dptr) {
 	    } while (nxtpst);
 	    nc = 0;
 	    do {
-		for (nxtpst=nullptr,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
+		for (nxtpst=NULL,ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt) {
 		    if (!ppst->ps_okls)
 			if (!nxtpst || ppst->ps_mkls > nxtpst->ps_mkls)
 			    nxtpst = ppst;
@@ -238,7 +238,7 @@ done:	for (nxtpst=ppst=psstat->ss_lst;ppst;ppst=nxtpst) {
 	free((char *)psstat);
 	plogin->ln_iomode = 0;
 	plogin->ln_stat = 0;
-	plogin->ln_substat = nullptr;
+	plogin->ln_substat = NULL;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);
 

@@ -33,7 +33,7 @@ char *msg;
 	struct crft *pcrft;
 	struct aln *paln;
 	struct torp *ptorp;
-	double vdist(),trgtdist;
+	double trgtdist;
 	int inflict,savinflict,totinflict=0,sh,ishulldmg,sysdmg;
 	char buf[80+1];
 	dsplcmnt tmpdspl;
@@ -60,10 +60,10 @@ char *msg;
 	    /*******************************/
 	    /* figure shielding protection */
 	    /*******************************/
-	    psys = nullptr;
-	    pcrft = nullptr;
-	    paln = nullptr;
-	    ptorp = nullptr;
+	    psys = NULL;
+	    pcrft = NULL;
+	    paln = NULL;
+	    ptorp = NULL;
 	    switch(puniv->uv_type) {
 		case 'T':
 		    if (patck == puniv) continue;
