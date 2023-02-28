@@ -22,8 +22,6 @@
 // add missing headers
 #include <string.h>
 
-extern void fixdir();
-extern double vdist(),vlen();
 static int okdir();
 static void fixaf();
 

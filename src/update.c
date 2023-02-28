@@ -24,7 +24,6 @@ void update()
 	struct login *plogin;
 	struct crft *pcrft;
 	char *s,*lckmsg();
-	extern int numpling;
 
 	DBG("update()\n");
 

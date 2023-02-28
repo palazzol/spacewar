@@ -21,8 +21,6 @@
 #include "build.h"
 #include "flds.h"
 
-extern double vlen();
-
 void updmov()
 {
 	struct universe *puniv,*pobj;

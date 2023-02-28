@@ -33,8 +33,6 @@ int main(argc,argv)
 int argc;
 char *argv[];
 {
-	extern void proctrap(),shutdown(),cmd();
-
 	if (argc > 1) dbglvl = atoi(argv[1]);
 
 	/* insure running in background */

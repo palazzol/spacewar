@@ -24,7 +24,6 @@
 int doproctrap,doupdate;
 static struct login *getinp();
 static void cmd2();
-extern void prvcmd();
 
 void cmd()
 {

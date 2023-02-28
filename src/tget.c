@@ -22,7 +22,7 @@ char *p1,*termname;
 	return((tptr->tnam) ? 1 : 0);
 }
 
-char *tgetstr(cap,p2)
+char *tgetstr(cap)
 char *cap;
 {
 	if (!strcmp(cap,"cm"))

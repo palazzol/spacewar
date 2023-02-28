@@ -30,7 +30,6 @@ struct login *plogin;
 	struct plyr getpldat;
 	datum dbmkey,dbmdata;
 	int i;
-	extern int numpling;
 
 	DBG("unplay(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
 

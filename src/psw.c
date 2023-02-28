@@ -31,7 +31,6 @@ int main()
 	char *ttyname();
 	static char waitmsg[]="\nJust a moment while the game cranks up ...\n";
 	static char backmsg[]="Doesn't make sense to run in background\n";
-	extern char **environ;
 
 	/* if newsfile readable, show it */
 	if ((i=open(SWNEWS,0)) >= 0) {

@@ -16,8 +16,6 @@
 #include "obj.h"
 #include "torp.h"
 
-extern double vlen(),vdist();
-
 void upddsh()
 {
 	struct crft *pcrft;

@@ -158,4 +158,20 @@ void vrmv(struct universe *puniv);
 
 void bitoff(char ary[],int bitno);
 
+void prvcmd(struct login *plogin);
+void fixdir(struct crft *pcrft);
+double vdist(double avec[3],double bvec[3]);
+double vlen(double avec[3]);
+char *tgetstr(char *cap);
+char *lckmsg();
+void logon(struct login *plogin);
+void cmd();
+
+extern int numpling;
+extern int doproctrap;
+extern int doupdate;
+extern long gametime;
+
+extern char **environ;
+
 #endif

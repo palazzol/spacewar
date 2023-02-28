@@ -28,7 +28,6 @@ struct uio2 uio;
 {
 	struct login *plogin;
 	int i;
-	extern void logon(),logoff();
 
 	DBG("proctrap(%d,%d,%.*s)\n",uio.uio2sig,uio.uio2pid,sizeof(uio.uio2tty),uio.uio2tty);
 
@@ -94,7 +93,6 @@ char *ttynm;
 {
 	int ttyfd,readpid,i;
 	char buf[32];
-	extern int doproctrap;
 
 	/* temporarily disable interrupts */
 	if (doproctrap == 1) doproctrap = 0;

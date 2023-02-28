@@ -18,7 +18,6 @@
 #include "torp.h"
 
 static void dofld();
-extern long gametime;
 
 void background(pcrft)
 struct crft *pcrft;
