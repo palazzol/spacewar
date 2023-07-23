@@ -9,6 +9,8 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#define CNUL 0
+
 #include <signal.h>
 #include "spacewar.h"
 #include "universe.h"

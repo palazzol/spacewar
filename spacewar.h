@@ -11,13 +11,13 @@
 #endif /* VMS */
 
 #ifdef BSD
-#	define SWPIDFILE	"/usr/dir/sw/swpid"
-#	define SWLGNFILE	"/usr/dir/sw/swlgn"
+#	define SWPIDFILE	"/home/palazzol/sw/swpid"
+#	define SWLGNFILE	"/home/palazzol/sw/swlgn"
 #else /* VMS SYSIII SYSV */
 #ifdef VMS
 #	define SWCOMFILE	"swmlbx"
 #else /* SYSIII SYSV */
-#	define SWCOMFILE	"/usr/dir/sw/swcomm"
+#	define SWCOMFILE	"/home/palazzol/sw/swcomm"
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
@@ -29,15 +29,15 @@
 #	define SWERR		"$DISK2:[TSDIR.SW]swerr"
 #	define SWOBJ		"$DISK2:[TSDIR.SW]swobj"
 #else /* BSD SYSIII SYSV */
-#	define SWDATABASE	"/usr/dir/sw/swdb"
-#	define SWGAME		"/usr/dir/sw/sw"
-#	define SWREAD		"/usr/dir/sw/rsw"
-#	define SWNEWS		"/usr/dir/sw/swnews"
-#	define SWERR		"/usr/dir/sw/swerr"
-#	define SWOBJ		"/usr/dir/sw/swobj" /* see objupdate.c */
+#	define SWDATABASE	"/home/palazzol/sw/swdb"
+#	define SWGAME		"/home/palazzol/sw/sw"
+#	define SWREAD		"/home/palazzol/sw/rsw"
+#	define SWNEWS		"/home/palazzol/sw/swnews"
+#	define SWERR		"/home/palazzol/sw/swerr"
+#	define SWOBJ		"/home/palazzol/sw/swobj" /* see objupdate.c */
 #endif /* VMS BSD SYSIII SYSV */
 
-#define SWMASTER	"Dan R"
+#define SWMASTER	"Frank P"
 
 #define PI		(3.1415926536)
 #define TWOPI		(6.2831853072)

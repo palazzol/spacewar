@@ -101,7 +101,7 @@ register struct login *plogin;
 	}
 
 	/* remove craft from universe */
-	remove(plogin->ln_play);
+	removeobj(plogin->ln_play);
 	if (--numpling < 0) numpling = 0;
 
 	/* put player back to command mode */

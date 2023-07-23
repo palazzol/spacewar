@@ -90,7 +90,7 @@ VOID upddmg()
 			}
 
 			/* remove torpedo */
-			remove(ptorp->tp_univ);
+			removeobj(ptorp->tp_univ);
 		    }
 		    continue;
 		default:
@@ -113,7 +113,7 @@ VOID upddmg()
 			rpt(phit,"Alien destroyed by you");
 			fnshrpt(phit,1);
 		    }
-		    remove(paln->al_univ);
+		    removeobj(paln->al_univ);
 
 		/* craft */
 		} else {

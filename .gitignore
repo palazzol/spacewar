@@ -1,0 +1,12 @@
+*.o
+sw
+psw
+rsw
+dmpdbm
+upddbm
+tstsz
+swcomm
+swerr
+swobj
+swdb.dir
+swdb.pag
