@@ -91,10 +91,10 @@ register struct login *plogin;
 #else /* VMS SYSIII SYSV */
 #ifndef VMS
 	{
-	struct termio tmode;
+	struct termios tmode;
 
-	if (ioctl(plogin->ln_tty,TCGETA,&tmode)) {
-		perror("ioctl TCGETA");
+	if (tcgetattr(plogin->ln_tty, &tmode)) {
+		perror("tcgetattr");
 		logoff(plogin);
 #ifdef DEBUG
 		VDBG("logon return\n");
@@ -108,8 +108,8 @@ register struct login *plogin;
 	tmode.c_cc[VMIN] = 1;
 	tmode.c_cc[VTIME] = 0;
 
-	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
-		perror("ioctl TCSETA");
+	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
+		perror("tcsetattr");
 		logoff(plogin);
 #ifdef DEBUG
 		VDBG("logon return\n");

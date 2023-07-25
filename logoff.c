@@ -9,7 +9,6 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
-#define CNUL 0
 
 #include <signal.h>
 #include "spacewar.h"
@@ -68,21 +67,21 @@ register struct login *plogin;
 #else /* VMS SYSIII SYSV */
 #ifndef VMS
 	{
-	struct termio tmode;
+	struct termios tmode;
 
-	if (ioctl(plogin->ln_tty,TCGETA,&tmode)) {
-		perror("ioctl TCGETA");
+	if (tcgetattr(plogin->ln_tty,&tmode)) {
+		perror("tcgetattr");
 		goto sigh;	/* horrendous */
 	}
 
 	/* reset echo and erase/kill edit processing */
 	/* (too bad the previous states weren't saved)  */
 	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
-	tmode.c_cc[VEOF] = CEOF;
-	tmode.c_cc[VEOL] = CNUL;
+	tmode.c_cc[VEOF] = 004;
+	tmode.c_cc[VEOL] = 000;
 
-	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
-		perror("ioctl TCSETA");
+	if (tcsetattr(plogin->ln_tty,TCSANOW,&tmode)) {
+		perror("tcsetattr");
 		goto sigh;	/* horrendous */
 	}
 	}
