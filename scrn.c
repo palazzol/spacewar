@@ -161,7 +161,7 @@ register struct crft *pcrft;
 ";
 
 	/* init to 'nothing there' */
-	bcopy((char *)vnew,vinit,sizeof(vnew));
+	bytecopy((char *)vnew,vinit,sizeof(vnew));
 	binit((char *)vdst,sizeof(vdst));
 	savrow = flds[FLD_VIEWSCREEN].f_row;
 	savcol = flds[FLD_VIEWSCREEN].f_col;
@@ -169,9 +169,9 @@ register struct crft *pcrft;
 	/* special case: draw entire viewscreen */
 	if (pcrft->cr_scrn[0][0] == NULL) {
 	    buf[31] = NULL;
-	    bcopy((char *)pcrft->cr_scrn,vinit,sizeof(pcrft->cr_scrn));
+	    bytecopy((char *)pcrft->cr_scrn,vinit,sizeof(pcrft->cr_scrn));
 	    for (row=0;row < 15;++row) {
-		bcopy(buf,pcrft->cr_scrn[row],31);
+		bytecopy(buf,pcrft->cr_scrn[row],31);
 		flds[FLD_VIEWSCREEN].f_row = savrow + row;
 		output(pcrft->cr_lgn,'L',FLD_VIEWSCREEN,buf);
 	    }

@@ -46,13 +46,13 @@ char *argv[];
 	    switch(dbmkey.dptr[0]) {
 
 		case CRAFT:
-		    bcopy((char *)&crk,dbmkey.dptr,sizeof(crk));
+		    bytecopy((char *)&crk,dbmkey.dptr,sizeof(crk));
 		    printf("craft '%s' '%s': ",crk.cr_plyr,crk.cr_name);
 		    dbmdata = fetch(dbmkey);
 		    if (!dbmdata.dptr)
 			printf("can't fetch\n");
 		    else {
-			bcopy((char *)&crd,dbmdata.dptr,sizeof(crd));
+			bytecopy((char *)&crd,dbmdata.dptr,sizeof(crd));
 			printf("%d %ld %ld %ld %ld %d %d\n",
 			crd.cr_htyp,crd.cr_flsp,crd.cr_crew,crd.cr_pnts,
 			crd.cr_time,crd.cr_kill,crd.cr_dock.ip_ofst);
@@ -74,7 +74,7 @@ char *argv[];
 		    break;
 
 		case MLBX:
-		    bcopy((char *)&mbk,dbmkey.dptr,sizeof(mbk));
+		    bytecopy((char *)&mbk,dbmkey.dptr,sizeof(mbk));
 		    printf("mlbx '%s' %d: ",mbk.mb_plyr,mbk.mb_mlbx);
 		    dbmdata = fetch(dbmkey);
 		    if (!dbmdata.dptr)
@@ -84,13 +84,13 @@ char *argv[];
 		    break;
 
 		case PLYR:
-		    bcopy((char *)&plk,dbmkey.dptr,sizeof(plk));
+		    bytecopy((char *)&plk,dbmkey.dptr,sizeof(plk));
 		    printf("plyr '%s': ",plk.pl_name);
 		    dbmdata = fetch(dbmkey);
 		    if (!dbmdata.dptr)
 			printf("can't fetch\n");
 		    else {
-			bcopy((char *)&pld,dbmdata.dptr,sizeof(pld));
+			bytecopy((char *)&pld,dbmdata.dptr,sizeof(pld));
 			printf("'%s' %d {%.24s} %d %d %d %d %ld %ld %ld\n",
 			pld.pl_passwd,pld.pl_numlgn,
 #ifdef VMS
@@ -104,7 +104,7 @@ char *argv[];
 		    break;
 
 		case UCMD:
-		    bcopy((char *)&uck,dbmkey.dptr,sizeof(uck));
+		    bytecopy((char *)&uck,dbmkey.dptr,sizeof(uck));
 		    printf("ucmd '%s' '%s' %d: ",uck.uc_plyr,
 		    uck.uc_name,uck.uc_ucmd);
 		    dbmdata = fetch(dbmkey);
@@ -115,14 +115,14 @@ char *argv[];
 		    break;
 
 		case SUBSYS:
-		    bcopy((char *)&sk,dbmkey.dptr,sizeof(sk));
+		    bytecopy((char *)&sk,dbmkey.dptr,sizeof(sk));
 		    printf("sys '%s' '%s' %d: ",sk.s_plyr,sk.s_crft,
 		    sk.s_type);
 		    dbmdata = fetch(dbmkey);
 		    if (!dbmdata.dptr)
 			printf("can't fetch\n");
 		    else {
-			bcopy((char *)&s,dbmdata.dptr,sizeof(s));
+			bytecopy((char *)&s,dbmdata.dptr,sizeof(s));
 			printf("%d %d %d %d %d\n",s.s_pct,s.s_edmg,s.s_dmg,
 			s.s_lvl,s.s_cap);
 		    }

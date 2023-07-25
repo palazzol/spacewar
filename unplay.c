@@ -77,7 +77,7 @@ register struct login *plogin;
 	    dbmkey.dsize = sizeof(getplkey);
 	    dbmdata = fetch(dbmkey);
 	    if (dbmdata.dptr) {
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 		getpldat.pl_slst += 1;
 		getpldat.pl_klst += pcrft->cr_kill;
 		getpldat.pl_plst += pcrft->cr_pnts;

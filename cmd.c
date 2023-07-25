@@ -191,7 +191,7 @@ How about another name?");
 			plogin-loginlst,plogin->ln_name);
 #endif
 
-			bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+			bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 			/* bad password */
 			if (strcmp(plogin->ln_input,getpldat.pl_passwd)) {
@@ -402,7 +402,7 @@ static struct login *getinp()
 			VDBG("getinp: uio sig %d %s\n",(int)inp.uio_lgn,
 			inp.uio_chrs);
 #else /* SYSIII SYSV */
-			bcopy((char *)&inp2,(char *)&inp,sizeof(inp2));
+			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			VDBG("getinp: uio sig %d %d %s\n",inp2.uio2sig,
 			inp2.uio2pid,inp2.uio2tty);
 #endif /* VMS SYSIII SYSV */
@@ -422,7 +422,7 @@ static struct login *getinp()
 #ifdef VMS
 			proctrap(inp);
 #else /* SYSIII SYSV */
-			bcopy((char *)&inp2,(char *)&inp,sizeof(inp2));
+			bytecopy((char *)&inp2,(char *)&inp,sizeof(inp2));
 			proctrap(inp2);
 #endif /* VMS SYSIII SYSV */
 			continue;

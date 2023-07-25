@@ -103,13 +103,13 @@ register struct login *plogin;
 again:	while (dbmkey.dptr) {
 	    if (dbmkey.dptr[0] == CRAFT && psstat->ss_stat == CRAFT) {
 
-		bcopy((char *)&getcrkey,dbmkey.dptr,sizeof(getcrkey));
+		bytecopy((char *)&getcrkey,dbmkey.dptr,sizeof(getcrkey));
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {
 		    perror("see: can't fetch craft");
 		    goto done;
 		}
-		bcopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
+		bytecopy((char *)&getcrdat,dbmdata.dptr,dbmdata.dsize);
 
 		/* find/create player statistics structure */
 		for (ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt)
@@ -147,13 +147,13 @@ again:	while (dbmkey.dptr) {
 
 	    } else if (dbmkey.dptr[0] == PLYR && psstat->ss_stat == PLYR) {
 
-		bcopy((char *)&getplkey,dbmkey.dptr,sizeof(getplkey));
+		bytecopy((char *)&getplkey,dbmkey.dptr,sizeof(getplkey));
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {
 		    perror("see: can't fetch plyr");
 		    goto done;
 		}
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 		/* find player statistics structure */
 		for (ppst=psstat->ss_lst;ppst;ppst=ppst->ps_nxt)
@@ -183,7 +183,7 @@ again:	while (dbmkey.dptr) {
 	    if (nlines <= 0) {
 		output(plogin,0,0,0);
 		psstat->ss_savsiz = (dbmkey.dptr) ? dbmkey.dsize : 0;
-		bcopy(psstat->ss_savkey,dbmkey.dptr,psstat->ss_savsiz);
+		bytecopy(psstat->ss_savkey,dbmkey.dptr,psstat->ss_savsiz);
 #ifdef DEBUG
 		VDBG("see return\n");
 #endif
