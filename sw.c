@@ -70,7 +70,12 @@ char *argv[];
 	ioctl(0,TIOCNOTTY,0);
 	close(open("/dev/console",1));
 #endif
+#else
+#ifdef BSD
 	setpgrp(getpid(),getpid());
+#else /* SYSIII SYSV */
+	setpgid(getpid(),getpid());
+#endif
 #endif
 	close(0);
 	close(1);
