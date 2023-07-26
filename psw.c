@@ -60,11 +60,12 @@ tryagain:
 				for (i=0;i < 20;ioctl(i++,FIOCLEX,NULL));
 				ioctl(2,FIONCLEX,NULL);
 #else /* SYSIII SYSV */
-				for (i=0;i < 20;fcntl(i++,F_SETFD,1));
+
+				for (i=0;i < 20;fcntl(i++,F_SETFD,FD_CLOEXEC));
 				fcntl(2,F_SETFD,0);
 #endif /* BSD SYSIII SYSV */
 				close(2);
-				lseek(open(SWERR,1),0L,2);
+				lseek(open(SWERR,O_WRONLY),0L,SEEK_END);
 				environ = NULL;
 				execle(SWGAME,"sw",(char *)0,(char *)0);
 				perror(SWGAME);

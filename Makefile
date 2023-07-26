@@ -75,10 +75,12 @@ tstsz : tstsz.c uio.h uio2.h spacewar.h
 
 install :
 	rm -f swcomm
+	rm -f swerr
 	rm -f swobj
 	rm -f swdb.dir
 	rm -f swdb.pag
 	cp swobj.init swobj
+	touch swerr
 	touch swdb.dir
 	touch swdb.pag
 
