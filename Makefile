@@ -48,7 +48,7 @@ send : Makefile ${INCLUDES} ${SOURCES} psw.c psw.sh vmspsw.c rsw.c vmsrsw.c \
 	touch send
 
 clean :
-	rm *.o sw psw rsw dmpdbm upddbm tstsz swcomm swerr swobj swdb.dir swdb.pag
+	rm -f *.o sw psw rsw dmpdbm upddbm tstsz swcomm swerr swobj swdb.dir swdb.pag
 
 sw : ${OBJECTS}
 	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -lncurses -lgdbm_compat -lm

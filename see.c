@@ -38,8 +38,8 @@ struct pst {
 };
 static struct pst zpst;
 
-char *malloc();
-
+#include <stdlib.h>
+#include <string.h>
 
 void see(plogin)
 struct login *plogin;
@@ -245,8 +245,8 @@ done:	for (nxtpst=ppst=psstat->ss_lst;ppst;ppst=nxtpst) {
 	    free((char *)ppst);
 	}
 	free((char *)psstat);
-	plogin->ln_iomode = NULL;
-	plogin->ln_stat = NULL;
+	plogin->ln_iomode = 0;
+	plogin->ln_stat = 0;
 	plogin->ln_substat = NULL;
 	output(plogin,'C',0,PROMPT);
 	output(plogin,0,0,0);

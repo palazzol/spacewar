@@ -35,10 +35,12 @@ struct mlst {
 	char	*ml_lin;	/* line of mail */
 };
 
-static void sndmail(),dspmail();
-extern char *malloc();
+#include <stdlib.h>
+#include <string.h>
 
-mail(plogin)
+static void sndmail(),dspmail();
+
+void mail(plogin)
 struct login *plogin;
 {
 	struct mstat *pmstat;
@@ -66,7 +68,7 @@ struct login *plogin;
 		    break;
 		default:
 		    perror("mail: unknown ms_stat");
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
@@ -88,7 +90,7 @@ struct login *plogin;
 		dbmdata = fetch(dbmkey);
 		if (!dbmdata.dptr) {	/* not found? */
 		    perror("mail: can't find plyr");
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 #ifdef DEBUG
@@ -118,7 +120,7 @@ struct login *plogin;
 	    dbmdata = fetch(dbmkey);
 	    if (!dbmdata.dptr) {	/* not found? */
 		perror("mail: can't find plyr");
-		plogin->ln_stat = NULL;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 #ifdef DEBUG
@@ -158,7 +160,7 @@ struct login *plogin;
 
 		    /* back to command prompt */
 		case '.':	/* quit mail */
-		    plogin->ln_stat = NULL;
+		    plogin->ln_stat = 0;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
 		    break;
@@ -171,7 +173,7 @@ struct login *plogin;
 		    if (!(pmstat = (struct mstat *)
 		    malloc(sizeof(struct mstat)))) {
 			perror("mail: out of memory for mstat");
-			plogin->ln_stat = NULL;
+			plogin->ln_stat = 0;
 			output(plogin,'C',0,PROMPT);
 			output(plogin,0,0,0);
 			break;
@@ -204,12 +206,12 @@ struct login *plogin;
 		/* allocate/initialize subtask status structure */
 		if (!(pmstat = (struct mstat *) malloc(sizeof(struct mstat)))) {
 			perror("mail: out of memory for mstat");
-			plogin->ln_stat = NULL;
+			plogin->ln_stat = 0;
 			output(plogin,'C',0,PROMPT);
 			output(plogin,0,0,0);
 		} else {
 			pmstat->ms_stat = 'S';
-			plogin->ln_input[sizeof(pmstat->ms_towho)-1] = NULL;
+			plogin->ln_input[sizeof(pmstat->ms_towho)-1] = 0;
 			strcpy(pmstat->ms_towho,plogin->ln_input);
 			pmstat->ms_frst = pmstat->ms_lst = NULL;
 			plogin->ln_substat = (char *) pmstat;
@@ -288,8 +290,8 @@ struct mstat *pmstat;
 			}
 
 			free((char *)pmstat);
-			plogin->ln_iomode = NULL;
-			plogin->ln_stat = NULL;
+			plogin->ln_iomode = 0;
+			plogin->ln_stat = 0;
 			plogin->ln_substat = NULL;
 			output(plogin,'C',0,PROMPT);
 			break;
@@ -405,7 +407,7 @@ struct mstat *pmstat;
 		/* back to command prompt */
 terminate:
 		free((char *)pmstat);
-		plogin->ln_stat = NULL;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);

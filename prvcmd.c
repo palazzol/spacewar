@@ -20,6 +20,9 @@
 #include "crft.h"
 #include "torp.h"
 
+#include <stdio.h>
+#include <string.h>
+
 static char *fmtip();
 
 void prvcmd(plogin)
@@ -213,10 +216,10 @@ struct login *plogin;
 	    }
 
 	} else if (!strncmp(".lock",s,5)) {
-	    static msg[80+1];
+	    static char msg[80+1];
 	    s += 5;
 	    while (*s == ' ') ++s;
-	    strcpy(msg,s);
+	    strcpy((char *)msg,s);
 	    prvlck((*s) ? msg : NULL);
 
 	} else if (!strcmp(".unlock",s)) {

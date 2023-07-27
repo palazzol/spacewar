@@ -27,6 +27,10 @@
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
 void logoff(plogin)
 struct login *plogin;
 {

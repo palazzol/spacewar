@@ -27,9 +27,12 @@ static struct syskey getskey;
 static struct sys getsdat;
 static datum dbmkey,dbmdata;
 static struct sysc *getsc;
-static getsys(),getcrft();
+static int getsys();
+static int getcrft();
 static void fixdmg(),putcrft(),putsys(),delsys();
 extern long atol();
+
+#include <string.h>
 
 void build(plogin)
 struct login *plogin;
@@ -68,11 +71,11 @@ struct login *plogin;
 #ifdef DEBUG
 		VDBG("build: get/create craft '%s'\n",plogin->ln_input);
 #endif
-		plogin->ln_input[sizeof(plogin->ln_crft)-1] = NULL;
+		plogin->ln_input[sizeof(plogin->ln_crft)-1] = 0;
 		strcpy(plogin->ln_crft,plogin->ln_input);
 		if (!strcmp(plogin->ln_input,".")) {
-		    plogin->ln_crft[0] = NULL;
-		    plogin->ln_stat = NULL;
+		    plogin->ln_crft[0] = 0;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
@@ -102,8 +105,8 @@ struct login *plogin;
 			    VDBG("build: docked=%d plvl=%d\n",
 			    getcrdat.cr_dock.ip_ofst,getcrdat.cr_plvl);
 #endif
-			    plogin->ln_crft[0] = NULL;
-			    plogin->ln_stat = NULL;
+			    plogin->ln_crft[0] = 0;
+			    plogin->ln_stat = 0;
 			    plogin->ln_substat = NULL;
 			    output(plogin,'C',0,"Must be docked to rebuild.");
 			    output(plogin,'C',0,PROMPT);
@@ -121,8 +124,8 @@ struct login *plogin;
 #endif
 			    if (!getsys(plogin,HULL)) {
 				perror("build: docked and can't find HULL");
-				plogin->ln_crft[0] = NULL;
-				plogin->ln_stat = NULL;
+				plogin->ln_crft[0] = 0;
+				plogin->ln_stat = 0;
 				plogin->ln_substat = NULL;
 				output(plogin,'C',0,PROMPT);
 				output(plogin,0,0,0);
@@ -159,7 +162,7 @@ struct login *plogin;
 			"(sigh) database collision - try another ship name\n\n\
 What is the name of your ship?");
 			output(plogin,0,0,0);
-			plogin->ln_crft[0] = NULL;
+			plogin->ln_crft[0] = 0;
 #ifdef DEBUG
 			VDBG("build return\n");
 #endif
@@ -174,8 +177,8 @@ What is the name of your ship?");
 	/******************************/
 	} else if (!getcrft(plogin)) {
 		perror("build: can't find craft\n");
-		plogin->ln_crft[0] = NULL;
-		plogin->ln_stat = NULL;
+		plogin->ln_crft[0] = 0;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
@@ -193,8 +196,8 @@ What is the name of your ship?");
 #endif
 
 		if (!strcmp(plogin->ln_input,".")) {
-		    plogin->ln_crft[0] = NULL;
-		    plogin->ln_stat = NULL;
+		    plogin->ln_crft[0] = 0;
+		    plogin->ln_stat = 0;
 		    plogin->ln_substat = NULL;
 		    output(plogin,'C',0,PROMPT);
 		    output(plogin,0,0,0);
@@ -308,8 +311,8 @@ What is the name of your ship?");
 	    (int)plogin->ln_substat);
 #endif
 	    if (!strcmp(plogin->ln_input,".")) {
-		plogin->ln_crft[0] = NULL;
-		plogin->ln_stat = NULL;
+		plogin->ln_crft[0] = 0;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
@@ -410,8 +413,8 @@ What is the name of your ship?");
 
 	/* all done */
 	} else {
-	    plogin->ln_crft[0] = NULL;
-	    plogin->ln_stat = NULL;
+	    plogin->ln_crft[0] = 0;
+	    plogin->ln_stat = 0;
 	    plogin->ln_substat = NULL;
 	    output(plogin,'C',0,PROMPT);
 	    output(plogin,0,0,0);
@@ -421,7 +424,7 @@ What is the name of your ship?");
 #endif
 }
 
-static getcrft(plogin)
+static int getcrft(plogin)
 struct login *plogin;
 {
 	binit((char *)&getcrkey,sizeof(getcrkey));
@@ -454,15 +457,15 @@ struct login *plogin;
 	dbmdata.dsize = CRDATSIZ;
 	if (store(dbmkey,dbmdata)) {
 		perror("putcrft: can't update craft");
-		plogin->ln_crft[0] = NULL;
-		plogin->ln_stat = NULL;
+		plogin->ln_crft[0] = 0;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
 	}
 }
 
-static getsys(plogin,styp)
+static int getsys(plogin,styp)
 struct login *plogin;
 int styp;
 {
@@ -496,8 +499,8 @@ struct login *plogin;
 	dbmdata.dsize = sizeof(getsdat);
 	if (store(dbmkey,dbmdata)) {
 		perror("putsys: can't update subsystem");
-		plogin->ln_crft[0] = NULL;
-		plogin->ln_stat = NULL;
+		plogin->ln_crft[0] = 0;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);
@@ -515,8 +518,8 @@ struct login *plogin;
 	dbmkey.dsize = sizeof(getskey);
 	if (delete(dbmkey)) {
 		perror("delsys: can't delete subsystem");
-		plogin->ln_crft[0] = NULL;
-		plogin->ln_stat = NULL;
+		plogin->ln_crft[0] = 0;
+		plogin->ln_stat = 0;
 		plogin->ln_substat = NULL;
 		output(plogin,'C',0,PROMPT);
 		output(plogin,0,0,0);

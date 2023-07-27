@@ -19,6 +19,9 @@
 
 #define UCMDPROMPT	"\ncommand/L(ist)/.(quit)>"
 
+#include <stdlib.h>
+#include <string.h>
+
 void usrcmd(plogin)
 struct login *plogin;
 {
@@ -26,7 +29,6 @@ struct login *plogin;
 	struct ucmdkey getuckey;
 	datum dbmkey,dbmdata;
 	char buf[40+1];
-	extern char *malloc();
 
 #ifdef DEBUG
 	DBG("usrcmd(#%d/%s)\n",plogin-loginlst,plogin->ln_name);
@@ -89,7 +91,7 @@ struct login *plogin;
 		binit((char *)pucmdkey,sizeof(*pucmdkey));
 		pucmdkey->uc_ucmdkey = UCMD;
 		strcpy(pucmdkey->uc_plyr,plogin->ln_name);
-		plogin->ln_input[sizeof(pucmdkey->uc_name)-1] = NULL;
+		plogin->ln_input[sizeof(pucmdkey->uc_name)-1] = 0;
 		strcpy(pucmdkey->uc_name,plogin->ln_input);
 		pucmdkey->uc_ucmd = 1;
 
@@ -145,7 +147,7 @@ struct login *plogin;
 #endif
 	return;
 
-done:	plogin->ln_stat = NULL;
+done:	plogin->ln_stat = 0;
 	if (plogin->ln_substat) {
 	    free(plogin->ln_substat);
 	    plogin->ln_substat = NULL;

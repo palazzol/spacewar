@@ -125,6 +125,9 @@ void logoff(struct login *plogin); // logoff.c
 
 void vinit(double *dst); // bfuncs.c
 void binit(char *dst, int len);	// bfuncs.c
+void bytecopy(char *dst, // bfuncs.c
+		   char *src,
+		   int len);
 
 void updobjs(); // updobjs.c
 
@@ -133,7 +136,28 @@ void xrot(double rotmtrx[3][3], double rotangl);	// mutils.c
 void yrot(double rotmtrx[3][3], double rotangl);	// mutils.c
 void zrot(double rotmtrx[3][3], double rotangl);	// mutils.c
 
+void unplay(struct login *plogin); // unplay.c
+
+void play(struct login *plogin); // play.c
+
+void mail(struct login *plogin); // mail.c
+
+void build(struct login *plogin); // build.c
+
+void see(struct login *plogin); // see.c
+
+void usrcmd(struct login *plogin); // usrcmd.c
+
+void who(struct login *plogin); // who.c
+
+#include "uio.h"
+#include "uio2.h"
+
+void proctrap(struct uio2 uio); // proctrap.c
+
 void shutdown(int e);	// shutdown.c
+
+void prvlck(char *s);	// lckmsg.c
 
 void cmd(); // cmd.c
 extern int doproctrap; // cmd.c
