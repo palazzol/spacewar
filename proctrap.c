@@ -29,15 +29,20 @@
 #	include "uio2.h"
 #endif /* VMS */
 
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 static int setupread();
 
 #ifdef BSD
-VOID proctrap(trapmsgfd,ntrapmsg)
+void proctrap(trapmsgfd,ntrapmsg)
 int trapmsgfd,*ntrapmsg;
 {
 	struct uio2 uio;
 #else /* VMS SYSIII SYSV */
-VOID proctrap(uio)
+void proctrap(uio)
 #ifdef VMS
 struct uio uio;
 #else /* SYSIII SYSV */
@@ -45,12 +50,12 @@ struct uio2 uio;
 #endif /* VMS SYSIII SYSV */
 {
 #endif /* VMS BSD SYSIII SYSV */
-	register struct login *plogin;
+	struct login *plogin;
 	int i;
 #ifdef VMS
 	int pid;
 #endif /* VMS */
-	extern VOID logon(),logoff();
+	extern void logon(),logoff();
 
 #ifdef BSD
 #ifdef DEBUG
@@ -132,7 +137,7 @@ struct uio2 uio;
 
 			/* find an available login */
 			for (plogin=loginlst,i=MAXLOGIN+1;--i > 0;++plogin)
-				if (plogin->ln_tty == NULL)
+				if (plogin->ln_tty == 0)
 					break;
 #ifdef DEBUG
 			VDBG("proctrap: available login entry #%d\n",
@@ -209,7 +214,7 @@ int pid;
  * returns non-zero if successful, 0 otherwise
  */
 static int setupread(plogin,playpid,ttynm)
-register struct login *plogin;
+struct login *plogin;
 int playpid;
 char *ttynm;
 {
@@ -270,7 +275,7 @@ char *ttynm;
 			for (i=3;i < 20;fcntl(i++,F_SETFD,1));
 #endif /* BSD SYSIII SYSV */
 			sprintf(buf,"%d",(int)plogin);
-			execlp(SWREAD,"rsw",buf,0);
+			execlp(SWREAD,"rsw",buf,(char *)0);
 			perror(SWREAD);
 			exit(1);
 	}

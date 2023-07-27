@@ -27,8 +27,8 @@
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
-VOID logoff(plogin)
-register struct login *plogin;
+void logoff(plogin)
+struct login *plogin;
 {
 #ifdef VMS
 	int i;

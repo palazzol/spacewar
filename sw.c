@@ -6,7 +6,6 @@
  */
 
 #include <signal.h>
-#include "spacewar.h"
 
 int numpling;
 
@@ -25,15 +24,23 @@ int numpling;
 #    include <sys/stat.h>
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
-extern int doproctrap,doupdate;
 static int dbglvl;
-static VOID catchtrp(),catchalrm();
+static void catchtrp(),catchalrm();
 
-main(argc,argv)
+#include <dbm.h>
+#include <fcntl.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include "spacewar.h"
+#include "obj.h"
+
+int main(argc,argv)
 int argc;
 char *argv[];
 {
-	extern VOID proctrap(),shutdown(),cmd();
 #ifdef VMS
 	int i;
 #endif /* VMS */
@@ -171,10 +178,10 @@ char *argv[];
 
 }
 
-firstplyr()
+void firstplyr()
 {catchalrm();}
 
-static VOID catchalrm()
+static void catchalrm()
 {
 
 #ifdef DEBUG
@@ -195,7 +202,7 @@ static VOID catchalrm()
 }
 
 #ifdef BSD
-static VOID catchtrp()
+static void catchtrp()
 {
 #ifdef DEBUG
 	VDBG("catchtrp [doproctrap=%d]\n",doproctrap);
@@ -218,7 +225,7 @@ static VOID catchtrp()
 
 #ifdef VMS
 #include <varargs.h>
-VOID DBG(va_alist)
+void DBG(va_alist)
 va_dcl
 {
 	va_list ap;
@@ -236,7 +243,7 @@ va_dcl
 	if (dbglvl > 0) fprintf(stderr,fmt,
 	a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]);
 }
-VOID VDBG(va_alist)
+void VDBG(va_alist)
 va_dcl
 {
 	va_list ap;
@@ -256,14 +263,27 @@ va_dcl
 }
 #else
 /*VARARGS1*/
-VOID DBG(fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-char *fmt;
-{if (dbglvl > 0) fprintf(stderr,fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);}
+void DBG(char *fmt,...)
+{
+	if (dbglvl > 0) {
+		va_list argp;
+		va_start(argp, fmt);
+		vfprintf(stderr,fmt,argp);
+		va_end(argp);
+	}
+}
 
 /*VARARGS1*/
-VOID VDBG(fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-char *fmt;
-{if (dbglvl > 1) fprintf(stderr,fmt,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);}
+void VDBG(char *fmt,...)
+{
+    if (dbglvl > 1) {
+		va_list argp;
+		va_start(argp, fmt);
+		vfprintf(stderr,fmt,argp);
+		va_end(argp);
+	}
+}
+
 #endif
 
 #endif

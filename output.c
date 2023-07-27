@@ -21,17 +21,15 @@
 #endif /* VMS */
 
 static char outbuf[80*24*2]="";
-static VOID doout(),dowrite();
+static void doout(),dowrite();
 extern int errno;
 
+#include <stdarg.h>
+
 /*VARARGS1*/
-VOID output(plogin,mode,fld,str,val2,val3,val4)
-register struct login *plogin;
-char mode;
-int fld;
-char *str;
-int val2,val3,val4;
+void output(struct login *plogin, char mode, int fld, char *str, ...)
 {
+	int val2,val3,val4;
 	char *s,buf[256],fmt[16],*so="",*se="",*tgoto();
 	int grp;
 #ifdef VMS
@@ -63,6 +61,12 @@ int val2,val3,val4;
 		}
 		grp = (fld>>8)&0xff;
 		fld &= 0xff;
+		va_list(argp);
+		va_start(argp, str);
+		val2 = va_arg(argp, int);
+		val3 = va_arg(argp, int);
+		val4 = va_arg(argp, int);
+		va_end(argp);
 		sprintf(fmt,"%%s%%s%s",flds[fld].f_fmt); /* no overflow check */
 		sprintf(buf,fmt,
 		tgoto(plogin->ln_tcm,flds[fld].f_col,flds[fld].f_row+grp),
@@ -96,7 +100,7 @@ int val2,val3,val4;
 	}
 }
 
-static VOID doout(fd,s)
+static void doout(fd,s)
 short fd;
 char *s;
 {
@@ -138,7 +142,7 @@ char *s;
 
 #ifndef VMS
 #include <signal.h>
-static VOID dowrite(fd,s,ls)
+static void dowrite(fd,s,ls)
 int fd,ls;
 char *s;
 {

@@ -7,7 +7,7 @@
 
 #include "spacewar.h"
 
-VOID unity(mtrx)
+void unity(mtrx)
 double mtrx[3][3];
 {
 	minit(mtrx);
@@ -16,7 +16,7 @@ double mtrx[3][3];
 	mtrx[2][2] = 1.0;
 }
 
-VOID matmul(amtrx,bmtrx,cmtrx)
+void matmul(amtrx,bmtrx,cmtrx)
 double amtrx[3][3],bmtrx[3][3],cmtrx[3][3];
 {
 	double tmp,tmpmtrx[3][3];
@@ -32,7 +32,7 @@ double amtrx[3][3],bmtrx[3][3],cmtrx[3][3];
 	mcopy(cmtrx,tmpmtrx);
 }
 
-VOID vecmul(avec,bmtrx,cvec)
+void vecmul(avec,bmtrx,cvec)
 double avec[3],bmtrx[3][3],cvec[3];
 {
 	double tmp,tmpvec[3];
@@ -47,7 +47,7 @@ double avec[3],bmtrx[3][3],cvec[3];
 	vcopy(cvec,tmpvec);
 }
 
-VOID xrot(rotmtrx,rotangl)
+void xrot(rotmtrx,rotangl)
 double rotmtrx[3][3],rotangl;
 {
 	double tmpmtrx[3][3];
@@ -59,7 +59,7 @@ double rotmtrx[3][3],rotangl;
 	matmul(rotmtrx,tmpmtrx,rotmtrx);
 }
 
-VOID yrot(rotmtrx,rotangl)
+void yrot(rotmtrx,rotangl)
 double rotmtrx[3][3],rotangl;
 {
 	double tmpmtrx[3][3];
@@ -71,7 +71,7 @@ double rotmtrx[3][3],rotangl;
 	matmul(rotmtrx,tmpmtrx,rotmtrx);
 }
 
-VOID zrot(rotmtrx,rotangl)
+void zrot(rotmtrx,rotangl)
 double rotmtrx[3][3],rotangl;
 {
 	double tmpmtrx[3][3];
@@ -83,7 +83,7 @@ double rotmtrx[3][3],rotangl;
 	matmul(rotmtrx,tmpmtrx,rotmtrx);
 }
 
-VOID sptort(spvec,rtvec)
+void sptort(spvec,rtvec)
 double spvec[3],rtvec[3];
 {
 	double sin2,tmpvec[3];
@@ -104,7 +104,7 @@ double x,y;
 	    return(ATAN2(x,y));
 }
 
-VOID rttosp(rtvec,spvec)
+void rttosp(rtvec,spvec)
 double rtvec[3],spvec[3];
 {
 	double tmp,tmpvec[3];
@@ -116,10 +116,10 @@ double rtvec[3],spvec[3];
 	vcopy(spvec,tmpvec);
 }
 
-VOID vdiff(avec,bvec,cvec)
-register double *avec,*bvec,*cvec;
+void vdiff(avec,bvec,cvec)
+double *avec,*bvec,*cvec;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<3;)
 		*cvec++ = *avec++ - *bvec++;

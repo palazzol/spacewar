@@ -28,10 +28,10 @@ static struct sys getsdat;
 static datum dbmkey,dbmdata;
 static struct sysc *getsc;
 static getsys(),getcrft();
-static VOID fixdmg(),putcrft(),putsys(),delsys();
+static void fixdmg(),putcrft(),putsys(),delsys();
 extern long atol();
 
-VOID build(plogin)
+void build(plogin)
 struct login *plogin;
 {
 	char buf[80+1];
@@ -442,7 +442,7 @@ struct login *plogin;
 }
 
 /* assumes getcrkey and getcrdat are current */
-static VOID putcrft(plogin)
+static void putcrft(plogin)
 struct login *plogin;
 {
 #ifdef DEBUG
@@ -484,7 +484,7 @@ int styp;
 }
 
 /* assumes getskey and getsdat are current */
-static VOID putsys(plogin)
+static void putsys(plogin)
 struct login *plogin;
 {
 #ifdef DEBUG
@@ -505,7 +505,7 @@ struct login *plogin;
 }
 
 /* assumes getskey is current */
-static VOID delsys(plogin)
+static void delsys(plogin)
 struct login *plogin;
 {
 #ifdef DEBUG
@@ -524,7 +524,7 @@ struct login *plogin;
 }
 
 /* assumes getcrdat, getskey, and getsdat are current */
-static VOID fixdmg()
+static void fixdmg()
 {
 	/* if priviledged or docked at a starbase, fix all damage */
 	if (getcrdat.cr_plvl ||

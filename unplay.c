@@ -20,10 +20,10 @@
 #include "sys.h"
 #include "crft.h"
 
-VOID unplay(plogin)
-register struct login *plogin;
+void unplay(plogin)
+struct login *plogin;
 {
-	register struct crft *pcrft;
+	struct crft *pcrft;
 	struct crft *pcrft2;
 	struct sys *psys;
 	struct crftkey getcrkey;

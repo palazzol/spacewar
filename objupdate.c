@@ -10,11 +10,14 @@
 #include "universe.h"
 #include "obj.h"
 
-VOID objupdate()
+#include <string.h>
+#include <unistd.h>
+
+void objupdate()
 {
 	char buf[128];
 	FILE *fobj;
-	register struct obj *p=objlst;
+	struct obj *p=objlst;
 
 #ifdef DEBUG
 	DBG("objupdate()\n");

@@ -41,11 +41,11 @@ static struct pst zpst;
 char *malloc();
 
 
-VOID see(plogin)
-register struct login *plogin;
+void see(plogin)
+struct login *plogin;
 {
 	struct sstat *psstat;
-	register struct pst *ppst;
+	struct pst *ppst;
 	struct pst *nxtpst;
 	int nlines=6,nc;
 	char buf[80+1];

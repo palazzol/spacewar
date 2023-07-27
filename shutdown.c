@@ -14,10 +14,14 @@
 	extern short inmlbx;
 #endif /* VMS */
 
-VOID shutdown(e)
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void shutdown(e)
 int e;
 {
-	register struct login *plogin;
+	struct login *plogin;
 	int i;
 	extern int errno;
 

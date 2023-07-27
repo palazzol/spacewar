@@ -19,7 +19,7 @@
 
 static char nxtrpt;
 
-VOID rpt(pcrft,msg)
+void rpt(pcrft,msg)
 struct crft *pcrft;
 char *msg;
 {
@@ -30,14 +30,14 @@ char *msg;
 }
 
 /*ARGSUSED*/
-VOID setrpt(pcrft)
+void setrpt(pcrft)
 struct crft *pcrft;
 {
 	nxtrpt = 0;
 }
 
-VOID fnshrpt(pcrft,flsh)
-register struct crft *pcrft;
+void fnshrpt(pcrft,flsh)
+struct crft *pcrft;
 int flsh;
 {
 	int i;

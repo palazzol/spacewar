@@ -24,7 +24,7 @@
 #include "torp.h"
 #include "obj.h"
 
-static VOID thr(paln,tmpvec)
+static void thr(paln,tmpvec)
 struct aln *paln;
 double *tmpvec;
 {
@@ -34,11 +34,11 @@ double *tmpvec;
 	vdiff(tmpvec,paln->al_vel,paln->al_thr);
 }
 
-VOID updaln()
+void updaln()
 {
-	register struct aln *paln;
+	struct aln *paln;
 	struct sys *psys;
-	register struct universe *puniv;
+	struct universe *puniv;
 	double vdist(),ftmp,tmpvec[3];
 	long l;
 	int i;
@@ -137,7 +137,7 @@ noatck:
 		    FLOAT(RANDOM(600) - 300));
 		vchngd(paln->al_univ.ip_ptr);
 		for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
-		    register struct crft *pcrft;
+		    struct crft *pcrft;
 		    if (puniv->uv_type != 'P') continue;
 		    pcrft = puniv->uv_ptr.uv_crft;
 		    if (pcrft->cr_auto.ip_ptr &&

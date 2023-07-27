@@ -16,8 +16,8 @@
 #include "crft.h"
 #include "flds.h"
 
-VOID fixdir(pcrft)
-register struct crft *pcrft;
+void fixdir(pcrft)
+struct crft *pcrft;
 {
 	double tmp;
 

@@ -24,10 +24,10 @@
 #include "torp.h"
 #include "ucmd.h"
 
-extern VOID fixdir();
+extern void fixdir();
 extern double vdist(),vlen();
 static int okdir();
-static VOID fixaf();
+static void fixaf();
 
 static struct {
 	char	*pc_cmd;
@@ -42,14 +42,14 @@ static struct {
 /* 24 */{"-",1},	{"sensors",2},	{"lockon",2},	{"redraw",3}
 };
 
-VOID play(plogin)
-register struct login *plogin;
+void play(plogin)
+struct login *plogin;
 {
 	int i,j;
 	long l,m;
-	register struct crft *pcrft;
+	struct crft *pcrft;
 	struct torp *ptorp;
-	register struct universe *puniv;
+	struct universe *puniv;
 	struct login *plgn;
 	char buf[128];
 	double ftmp,tmpvec[3],tmpvec2[3];
@@ -474,7 +474,7 @@ doauto:		    /* use viewing distance and smaller of */
 		    biton(pcrft->cr_chng,BIT_AUTOFFWD);
 		}
 		for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
-		    register struct crft *pcrft2;
+		    struct crft *pcrft2;
 		    if (puniv->uv_type != 'P') continue;
 		    pcrft2 = puniv->uv_ptr.uv_crft;
 		    if (pcrft2->cr_dock.ip_ptr == plogin->ln_play.ip_ptr) {
@@ -599,7 +599,7 @@ doauto:		    /* use viewing distance and smaller of */
 
 		/* fix autopilots, docks, torp aim, alien attack */
 		for (puniv=univlst+MAXUNIVERSE;puniv-- > univlst;) {
-		    register struct crft *pcrft2;
+		    struct crft *pcrft2;
 		    struct aln *paln;
 		    switch(puniv->uv_type) {
 			case 0: continue;
@@ -1153,8 +1153,8 @@ done2:	nums(pcrft);
 }
 
 static int okdir(plogin,pcrft,pftmp)
-register struct login *plogin;
-register struct crft *pcrft;
+struct login *plogin;
+struct crft *pcrft;
 double *pftmp;
 {
 	char c;
@@ -1174,8 +1174,8 @@ double *pftmp;
 	return(1);
 }
 
-static VOID fixaf(pcrft)
-register struct crft *pcrft;
+static void fixaf(pcrft)
+struct crft *pcrft;
 {
 	if (pcrft->cr_ffwd) {
 	    pcrft->cr_ffwd = NULL;

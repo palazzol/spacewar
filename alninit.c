@@ -12,7 +12,7 @@
 #include "obj.h"
 #include "build.h"
 
-VOID alninit()
+void alninit()
 {
 	struct aln *paln=alnlst+MAXALN;
 	int i;

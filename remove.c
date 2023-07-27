@@ -24,7 +24,7 @@
 #include "flds.h"
 #include "aln.h"
 
-VOID removeobj(prmv)
+void removeobj(prmv)
 idxptr prmv;
 {
 	struct universe *puniv=univlst+MAXUNIVERSE;

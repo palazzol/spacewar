@@ -10,7 +10,9 @@
 #include "universe.h"
 #include "obj.h"
 
-VOID objinit()
+#include <stdlib.h>
+
+void objinit()
 {
 	FILE *fobj;
 	struct obj *p=objlst;

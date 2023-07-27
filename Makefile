@@ -5,7 +5,7 @@
 #  Copyright 1984 Dan Rosenblatt
 #
 LDFLAGS=
-CFLAGS= -g -DVOID=void -m32 -DDEBUG
+CFLAGS= -g -m32 -DDEBUG
 LPR= lpr
 
 INCLUDES= aln.h build.h crft.h flds.h login.h mlbx.h obj.h plyr.h \

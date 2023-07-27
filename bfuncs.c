@@ -7,53 +7,53 @@
 
 #include "spacewar.h"
 
-VOID bytecopy(dst,src,len)
-register char *dst,*src;
-register int len;
+void bytecopy(dst,src,len)
+char *dst,*src;
+int len;
 {
 	while (len-- > 0)
 		*dst++ = *src++;
 }
 
-VOID binit(dst,len)
-register char *dst;
-register int len;
+void binit(dst,len)
+char *dst;
+int len;
 {
 	while (len-- > 0)
 		*dst++ = 0;
 }
 
-VOID vcopy(dst,src)
-register double *dst,*src;
+void vcopy(dst,src)
+double *dst,*src;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<3;)
 		*dst++ = *src++;
 }
 
-VOID mcopy(dst,src)
-register double *dst,*src;
+void mcopy(dst,src)
+double *dst,*src;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<9;)
 		*dst++ = *src++;
 }
 
-VOID vinit(dst)
-register double *dst;
+void vinit(dst)
+double *dst;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<3;)
 		*dst++ = 0.;
 }
 
-VOID minit(dst)
-register double *dst;
+void minit(dst)
+double *dst;
 {
-	register int i;
+	int i;
 
 	for (i=0;i++<9;)
 		*dst++ = 0.;

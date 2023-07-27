@@ -21,10 +21,10 @@
 #include "obj.h"
 #include "torp.h"
 
-static VOID dofld();
+static void dofld();
 extern long gametime;
 
-VOID background(pcrft)
+void background(pcrft)
 struct crft *pcrft;
 {
 	static struct {
@@ -50,7 +50,7 @@ struct crft *pcrft;
 		{0,	75,	"%DMG"}
 	};
 	int i;
-	register struct flddesc *pfld;
+	struct flddesc *pfld;
 
 	for (pfld=flds+FLD_BACKGROUND,i=0;i < sizeof(bg)/sizeof(bg[0]);++i) {
 		pfld->f_row = bg[i].bg_row;
@@ -59,8 +59,8 @@ struct crft *pcrft;
 	}
 }
 
-VOID nums(pcrft)
-register struct crft *pcrft;
+void nums(pcrft)
+struct crft *pcrft;
 {
 	int i,j;
 	struct sys *psys;
@@ -119,7 +119,7 @@ register struct crft *pcrft;
 }
 
 /*VARARGS4*/
-static VOID dofld(pcrft,fld,grp,bit,val1,val2,val3,val4)
+static void dofld(pcrft,fld,grp,bit,val1,val2,val3,val4)
 struct crft *pcrft;
 int fld,grp,bit;
 int val1,val2,val3,val4;
@@ -133,15 +133,15 @@ int val1,val2,val3,val4;
 	}
 }
 
-VOID view(pcrft)
-register struct crft *pcrft;
+void view(pcrft)
+struct crft *pcrft;
 {
 	char vnew[15][31],buf[31+1];
 	double vdst[15][31],tmpdst,tmpvec[3],hlfvang;
 	dsplcmnt tmpdspl;
 	long ldst;
 	int row,col,savrow,savcol;
-	register struct universe *puniv;
+	struct universe *puniv;
 	static char vinit[]="\
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\
 @@@@@@@@       |       @@@@@@@@\

@@ -9,10 +9,10 @@
 #include "universe.h"
 #include "login.h"
 
-VOID who(plogin)
-register struct login *plogin;
+void who(plogin)
+struct login *plogin;
 {
-	register struct login *plgn=loginlst+MAXLOGIN;
+	struct login *plgn=loginlst+MAXLOGIN;
 	char buf[40+1];
 
 #ifdef DEBUG

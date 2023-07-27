@@ -27,12 +27,12 @@
 
 int doproctrap,doupdate;
 static struct login *getinp();
-static VOID cmd2();
-extern VOID prvcmd();
+static void cmd2();
+extern void prvcmd();
 
-VOID cmd()
+void cmd()
 {
-	register struct login *plogin;
+	struct login *plogin;
 
 #ifdef DEBUG
 	DBG("cmd()\n");
@@ -101,8 +101,8 @@ VOID cmd()
 #endif
 }
 
-static VOID cmd2(plogin)
-register struct login *plogin;
+static void cmd2(plogin)
+struct login *plogin;
 {
 	int inplen=strlen(plogin->ln_input);
 	struct plyrkey getplkey;
@@ -348,8 +348,8 @@ static struct login *getinp()
 {
 	struct uio inp;
 	int i;
-	register char *p;
-	register char *input;
+	char *p;
+	char *input;
 	extern int errno;
 #ifndef BSD
 #ifndef VMS

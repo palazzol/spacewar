@@ -22,8 +22,11 @@
 #endif /* VMS SYSIII SYSV */
 #endif /* BSD VMS SYSIII SYSV */
 
-VOID logon(plogin)
-register struct login *plogin;
+#include <stdlib.h>
+#include <stdio.h>
+
+void logon(plogin)
+struct login *plogin;
 {
 
 #ifdef DEBUG
@@ -31,7 +34,7 @@ register struct login *plogin;
 #endif
 
 	/* clear out most of login structure */
-	plogin->ln_name[0] = NULL;
+	plogin->ln_name[0] = 0;
 	if (plogin->ln_term)
 		free(plogin->ln_term);
 	plogin->ln_term = NULL;
@@ -51,12 +54,12 @@ register struct login *plogin;
 		free(plogin->ln_tse);
 	plogin->ln_tse = NULL;
 	plogin->ln_rvslh = 0;
-	plogin->ln_iomode = NULL;
-	plogin->ln_crft[0] = NULL;
+	plogin->ln_iomode = 0;
+	plogin->ln_crft[0] = 0;
 	plogin->ln_play.ip_ptr = NULL;
-	plogin->ln_stat = NULL;
+	plogin->ln_stat = 0;
 	plogin->ln_substat = NULL;
-	plogin->ln_input[0] = NULL;
+	plogin->ln_input[0] = 0;
 
 	/*****************/
 	/* set tty modes */

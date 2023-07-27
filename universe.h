@@ -7,6 +7,9 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __UNIVERSE_H__
+#define __UNIVERSE_H__
+
 struct universe {
 	char	uv_type;	/* universe type of object: NULL 'A|P|O|T' */
 	char	uv_pctr;	/* universe screen character of object */
@@ -30,3 +33,5 @@ typedef union {
 	struct universe *ip_ptr;
 	int		 ip_ofst;
 } idxptr;
+
+#endif /* __UNIVERSE_H__ */

@@ -22,7 +22,7 @@
 
 static char *fmtip();
 
-VOID prvcmd(plogin)
+void prvcmd(plogin)
 struct login *plogin;
 {
 	char *s=plogin->ln_input,buf[256];

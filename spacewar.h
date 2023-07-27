@@ -5,8 +5,11 @@
  * Copyright 1984 Dan Rosenblatt
  */
 
+#ifndef __SPACEWAR_H__
+#define __SPACEWAR_H__
+
 #ifdef VMS
-#define VOID
+#define void
 #define delete dbmdelete
 #endif /* VMS */
 
@@ -37,7 +40,7 @@
 #	define SWOBJ		"/home/palazzol/sw/swobj" /* see objupdate.c */
 #endif /* VMS BSD SYSIII SYSV */
 
-#define SWMASTER	"Frank P"
+#define SWMASTER	"Dan R"
 
 #define PI		(3.1415926536)
 #define TWOPI		(6.2831853072)
@@ -81,7 +84,11 @@ extern double fmod();
 #define MIN(x,y)	(((x) < (y)) ? (x) : (y))
 
 #ifdef DEBUG
-extern VOID DBG(),VDBG();
+void DBG(char *fmt, ...);
+void VDBG(char *fmt, ...);
+#else
+#define DBG(A,...)cmd
+#define VDBG(A,...)
 #endif
 
 typedef struct {
@@ -92,4 +99,44 @@ typedef struct {
 #define VECVALID 1
 #define DSTVALID 2
 
-dsplcmnt vdisp();
+#include "universe.h"
+
+dsplcmnt vdisp(struct universe *p1,  // vdisp.c
+			   struct universe *p2,
+			   char which);
+
+void alninit();	// alninit.c
+
+void update(); // update.c
+
+struct login;	// login.h
+
+void output(struct login *plogin, 	// output.c
+			char mode, 
+			int fld, 
+			char *str, 
+			...);
+
+void objupdate(); // objupdate.c
+
+void crftupdate(struct login *plogin); // crftupdate.c
+
+void logoff(struct login *plogin); // logoff.c
+
+void vinit(double *dst); // bfuncs.c
+void binit(char *dst, int len);	// bfuncs.c
+
+void updobjs(); // updobjs.c
+
+void unity(double mtrx[3][3]);	// mutils.c
+void xrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+void yrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+void zrot(double rotmtrx[3][3], double rotangl);	// mutils.c
+
+void shutdown(int e);	// shutdown.c
+
+void cmd(); // cmd.c
+extern int doproctrap; // cmd.c
+extern int doupdate; // cmd.c
+
+#endif /* __SPACEWAR_H__ */
