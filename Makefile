@@ -51,7 +51,7 @@ clean :
 	rm -f *.o sw psw rsw dmpdbm upddbm tstsz swcomm swerr swobj swdb.dir swdb.pag
 
 sw : ${OBJECTS}
-	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -lncurses -lgdbm_compat -lm
+	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -ltinfo -lgdbm_compat -lm
 	chmod u+s sw
 
 psw : psw.c spacewar.h uio2.h
