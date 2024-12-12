@@ -4,8 +4,7 @@
 #  Copyright 1984 obo Systems, Inc.
 #  Copyright 1984 Dan Rosenblatt
 #
-LDFLAGS= -n
-CFLAGS= -O -DBSD -DVOID=void -m68020 -f68881 -DNEEDFMOD
+CFLAGS= -O -DVOID=void -w
 LPR= lpr
 
 INCLUDES= aln.h build.h crft.h flds.h login.h mlbx.h obj.h plyr.h \
@@ -51,7 +50,7 @@ clean :
 	rm *.o sw psw rsw dmpdbm upddbm tstsz
 
 sw : ${OBJECTS}
-	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -ltermlib -ldbm -lm
+	${CC} ${CFLAGS} ${LDFLAGS} -o sw ${OBJECTS} -lncurses -lgdbm -lgdbm_compat -lm
 	chmod u+s sw
 
 psw : psw.c spacewar.h uio2.h
@@ -63,15 +62,15 @@ rsw : rsw.c login.h uio.h universe.h spacewar.h
 
 dmpdbm : dmpdbm.c spacewar.h universe.h login.h sys.h crft.h mlbx.h \
 	plyr.h ucmd.h bfuncs.o
-	${CC} ${CFLAGS} ${LDFLAGS} dmpdbm.c bfuncs.o -ldbm -o dmpdbm
+	${CC} ${CFLAGS} ${LDFLAGS} dmpdbm.c bfuncs.o -lgdbm -lgdbm_compat -o dmpdbm
 
 upddbm : upddbm.c spacewar.h universe.h login.h sys.h crft.h mlbx.h \
 	plyr.h ucmd.h bfuncs.o
-	${CC} ${CFLAGS} ${LDFLAGS} upddbm.c bfuncs.o -ldbm -o upddbm
+	${CC} ${CFLAGS} ${LDFLAGS} upddbm.c bfuncs.o -lgdbm -lgdbm_compat -o upddbm
 
 tstsz : tstsz.c uio.h uio2.h spacewar.h
 	${CC} ${CFLAGS} ${LDFLAGS} tstsz.c -o tstsz
-	tstsz
+	./tstsz
 
 lint : ${SOURCES} psw.c rsw.c dmpdbm.c upddbm.c tstsz.c
 	lint ${CFLAGS} ${SOURCES}

@@ -51,7 +51,7 @@ register struct login *plogin;
 		strcpy(buf,"\n");
 		dbmkey = firstkey();
 		while (dbmkey.dptr) {
-		    bcopy((char *)&getuckey,dbmkey.dptr,sizeof(getuckey));
+		    bytecopy((char *)&getuckey,dbmkey.dptr,sizeof(getuckey));
 		    if (getuckey.uc_ucmdkey == UCMD &&
 		    !strcmp(getuckey.uc_plyr,plogin->ln_name) &&
 		    getuckey.uc_ucmd == 1) {

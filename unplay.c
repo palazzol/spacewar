@@ -77,7 +77,7 @@ register struct login *plogin;
 	    dbmkey.dsize = sizeof(getplkey);
 	    dbmdata = fetch(dbmkey);
 	    if (dbmdata.dptr) {
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 		getpldat.pl_slst += 1;
 		getpldat.pl_klst += pcrft->cr_kill;
 		getpldat.pl_plst += pcrft->cr_pnts;
@@ -101,7 +101,7 @@ register struct login *plogin;
 	}
 
 	/* remove craft from universe */
-	remove(plogin->ln_play);
+	removeobj(plogin->ln_play);
 	if (--numpling < 0) numpling = 0;
 
 	/* put player back to command mode */

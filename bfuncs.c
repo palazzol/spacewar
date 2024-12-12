@@ -7,7 +7,7 @@
 
 #include "spacewar.h"
 
-VOID bcopy(dst,src,len)
+VOID bytecopy(dst,src,len)
 register char *dst,*src;
 register int len;
 {

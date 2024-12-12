@@ -648,7 +648,7 @@ doauto:		    /* use viewing distance and smaller of */
 				setrpt(pcrft2);
 				rpt(pcrft2,"Torpedo missed - target docked");
 				fnshrpt(pcrft2,1);
-				remove(ptorp->tp_univ);
+				removeobj(ptorp->tp_univ);
 			    }
 			    break;
 			case 'A':

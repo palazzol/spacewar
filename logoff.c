@@ -77,7 +77,8 @@ register struct login *plogin;
 	/* (too bad the previous states weren't saved)  */
 	tmode.c_lflag |= ICANON+ECHO+ECHOE+ECHOK+ECHONL;
 	tmode.c_cc[VEOF] = CEOF;
-	tmode.c_cc[VEOL] = CNUL;
+	//tmode.c_cc[VEOL] = CNUL;
+	tmode.c_cc[VEOL] = 0;
 
 	if (ioctl(plogin->ln_tty,TCSETA,&tmode)) {
 		perror("ioctl TCSETA");

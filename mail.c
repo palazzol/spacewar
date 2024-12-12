@@ -96,7 +96,7 @@ register struct login *plogin;
 #endif
 		    return;
 		}
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 		sprintf(buf,
 		"\nYou have %d line(s) of old mail, %d line(s) of new mail.\n",
@@ -126,7 +126,7 @@ register struct login *plogin;
 #endif
 		return;
 	    }
-	    bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+	    bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 
 	    switch(c=plogin->ln_input[0]) {
 
@@ -276,7 +276,7 @@ register struct mstat *pmstat;
 			if (!dbmdata.dptr)	/* not found? */
 				perror("dspmail: can't find plyr");
 			else {
-				bcopy((char *)&getpldat,dbmdata.dptr,
+				bytecopy((char *)&getpldat,dbmdata.dptr,
 				sizeof(getpldat));
 				getpldat.pl_seenml =
 				    (pmstat->ms_cur < pmstat->ms_end) ?
@@ -362,7 +362,7 @@ register struct mstat *pmstat;
 	    } else {	/* terminate */
 
 		/* insert mlbx lines */
-		bcopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
+		bytecopy((char *)&getpldat,dbmdata.dptr,sizeof(getpldat));
 		binit((char *)&getmbkey,sizeof(getmbkey));
 		getmbkey.mb_mlbxkey = MLBX;
 		strcpy(getmbkey.mb_plyr,pmstat->ms_towho);

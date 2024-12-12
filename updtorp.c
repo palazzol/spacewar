@@ -57,11 +57,11 @@ VOID updtorp()
 			rpt(pcrft,"Your torpedo missed");
 			fnshrpt(pcrft,1);
 		    }
-		    remove(ptorp->tp_univ);
+		    removeobj(ptorp->tp_univ);
 		    /*for (prmv.ip_ptr=univlst+MAXUNIVERSE;prmv.ip_ptr-- > univlst;)
 			if (prmv.ip_ptr->uv_type == 'T' &&
 			prmv.ip_ptr->uv_ptr.uv_torp == ptorp) {
-			    remove(prmv);
+			    removeobj(prmv);
 			    break;
 			}*/
 		    continue;
@@ -80,13 +80,13 @@ VOID updtorp()
 		    }
 		    damage(ptorp->tp_univ.ip_ptr,ptorp->tp_univ.ip_ptr,
 		    100.,200.,"Torpedo attack");
-		    remove(ptorp->tp_univ);
+		    removeobj(ptorp->tp_univ);
 		    /*for (prmv.ip_ptr=univlst+MAXUNIVERSE;prmv.ip_ptr-- > univlst;)
 			if (prmv.ip_ptr->uv_type == 'T' &&
 			prmv.ip_ptr->uv_ptr.uv_torp == ptorp) {
 			    damage(prmv.ip_ptr,ptorp->tp_pstn,100.,200.,
 			    "Torpedo attack");
-			    remove(prmv);
+			    removeobj(prmv);
 			    break;
 			}*/
 		    continue;

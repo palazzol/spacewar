@@ -42,7 +42,7 @@ VOID update()
 		numpling = 0;
 		for (plogin=loginlst+MAXLOGIN;plogin-- > loginlst;) {
 		    if (plogin->ln_tty && plogin->ln_play.ip_ptr) {
-			remove(plogin->ln_play);
+			removeobj(plogin->ln_play);
 			plogin->ln_iomode = NULL;
 			plogin->ln_crft[0] = NULL;
 			plogin->ln_play.ip_ptr = NULL;
