@@ -54,7 +54,7 @@ char *argv[];
 #ifdef SIGTTOU
 	signal(SIGTTOU,SIG_IGN);
 #endif
-	setpgid(getpid(),getpid());
+	//setpgid(getpid(),getpid());
 	close(0);
 	close(1);
 
